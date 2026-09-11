@@ -1,0 +1,1949 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>전략구매팀 인턴 업무 인수인계 메뉴얼</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F5F8FB;
+    --surface:#FFFFFF;
+    --text:#1F2C38;
+    --text-muted:#657586;
+    --border:#DCE5ED;
+    --accent:#1F5F91;
+    --accent-soft:#E8F1F8;
+    --accent-strong:#173F61;
+    --amber:#B45309;
+    --amber-soft:#FDF1DE;
+    --red:#B3261E;
+    --red-soft:#FBE9E7;
+    --blue:#2E6FA7;
+    --blue-soft:#EAF2F9;
+    --mono-bg:#F2F6F9;
+    --radius:10px;
+    --sidebar-w:300px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    font-size:15px;
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{
+    font-family:'Space Grotesk',sans-serif;
+    color:var(--accent-strong);
+    line-height:1.3;
+    letter-spacing:-0.01em;
+  }
+  code, .mono{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.85em;
+  }
+  /* ---------- layout ---------- */
+  .app{
+    display:flex;
+    min-height:100vh;
+  }
+  .sidebar{
+    width:var(--sidebar-w);
+    flex-shrink:0;
+    background:var(--surface);
+    border-right:1px solid var(--border);
+    position:sticky;
+    top:0;
+    height:100vh;
+    overflow-y:auto;
+    padding:24px 18px 60px;
+  }
+  .sidebar-title{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:1.05rem;
+    font-weight:700;
+    color:var(--accent-strong);
+    margin:4px 4px 4px;
+  }
+  .sidebar-sub{
+    font-size:0.78rem;
+    color:var(--text-muted);
+    margin:0 4px 18px;
+  }
+  #navSearch{
+    width:100%;
+    padding:9px 12px;
+    border:1px solid var(--border);
+    border-radius:8px;
+    font-family:'Inter',sans-serif;
+    font-size:0.85rem;
+    margin-bottom:16px;
+    background:var(--bg);
+    color:var(--text);
+  }
+  #navSearch:focus{outline:2px solid var(--accent); outline-offset:1px;}
+  .nav-group{margin-bottom:4px;}
+  .nav-head{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    width:100%;
+    text-align:left;
+    background:none;
+    border:none;
+    font-family:'Inter',sans-serif;
+    font-size:0.86rem;
+    font-weight:600;
+    color:var(--text);
+    padding:8px 8px;
+    border-radius:7px;
+    cursor:pointer;
+  }
+  .nav-head:hover{background:var(--accent-soft);}
+  .nav-head .num{
+    font-family:'JetBrains Mono',monospace;
+    color:var(--accent);
+    font-size:0.78rem;
+    min-width:18px;
+  }
+  .nav-head .chev{
+    margin-left:auto;
+    font-size:0.7rem;
+    color:var(--text-muted);
+    transition:transform .15s ease;
+  }
+  .nav-group.open .chev{transform:rotate(90deg);}
+  .nav-children{
+    list-style:none;
+    margin:2px 0 8px;
+    padding-left:26px;
+    display:none;
+    border-left:1px solid var(--border);
+  }
+  .nav-group.open .nav-children{display:block;}
+  .nav-children li{margin:1px 0;}
+  .nav-children a{
+    display:block;
+    padding:5px 10px;
+    font-size:0.8rem;
+    color:var(--text-muted);
+    text-decoration:none;
+    border-radius:6px;
+  }
+  .nav-children a:hover{background:var(--accent-soft); color:var(--accent-strong);}
+  .nav-children a.active{background:var(--accent); color:#fff;}
+
+  .content{
+    flex:1;
+    min-width:0;
+    padding:48px 56px 120px;
+    max-width:880px;
+  }
+  .hero{
+    margin-bottom:40px;
+    padding-bottom:28px;
+    border-bottom:1px solid var(--border);
+  }
+  .hero .eyebrow{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    color:var(--accent);
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    margin-bottom:10px;
+  }
+  .hero h1{font-size:2.1rem; margin:0 0 12px;}
+  .hero p{color:var(--text-muted); max-width:620px; margin:0;}
+  .hero-cards{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+    margin-top:28px;
+  }
+  .hero-card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:14px 16px;
+    text-decoration:none;
+    color:var(--text);
+  }
+  .hero-card:hover{border-color:var(--accent);}
+  .hero-card .n{font-family:'JetBrains Mono',monospace; color:var(--accent); font-size:0.78rem;}
+  .hero-card .t{font-weight:600; font-size:0.88rem; margin-top:4px;}
+
+  section.doc-section{
+    margin-bottom:56px;
+    padding-top:8px;
+    scroll-margin-top:24px;
+  }
+  section.doc-section > h2{
+    font-size:1.5rem;
+    display:flex;
+    align-items:baseline;
+    gap:10px;
+    padding-bottom:10px;
+    border-bottom:2px solid var(--accent-soft);
+    margin-bottom:20px;
+  }
+  section.doc-section > h2 .tag{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.85rem;
+    color:#fff;
+    background:var(--accent);
+    padding:2px 9px;
+    border-radius:6px;
+  }
+  h3.sub{
+    font-size:1.1rem;
+    margin-top:34px;
+    scroll-margin-top:24px;
+    padding:6px 0 6px 12px;
+    border-left:3px solid var(--accent);
+  }
+  h4.sub4{
+    font-size:0.98rem;
+    color:var(--accent-strong);
+    margin-top:22px;
+    margin-bottom:8px;
+  }
+  p{margin:10px 0;}
+  ul, ol{padding-left:22px; margin:10px 0;}
+  li{margin:4px 0;}
+  strong{color:var(--accent-strong);}
+
+  .card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:18px 20px;
+    margin:16px 0;
+  }
+  .callout{
+    border-radius:var(--radius);
+    padding:14px 16px;
+    margin:16px 0;
+    font-size:0.92rem;
+  }
+  .callout.warn{background:var(--amber-soft); border:1px solid #F0D9AE; color:#7A4A0C;}
+  .callout.danger{background:var(--red-soft); border:1px solid #F0C4BF; color:#7A2A24;}
+  .callout.info{background:var(--blue-soft); border:1px solid #C9D9F0; color:#1E3A70;}
+  .callout .lbl{font-weight:700; margin-bottom:4px; display:block;}
+
+  table{
+    width:100%;
+    border-collapse:collapse;
+    margin:16px 0;
+    font-size:0.88rem;
+  }
+  th, td{
+    border:1px solid var(--border);
+    padding:8px 10px;
+    text-align:left;
+    vertical-align:top;
+  }
+  th{background:var(--accent-soft); color:var(--accent-strong); font-weight:600;}
+  tr:nth-child(even) td{background:#FBFCFD;}
+
+  .codebox{
+    background:var(--mono-bg);
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:12px 14px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.83rem;
+    overflow-x:auto;
+    margin:10px 0;
+    white-space:pre;
+  }
+  .example{
+    background:var(--mono-bg);
+    border-left:3px solid var(--accent);
+    border-radius:0 8px 8px 0;
+    padding:8px 12px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.82rem;
+    margin:6px 0;
+  }
+
+  .pill{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    font-weight:600;
+    padding:3px 10px;
+    border-radius:999px;
+    color:#fff;
+    margin:2px 4px 2px 0;
+  }
+  .pill.gray{background:#6B7280;}
+  .pill.blue{background:#2563EB;}
+  .pill.teal{background:#0E9488;}
+  .pill.red{background:#DC2626;}
+  .pill.dark{background:#111827;}
+
+  .status-legend{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin:14px 0;
+  }
+  .status-item{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:8px 12px;
+    font-size:0.83rem;
+    flex:1 1 220px;
+  }
+
+  .checklist{list-style:none; padding-left:0;}
+  .checklist li{
+    position:relative;
+    padding-left:26px;
+    margin:6px 0;
+  }
+  .checklist li::before{
+    content:"";
+    position:absolute;
+    left:0; top:4px;
+    width:14px; height:14px;
+    border:2px solid var(--accent);
+    border-radius:4px;
+  }
+
+  .stepnum{list-style:none; padding-left:0; counter-reset:step;}
+  .stepnum li{
+    counter-increment:step;
+    position:relative;
+    padding-left:34px;
+    margin:10px 0;
+  }
+  .stepnum li::before{
+    content:counter(step);
+    position:absolute;
+    left:0; top:-1px;
+    width:22px; height:22px;
+    background:var(--accent);
+    color:#fff;
+    border-radius:50%;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.72rem;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+
+  .diff-table td.old{color:#8A2C24; text-decoration:line-through; opacity:.7;}
+  .diff-table td.new{color:var(--accent-strong); font-weight:600;}
+
+  .back-top{
+    position:fixed;
+    bottom:24px;
+    right:24px;
+    background:var(--accent);
+    color:#fff;
+    border:none;
+    border-radius:50%;
+    width:44px; height:44px;
+    font-size:1.1rem;
+    cursor:pointer;
+    box-shadow:0 4px 14px rgba(0,0,0,.18);
+    display:none;
+  }
+
+  @media (max-width: 860px){
+    .sidebar{
+      position:fixed;
+      left:-100%;
+      z-index:50;
+      transition:left .2s ease;
+      box-shadow:0 0 0 100vmax rgba(0,0,0,0);
+    }
+    .sidebar.open{left:0; box-shadow:0 0 40px rgba(0,0,0,.25);}
+    .content{padding:24px 20px 100px;}
+    .hero-cards{grid-template-columns:repeat(2,1fr);}
+    .menu-toggle{
+      display:flex;
+      position:fixed;
+      top:16px; left:16px;
+      z-index:60;
+      background:var(--accent);
+      color:#fff;
+      border:none;
+      border-radius:8px;
+      padding:9px 12px;
+      font-size:0.85rem;
+      align-items:center;
+      gap:6px;
+    }
+  }
+  .menu-toggle{display:none;}
+
+
+  /* ========== UI UPGRADE: searchable manual ========== */
+  :root{
+    --shadow-sm:0 3px 12px rgba(23,63,97,.06);
+    --shadow-md:0 12px 34px rgba(23,63,97,.11);
+    --flower:#7C4DAD;
+    --flower-soft:#F2EAF8;
+    --purchase:#2452A8;
+    --purchase-soft:#E9F0FB;
+    --housing:#B06A15;
+    --housing-soft:#FFF2E2;
+    --naming:#1F6F5C;
+    --naming-soft:#E5F1EC;
+  }
+  body{
+    background:
+      radial-gradient(circle at 86% 4%, rgba(31,95,145,.055), transparent 24rem),
+      var(--bg);
+  }
+  .reading-progress{
+    position:fixed;
+    inset:0 auto auto 0;
+    width:0;
+    height:3px;
+    background:linear-gradient(90deg,var(--accent),#6A9CC4);
+    z-index:1000;
+    box-shadow:0 1px 5px rgba(31,95,145,.24);
+  }
+  .sidebar{
+    background:rgba(255,255,255,.97);
+    backdrop-filter:blur(14px);
+    box-shadow:8px 0 28px rgba(23,63,97,.035);
+  }
+  .sidebar-brand-row{display:flex; align-items:flex-start; justify-content:space-between; gap:10px;}
+  .sidebar-logo{
+    width:36px;height:36px;border-radius:11px;display:grid;place-items:center;
+    background:linear-gradient(135deg,var(--accent),var(--accent-strong));
+    color:#fff;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.8rem;
+    box-shadow:0 7px 16px rgba(31,95,145,.22);flex:none;
+  }
+  .sidebar-title-wrap{flex:1;min-width:0;}
+  #navSearch{
+    padding-left:35px;
+    background-color:#F8FAFC;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%235C6B63' stroke-width='1.7' viewBox='0 0 24 24'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='m20 20-3.4-3.4'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;background-position:11px center;
+  }
+  .sidebar-section-title{
+    display:flex;align-items:center;justify-content:space-between;
+    margin:16px 6px 8px;color:var(--text-muted);font-size:.69rem;font-weight:700;
+    text-transform:uppercase;letter-spacing:.08em;
+  }
+  .favorites-panel{
+    display:none;margin:0 0 14px;padding:10px;border:1px solid var(--border);
+    border-radius:10px;background:#FBFCFD;
+  }
+  .favorites-panel.has-items{display:block;}
+  .favorite-empty{font-size:.76rem;color:var(--text-muted);padding:2px 4px;}
+  .favorite-link{
+    display:flex;align-items:center;gap:7px;width:100%;padding:6px 7px;border:0;
+    border-radius:7px;background:transparent;color:var(--text-muted);text-align:left;
+    font-size:.76rem;cursor:pointer;
+  }
+  .favorite-link:hover{background:var(--accent-soft);color:var(--accent-strong);}
+  .favorite-link .star{color:#D28B16;}
+  .nav-head{transition:background .16s ease,color .16s ease,transform .16s ease;}
+  .nav-head:hover{transform:translateX(2px);}
+  .nav-head.current{background:var(--accent-soft);color:var(--accent-strong);}
+  .nav-children a{border-left:2px solid transparent;transition:.15s ease;}
+  .nav-children a.active{background:var(--accent-soft);color:var(--accent-strong);border-left-color:var(--accent);font-weight:600;}
+
+  .content{max-width:1080px;padding-top:34px;}
+  .hero{
+    position:relative;overflow:hidden;padding:30px 30px 26px;margin-bottom:20px;
+    border:1px solid var(--border);border-radius:18px;background:rgba(255,255,255,.88);
+    box-shadow:var(--shadow-md);
+  }
+  .hero::after{
+    content:"";position:absolute;width:260px;height:260px;right:-95px;top:-115px;
+    border-radius:50%;background:radial-gradient(circle,rgba(31,95,145,.14),rgba(31,95,145,0));pointer-events:none;
+  }
+  .hero h1{font-size:2.25rem;}
+  .hero-cards{gap:10px;}
+  .hero-card{
+    position:relative;min-height:112px;padding:15px;border-radius:12px;
+    box-shadow:var(--shadow-sm);transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease;
+  }
+  .hero-card:hover{transform:translateY(-3px);box-shadow:0 10px 25px rgba(31,95,145,.12);}
+  .hero-card .t{font-size:.9rem;}
+  .hero-card .desc{margin-top:7px;color:var(--text-muted);font-size:.72rem;line-height:1.45;}
+  .hero-card .type-badge{
+    display:inline-flex;margin-top:8px;padding:2px 7px;border-radius:999px;
+    background:var(--accent-soft);color:var(--accent-strong);font-size:.65rem;font-weight:700;
+  }
+  .hero-legend{
+    display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;padding-top:16px;border-top:1px dashed var(--border);
+  }
+  .hero-legend span{padding:5px 9px;border:1px solid var(--border);border-radius:999px;background:#FBFCFD;color:var(--text-muted);font-size:.72rem;}
+  .hero-legend b{color:var(--text);}
+
+  .manual-toolbar{
+    position:sticky;top:10px;z-index:35;margin:0 0 28px;padding:11px;
+    border:1px solid rgba(222,228,223,.92);border-radius:14px;
+    background:rgba(255,255,255,.92);box-shadow:0 10px 28px rgba(23,63,97,.10);
+    backdrop-filter:blur(14px);
+  }
+  .toolbar-main{display:flex;align-items:center;gap:8px;}
+  .global-search-wrap{position:relative;flex:1;min-width:180px;}
+  .global-search-icon{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--text-muted);pointer-events:none;}
+  #contentSearch{
+    width:100%;height:43px;padding:9px 78px 9px 39px;border:1px solid var(--border);
+    border-radius:10px;background:#F9FBFD;color:var(--text);font-family:'Inter',sans-serif;
+  }
+  #contentSearch:focus{outline:3px solid rgba(31,95,145,.13);border-color:var(--accent);}
+  .search-shortcut{position:absolute;right:10px;top:50%;transform:translateY(-50%);padding:2px 6px;border:1px solid var(--border);border-radius:5px;background:#fff;color:var(--text-muted);font:600 .66rem 'JetBrains Mono',monospace;}
+  .toolbar-btn{
+    height:43px;padding:0 11px;border:1px solid var(--border);border-radius:9px;
+    background:#fff;color:var(--text-muted);font-size:.77rem;font-weight:600;cursor:pointer;white-space:nowrap;
+  }
+  .toolbar-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-soft);}
+  .toolbar-btn.icon{width:40px;padding:0;font-size:1rem;}
+  .toolbar-sub{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:8px;padding:0 3px;}
+  .quick-keywords{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;}
+  .quick-keywords::-webkit-scrollbar{display:none;}
+  .keyword-chip{border:0;border-radius:999px;padding:5px 9px;background:var(--mono-bg);color:var(--text-muted);font-size:.69rem;cursor:pointer;white-space:nowrap;}
+  .keyword-chip:hover{background:var(--accent-soft);color:var(--accent-strong);}
+  .search-state{color:var(--text-muted);font-size:.72rem;white-space:nowrap;}
+
+  section.doc-section{
+    --section-accent:var(--accent);--section-soft:var(--accent-soft);
+    margin-bottom:50px;padding-top:14px;
+  }
+  #sec2{--section-accent:var(--flower);--section-soft:var(--flower-soft);}
+  #sec3{--section-accent:var(--purchase);--section-soft:var(--purchase-soft);}
+  #sec4{--section-accent:var(--housing);--section-soft:var(--housing-soft);}
+  #sec5{--section-accent:var(--naming);--section-soft:var(--naming-soft);}
+  section.doc-section > h2{
+    position:relative;margin-bottom:14px;padding:0 0 13px;border-bottom:1px solid var(--border);
+    color:var(--text);font-size:1.55rem;
+  }
+  section.doc-section > h2::after{
+    content:"";position:absolute;left:0;bottom:-1px;width:86px;height:3px;border-radius:3px;background:var(--section-accent);
+  }
+  section.doc-section > h2 .tag{background:var(--section-accent);}
+  .section-kicker{margin:-6px 0 16px;color:var(--text-muted);font-size:.82rem;}
+
+  .topic-card,.section-static{
+    margin:10px 0;border:1px solid var(--border);border-radius:12px;background:var(--surface);
+    box-shadow:var(--shadow-sm);overflow:hidden;scroll-margin-top:105px;
+  }
+  .topic-card{transition:border-color .18s ease,box-shadow .18s ease,transform .18s ease;}
+  .topic-card:hover{border-color:#C7D3DE;}
+  .topic-card[open]{border-color:color-mix(in srgb,var(--section-accent) 35%,var(--border));box-shadow:0 11px 28px rgba(23,63,97,.08);}
+  .topic-summary{
+    display:flex;align-items:center;gap:11px;padding:14px 15px;list-style:none;cursor:pointer;
+    background:linear-gradient(90deg,var(--section-soft),#fff 33%);scroll-margin-top:105px;
+  }
+  .topic-summary::-webkit-details-marker{display:none;}
+  .topic-index{
+    flex:none;display:grid;place-items:center;min-width:34px;height:27px;padding:0 7px;border-radius:7px;
+    background:#fff;border:1px solid color-mix(in srgb,var(--section-accent) 28%,var(--border));
+    color:var(--section-accent);font:600 .7rem 'JetBrains Mono',monospace;
+  }
+  .topic-title{flex:1;min-width:0;color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:1rem;font-weight:650;}
+  .topic-tools{display:flex;align-items:center;gap:5px;}
+  .bookmark-btn,.anchor-btn{
+    width:30px;height:30px;border:0;border-radius:8px;background:transparent;color:#8796A4;
+    cursor:pointer;font-size:.94rem;display:grid;place-items:center;
+  }
+  .bookmark-btn:hover,.anchor-btn:hover{background:#fff;color:var(--section-accent);}
+  .bookmark-btn.saved{color:#D28B16;background:#FFF7E4;}
+  .topic-chevron{color:var(--section-accent);font-size:.78rem;transition:transform .18s ease;}
+  .topic-card[open] .topic-chevron{transform:rotate(90deg);}
+  .topic-body{padding:18px 20px 22px;border-top:1px solid #EDF2F6;}
+  .topic-body > :first-child{margin-top:0;}
+  .topic-body > :last-child{margin-bottom:0;}
+  .section-static{padding:20px;}
+  .topic-card.search-hidden,.doc-section.search-hidden,.section-static.search-hidden{display:none!important;}
+  mark.search-hit{background:#FFE48A;color:#3E3100;border-radius:3px;padding:0 2px;box-shadow:0 0 0 1px rgba(203,151,0,.12);}
+  mark.search-hit.current-hit{background:#FFB648;box-shadow:0 0 0 3px rgba(255,182,72,.28);}
+  .topic-card.result-focus{animation:resultPulse .8s ease;}
+  @keyframes resultPulse{0%,100%{transform:none}45%{transform:translateY(-2px);box-shadow:0 0 0 4px rgba(31,95,145,.15),var(--shadow-md)}}
+
+  .callout{position:relative;padding-left:18px;}
+  .callout::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;border-radius:10px 0 0 10px;background:currentColor;opacity:.55;}
+  .card{box-shadow:var(--shadow-sm);}
+  .codebox,.example{position:relative;}
+  .example{border-left-color:var(--section-accent);}
+  table{border-radius:10px;overflow:hidden;box-shadow:0 0 0 1px var(--border);}
+  th,td{border-color:#E6ECF2;}
+  th{background:var(--section-soft);}
+  .back-top{right:26px;bottom:26px;transition:transform .15s ease,background .15s ease;}
+  .back-top:hover{transform:translateY(-2px);background:var(--accent-strong);}
+  .mobile-backdrop{display:none;position:fixed;inset:0;background:rgba(12,25,20,.42);z-index:45;backdrop-filter:blur(2px);}
+  .mobile-backdrop.show{display:block;}
+  .sidebar-close{display:none;border:0;background:transparent;color:var(--text-muted);font-size:1.2rem;cursor:pointer;}
+
+  @media (max-width:1080px){
+    :root{--sidebar-w:270px;}
+    .content{padding-left:34px;padding-right:34px;}
+    .toolbar-btn.text-btn{display:none;}
+  }
+  @media (max-width:860px){
+    .sidebar{left:-310px;width:min(88vw,310px);}
+    .sidebar.open{left:0;}
+    .sidebar-close{display:block;}
+    .menu-toggle{display:flex!important;box-shadow:0 8px 20px rgba(31,95,145,.22);}
+    .content{padding:72px 16px 100px;max-width:none;}
+    .hero{padding:24px 18px 21px;}
+    .hero h1{font-size:1.75rem;}
+    .hero-cards{grid-template-columns:1fr 1fr;}
+    .manual-toolbar{top:8px;padding:9px;}
+    .toolbar-main{flex-wrap:wrap;}
+    .global-search-wrap{flex-basis:100%;}
+    .toolbar-btn.text-btn{display:block;flex:1;}
+    .toolbar-sub{display:block;}
+    .search-state{display:block;margin-top:7px;}
+    .topic-summary{padding:13px 11px;gap:8px;}
+    .topic-tools{gap:1px;}
+    .anchor-btn{display:none;}
+    .topic-body{padding:16px 14px 19px;}
+  }
+  @media (max-width:520px){
+    .hero-cards{grid-template-columns:1fr;}
+    .hero-card{min-height:auto;}
+    .topic-index{display:none;}
+    .topic-title{font-size:.93rem;}
+    table{display:block;overflow-x:auto;white-space:nowrap;}
+    .search-shortcut{display:none;}
+    #contentSearch{padding-right:12px;}
+  }
+
+</style>
+</head>
+<body>
+<div class="reading-progress" id="readingProgress"></div>
+
+<button class="menu-toggle" id="menuToggle">☰ 메뉴</button>
+<div class="mobile-backdrop" id="mobileBackdrop"></div>
+
+<div class="app">
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-brand-row">
+      <div class="sidebar-logo">FITI</div>
+      <div class="sidebar-title-wrap">
+        <div class="sidebar-title">전략구매팀 인턴 메뉴얼</div>
+        <div class="sidebar-sub">운영 메뉴얼 · 사전형 참고 문서</div>
+      </div>
+      <button class="sidebar-close" id="sidebarClose" aria-label="메뉴 닫기">×</button>
+    </div>
+    <input type="text" id="navSearch" placeholder="목차 검색 (예: 만료, CAS)">
+    <div class="sidebar-section-title"><span>즐겨찾기</span><span>★</span></div>
+    <div class="favorites-panel" id="favoritesPanel"><div id="favoritesList"></div></div>
+    <div class="sidebar-section-title"><span>전체 목차</span><span id="navCount"></span></div>
+    <div id="navRoot"></div>
+  </nav>
+
+  <main class="content">
+
+    <div class="manual-toolbar" id="manualToolbar">
+      <div class="toolbar-main">
+        <div class="global-search-wrap">
+          <span class="global-search-icon">⌕</span>
+          <input type="search" id="contentSearch" placeholder="메뉴얼 전체 내용 검색 · 예: saveVersion, BS 양식, 3개월, CAS">
+          <span class="search-shortcut">Ctrl K</span>
+        </div>
+        <button class="toolbar-btn icon" id="prevResult" title="이전 검색 결과">↑</button>
+        <button class="toolbar-btn icon" id="nextResult" title="다음 검색 결과">↓</button>
+        <button class="toolbar-btn text-btn" id="expandAll">전체 펼치기</button>
+        <button class="toolbar-btn text-btn" id="collapseAll">전체 접기</button>
+      </div>
+      <div class="toolbar-sub">
+        <div class="quick-keywords" aria-label="빠른 검색어">
+          <button class="keyword-chip" data-query="서버 저장">서버 저장</button>
+          <button class="keyword-chip" data-query="localStorage">localStorage</button>
+          <button class="keyword-chip" data-query="saveVersion">saveVersion</button>
+          <button class="keyword-chip" data-query="BS 양식">BS 양식</button>
+          <button class="keyword-chip" data-query="3개월">계약 만료 3개월</button>
+          <button class="keyword-chip" data-query="CAS">CAS</button>
+          <button class="keyword-chip" data-query="AccuStandard">AccuStandard</button>
+        </div>
+        <div class="search-state" id="contentSearchStatus">전체 내용을 검색할 수 있습니다.</div>
+      </div>
+    </div>
+
+
+    <div class="hero">
+      <div class="eyebrow">Handover Manual · FITI 전략구매팀</div>
+      <h1>업무 인수인계 메뉴얼</h1>
+      <p>화환 배송, 구매현황 분석, 사택 임차계약 세 개의 대시보드와 ERP 소모품·시약 품목명 표준화 업무를 정리한 참고 문서입니다. 왼쪽 목차에서 항목을 검색하거나 눌러 이동하세요.</p>
+      <div class="hero-cards">
+        <a class="hero-card" href="#sec2"><div class="n">02</div><div class="t">화환 배송 대시보드</div><div class="desc">배송 요청·BS 양식·상태·변경이력</div><span class="type-badge">서버 운영</span></a>
+        <a class="hero-card" href="#sec3"><div class="n">03</div><div class="t">구매현황 분석 대시보드</div><div class="desc">엑셀 업로드·KPI·예산·통계</div><span class="type-badge">브라우저 분석</span></a>
+        <a class="hero-card" href="#sec4"><div class="n">04</div><div class="t">사택 임차계약 대시보드</div><div class="desc">계약 정보·만료 예정·지역 통계</div><span class="type-badge">서버 운영</span></a>
+        <a class="hero-card" href="#sec5"><div class="n">05</div><div class="t">소모품·시약 품목명 정의</div><div class="desc">ERP 명칭 규칙·제조사 확인·CAS</div><span class="type-badge">데이터 표준화</span></a>
+      </div>
+      <div class="hero-legend">
+        <span><b>화환</b> Vercel + Blob</span>
+        <span><b>구매현황</b> 브라우저 localStorage</span>
+        <span><b>사택</b> Vercel + Private Blob</span>
+        <span><b>품목명</b> ERP 표준화 업무</span>
+      </div>
+    </div>
+
+    <!-- ============ 1. 업무 구성 ============ -->
+    <section class="doc-section" id="sec1">
+      <h2><span class="tag">01</span> 업무 구성</h2>
+      <p>전략구매팀 인턴 업무 중 다음 네 가지 업무를 인수인계합니다. 각 업무의 목적은 서로 다르므로 혼동하지 않도록 구분해서 접근합니다.</p>
+      <table>
+        <tr><th>업무</th><th>목적</th></tr>
+        <tr><td>화환 배송 관리 대시보드</td><td>화환 및 상조용품 배송 요청 관리</td></tr>
+        <tr><td>구매현황 분석 대시보드</td><td>구매실적 엑셀을 이용한 지출 및 구매 통계 분석</td></tr>
+        <tr><td>사택 대시보드</td><td>사택 임차계약 현황과 계약 만료 예정 관리</td></tr>
+        <tr><td>품목명 정의</td><td>제조사 자료를 확인하여 ERP 등록용 품목명을 표준화</td></tr>
+      </table>
+    </section>
+
+    <!-- ============ 2. 화환 배송 관리 대시보드 ============ -->
+    <section class="doc-section" id="sec2">
+      <h2><span class="tag">02</span> 화환 배송 관리 대시보드</h2>
+
+      <h3 class="sub" id="sec2-1">2-1. 사용 목적</h3>
+      <p>전략구매팀으로 접수되는 화환과 상조용품 배송 요청을 등록하고, 배송 진행 상태와 변경 이력을 관리하기 위한 대시보드입니다. 일반 화환 배송뿐만 아니라 장례식장 배송에 사용하는 <strong>BS 양식</strong>을 별도로 지원합니다.</p>
+
+      <h3 class="sub" id="sec2-2">2-2. 주요 기능</h3>
+      <ul>
+        <li>화환 배송 요청 신규 등록 / 수정 / 삭제</li>
+        <li>배송 상태 변경</li>
+        <li>일반 양식과 BS 양식 구분</li>
+        <li>등록일·배송일·금액·상태 기준 정렬, 상태별·조건별 필터링</li>
+        <li>카카오톡 배송 요청 내용 공유</li>
+        <li>엑셀 파일 업로드 / 다운로드</li>
+        <li>현재 현황 서버 저장, 사용자별 변경 이력 기록</li>
+        <li>다른 사용자의 선행 저장 여부 확인</li>
+        <li>PC 및 모바일 화면 지원</li>
+      </ul>
+
+      <h3 class="sub" id="sec2-3">2-3. 주요 등록 항목</h3>
+      <p>일반 화환 등록 시 요청일/배송일, 요청자, 수령인, 배송지, 관계, 품목, 수량, 단가 또는 금액, 배송 상태, 관리 메모 등을 입력합니다. 실제 화면의 입력 항목은 현재 배포된 코드의 등록 양식을 기준으로 확인합니다.</p>
+
+      <h3 class="sub" id="sec2-4">2-4. BS 양식 (장례식장 배송)</h3>
+      <p>주요 입력 항목: 빈소, 받는 분, 고인명, 수량. BS 양식으로 등록하면 데이터에 <code>formType: "bs"</code> 값이 저장되고, 목록에서는 BS 표시로 일반 배송과 구분됩니다.</p>
+      <div class="callout warn"><span class="lbl">확인 필요</span>고인명, 빈소, 받는 분 정보가 엑셀 다운로드 및 재업로드 과정에서도 유지되는지 확인해야 합니다.</div>
+
+      <h3 class="sub" id="sec2-5">2-5. 배송 상태</h3>
+      <div class="status-legend">
+        <div class="status-item"><span class="pill gray">pending</span> 배송 준비</div>
+        <div class="status-item"><span class="pill blue">processing</span> 배송중</div>
+        <div class="status-item"><span class="pill teal">completed</span> 배송요청 완료</div>
+        <div class="status-item"><span class="pill red">issue</span> 확인필요</div>
+        <div class="status-item"><span class="pill dark">cancelled</span> 배송완료</div>
+      </div>
+      <div class="callout danger"><span class="lbl">주의</span>화면의 한글 상태명과 내부 코드값이 다릅니다. 코드를 수정할 때는 반드시 내부 코드값을 기준으로 확인하세요. 특히 <code>completed</code>는 "배송이 끝났다"는 뜻이 아니라 "배송 요청이 완료되었다"는 의미로 사용됩니다.</div>
+
+      <h3 class="sub" id="sec2-6">2-6. 카카오톡 공유</h3>
+      <p>배송지, 수령인, 관계, 품목, 수량 등 배송에 필요한 정보가 공유 내용에 포함됩니다. 수정 시 확인할 사항:</p>
+      <ul class="checklist">
+        <li>공유 문구가 정상적으로 만들어지는지</li>
+        <li>일반 양식과 BS 양식이 각각 정상 표시되는지</li>
+        <li>모바일과 PC에서 공유 링크가 정상 작동하는지</li>
+        <li>외부 연결 주소가 올바른지</li>
+      </ul>
+
+      <h3 class="sub" id="sec2-7">2-7. 서버 저장 구조</h3>
+      <p>GitHub 연결 Vercel 프로젝트 + Vercel Blob Storage 사용.</p>
+      <div class="codebox">deliveries.json   → 화환 배송 목록
+logs.json         → 변경 이력
+
+API:
+/api/deliveries
+/api/logs</div>
+      <p>화면에서 입력한 데이터는 브라우저에만 저장되는 것이 아니므로, 실제 운영 데이터는 반드시 서버 저장까지 완료해야 합니다.</p>
+
+      <h3 class="sub" id="sec2-8">2-8. 저장 버전과 충돌 감지</h3>
+      <p>두 사용자가 같은 데이터를 동시에 열어 둔 상태에서 서로 다른 내용을 저장하면 기존 작업을 덮어쓸 수 있어, 서버와 화면의 <code>saveVersion</code>을 비교해 충돌을 감지합니다.</p>
+      <div class="card">
+        <ol>
+          <li>크롬에서 데이터를 수정하고 저장</li>
+          <li>엣지는 저장 전의 이전 데이터를 열고 있음</li>
+          <li>엣지에서 그대로 저장을 시도</li>
+          <li>서버 버전과 엣지 화면의 기준 버전이 다르면 충돌 경고</li>
+          <li>최신 서버 데이터를 다시 불러온 후 내용을 확인</li>
+        </ol>
+      </div>
+      <div class="callout danger"><span class="lbl">주의</span>충돌 경고가 나타났는데 강제로 저장하거나 코드를 우회하면 다른 사용자의 작업을 덮어쓸 수 있습니다.</div>
+
+      <h3 class="sub" id="sec2-9">2-9. 변경 이력</h3>
+      <p>신규 등록·수정·삭제·상태 변경 작업은 변경 이력에 기록되며, 최대 10개까지 유지되고 화면에서 페이지 단위로 확인할 수 있습니다. 인수인계 전 테스트 등록·저장 이력은 삭제하거나 실제 데이터와 구분되도록 정리합니다.</p>
+
+      <h3 class="sub" id="sec2-10">2-10. 운영 순서</h3>
+      <ol class="stepnum">
+        <li>로그인 후 서버 데이터를 새로 불러온다</li>
+        <li>기존 배송 목록과 마지막 저장 시각을 확인한다</li>
+        <li>신규 배송 요청을 등록한다</li>
+        <li>입력 내용과 배송 상태를 확인한다</li>
+        <li>필요한 경우 카카오톡으로 배송 내용을 공유한다</li>
+        <li>현황 저장을 눌러 서버에 저장한다</li>
+        <li>저장 완료 시각과 변경 이력을 확인한다</li>
+        <li>필요하면 엑셀 파일을 다운로드한다</li>
+        <li>새로고침 후 저장 내용이 유지되는지 확인한다</li>
+      </ol>
+
+      <h3 class="sub" id="sec2-11">2-11. 주의사항</h3>
+      <ul class="checklist">
+        <li>화면에서 수정한 뒤 반드시 현황 저장을 해야 한다</li>
+        <li>엑셀 업로드 전 기존 데이터를 다운로드해 백업한다</li>
+        <li>다른 사용자가 작업 중인 경우 저장 충돌 여부를 확인한다</li>
+        <li>BS 양식은 일반 화환 양식과 입력 구조가 다르다</li>
+        <li>테스트 데이터는 실제 운영 데이터와 섞이지 않게 한다</li>
+        <li>서버 새로고침은 최신 데이터를 다시 불러오는 작업이므로 저장하지 않은 화면 내용이 사라질 수 있다</li>
+        <li>코드 수정 후에는 일반 등록, BS 등록, 카카오 공유, 저장, 재접속까지 모두 테스트한다</li>
+      </ul>
+    </section>
+
+    <!-- ============ 3. 구매현황 분석 대시보드 ============ -->
+    <section class="doc-section" id="sec3">
+      <h2><span class="tag">03</span> 구매현황 분석 대시보드</h2>
+
+      <h3 class="sub" id="sec3-1">3-1. 정확한 사용 목적</h3>
+      <div class="callout info"><span class="lbl">품목 마스터 관리 프로그램이 아님</span>전략구매팀의 구매·발주실적 엑셀 파일을 불러와 연도, 부서, 품목, 계약구분별 구매금액과 수량을 분석하기 위한 <strong>구매현황 분석용</strong> 대시보드입니다. 소모품 품목명 정의 업무와는 별개의 업무로 구분해야 합니다.</div>
+
+      <h3 class="sub" id="sec3-2">3-2. 업로드 가능한 파일</h3>
+      <p><span class="pill teal">CSV</span><span class="pill teal">XLSX</span><span class="pill teal">XLS</span></p>
+      <p>엑셀 파일은 첫 번째 시트를 기준으로 읽습니다. CSV는 기본적으로 UTF-8로 읽으며, 정상적으로 읽히지 않는 경우 EUC-KR 방식으로 다시 처리합니다.</p>
+
+      <h3 class="sub" id="sec3-3">3-3. 필요한 엑셀 컬럼</h3>
+      <table>
+        <tr><th>필수</th><th>있으면 함께 반영</th></tr>
+        <tr>
+          <td>발주일<br>품목명</td>
+          <td>요청부서/부서 · 품목코드 · 발주수량 · 발주금액 · 발주단가 · 분류/품목구분 · 계약구분 · 구매업무 · 구매유형 · 계약방법</td>
+        </tr>
+      </table>
+      <p>발주일이나 품목명이 없는 행은 정상 데이터로 등록되지 않습니다.</p>
+
+      <h3 class="sub" id="sec3-4">3-4. 파일 추가와 교체</h3>
+      <p>기존 데이터가 있는 상태에서 새 파일을 업로드하면 <strong>추가</strong> 또는 <strong>교체</strong> 중 선택합니다. 추가 업로드 시 중복 판단 기준:</p>
+      <div class="codebox">발주일 + 품목코드 + 발주수량 + 발주금액</div>
+      <div class="callout warn"><span class="lbl">한계</span>같은 날짜에 동일 품목을 같은 수량·금액으로 여러 번 발주한 경우, 서로 다른 발주인데도 중복으로 제외될 수 있습니다. 업로드 후 기존/신규/최종 건수와 원본·대시보드 금액 합계를 반드시 대조하세요.</div>
+
+      <h3 class="sub" id="sec3-5">3-5. 품목 자동 분류</h3>
+      <p>분류/품목구분 컬럼이 있으면 우선 사용하고, 없으면 품목명 단어 기준으로 자동 분류합니다 (시약 · 인쇄물 · 공기구비품 · 수리 · 교정 · 시험소모품). 예: Standard, Solution, Reagent, HPLC, Acid, CRM, 시약 등의 표현이 있으면 시약으로 분류될 수 있습니다. 이는 보조 기능이므로 실제 분류와 다를 수 있습니다.</p>
+
+      <h3 class="sub" id="sec3-6">3-6. 계약구분 자동 판정</h3>
+      <p>사용 컬럼: 구매업무 · 계약구분 · 구매유형 · 계약유형 · 입찰구분 · 입찰방법 · 구분 · 계약방법 · 구매구분</p>
+      <p>주요 계약구분: 수의계약 · 나라장터 입찰 · 입찰-소모품 · 입찰-사업비 · 입찰-일반구매요청 · 사업비. 나라장터/조달청/G2B 문구가 있으면 나라장터 입찰로 우선 분류합니다.</p>
+      <div class="callout warn"><span class="lbl">임시 분류 기준 (법적 확정 기준 아님)</span>2천만 원 이상 → 나라장터 입찰 / 2천만 원 미만 → 수의계약. 자동 분류된 계약구분은 원본 자료와 반드시 비교해야 합니다.</div>
+
+      <h3 class="sub" id="sec3-7">3-7. 데이터 품질 검사</h3>
+      <p>업로드 후 자동 점검 항목: 발주일 없음/비정상 연도, 발주금액 0원, 발주수량 0, 품목코드 없음, 계약구분 미분류, 신규 처리 건수, 최종 전체 건수. 품목코드가 없는 데이터는 전체 구매금액에는 포함되지만 연도별 단가 이력 계산에는 제한이 생깁니다.</p>
+
+      <h3 class="sub" id="sec3-8">3-8. 검색 및 필터</h3>
+      <p>연도 · 계약구분 · 품목 분류 · 요청부서 · 품목명 · 품목코드 · 부서명 · 최소/최대 발주금액으로 조회. 통합 검색창은 품목명·품목코드·부서명을 함께 검색합니다. 적용 필터는 배지로 표시되며, 필터 변경 시 KPI·차트·통계표·상세 목록이 함께 재계산됩니다.</p>
+
+      <h3 class="sub" id="sec3-9">3-9. 주요 KPI</h3>
+      <ul>
+        <li>예산 집행률 · 총 발주금액 · 총 발주건수 · 총 발주수량 · 전년 동기 대비 증감률</li>
+        <li>수의계약 / 나라장터 입찰 / 입찰-소모품 / 입찰-사업비 / 입찰-일반구매요청 / 사업비 — 각각 금액·건수·비율</li>
+        <li>최다 지출 부서 · 최다 지출 품목</li>
+      </ul>
+      <p>계약구분별 KPI 카드를 누르면 해당 필터가 자동 적용됩니다. 전년 동기 대비는 데이터상 가장 최근 연도와 전년도의 동일 월 범위를 비교합니다.</p>
+
+      <h3 class="sub" id="sec3-10">3-10. 전사 및 부서별 예산</h3>
+      <p>전사 연간 예산 입력 시 집행금액·예산 잔액·초과금액·집행률을 계산합니다. 부서별 예산도 별도 입력 가능하며, 특정 부서 필터 적용 시 해당 부서 예산 기준으로 집행률이 계산됩니다.</p>
+
+      <h3 class="sub" id="sec3-11">3-11. 통계 및 분석 기능</h3>
+      <table>
+        <tr><th>기능</th><th>내용</th></tr>
+        <tr><td>누적 집행 추이</td><td>월별 누적 발주금액과 연간 예산 비교</td></tr>
+        <tr><td>월별 발주금액 추이</td><td>연도별 월간 발주금액 비교</td></tr>
+        <tr><td>구매 유형별 집행 비율</td><td>계약구분별 금액 비율</td></tr>
+        <tr><td>부서별 점유율</td><td>전체 발주금액 중 부서별 비율</td></tr>
+        <tr><td>주요 50개 품목 월별 현황</td><td>발주금액 상위 50개 품목의 월별 구매금액</td></tr>
+        <tr><td>월별 집행 패턴 히트맵</td><td>월별 지출 규모를 색상 농도로 표시</td></tr>
+        <tr><td>파레토 분석</td><td>상위 10% 품목 점유율 · 누적 80% 도달 품목 수 · 하위 50% 점유율</td></tr>
+        <tr><td>월별 평균 단가 추이</td><td>건당 평균 발주단가 변화</td></tr>
+        <tr><td>품목별 연도별 단가 이력</td><td>동일 품목코드 기준 연도별 평균 발주단가 비교</td></tr>
+      </table>
+
+      <h3 class="sub" id="sec3-12">3-12. 상세 데이터 조회</h3>
+      <h4 class="sub4">목록 보기</h4>
+      <p>발주일자·부서·품목 분류·계약구분·품목명·발주수량·발주금액 표시. 발주일/부서/품목명/수량/금액 기준 정렬 가능. 페이지당 50/100/200/500건 선택.</p>
+      <h4 class="sub4">피벗 보기</h4>
+      <p>부서별 발주건수·총 발주수량·총 발주금액·부서별 품목 구매내역 집계.</p>
+      <h4 class="sub4">발주 상세 팝업</h4>
+      <p>발주일·요청부서·품목명·품목코드·분류·계약구분·발주수량·발주단가·발주금액·동일 품목의 과거 구매 이력 확인. 동일 품목 이력은 품목코드 우선, 없으면 품목명 기준으로 조회합니다.</p>
+
+      <h3 class="sub" id="sec3-13">3-13. KPI 스냅샷</h3>
+      <p>현재 필터·KPI 결과를 저장(저장일시, 필터조건, 총 발주금액/건수, 수의계약 금액, 나라장터 금액, 예산 집행률). 최대 20개까지 유지, 개별/전체 삭제 가능. 엑셀 저장 시 <em>KPI 스냅샷 목록</em>, <em>월별 추이</em> 시트가 생성되며 월별 추이 시트에서 저장 시점별 총 발주금액과 전회 대비 증감액을 확인할 수 있습니다.</p>
+
+      <h3 class="sub" id="sec3-14">3-14. 필터 결과 엑셀 저장</h3>
+      <p>현재 필터 결과만 엑셀로 저장. 구매현황 데이터(발주일·요청부서·품목명·품목코드·분류·계약구분·발주수량·발주금액)와 필터·KPI 요약(출력일시·적용 필터·총 발주건수/수량/금액·수의계약 금액·나라장터 금액·예산 집행률·전체/필터 결과 건수)이 포함됩니다.</p>
+
+      <h3 class="sub" id="sec3-15">3-15. 화면 편의 기능</h3>
+      <p>섹션 개별/전체 접기·펼치기, 맨 위/아래 이동, 보드 모드(상단 메뉴·필터 숨기고 통계 화면 확대), 인쇄, PDF 저장, 모바일 대응.</p>
+
+      <h3 class="sub" id="sec3-16">3-16. 데이터 저장 방식</h3>
+      <div class="callout danger"><span class="lbl">서버 저장 없음</span>이 대시보드는 데이터를 서버에 저장하지 않습니다. 업로드 데이터, 전사/부서별 예산, KPI 스냅샷, 업로드 파일 정보는 모두 <strong>현재 PC · 현재 브라우저의 localStorage</strong>에 저장됩니다.</div>
+      <ul class="checklist">
+        <li>같은 PC와 같은 브라우저에서만 저장 데이터가 유지된다</li>
+        <li>다른 PC 또는 다른 브라우저와 데이터가 공유되지 않는다</li>
+        <li>브라우저 사이트 데이터를 삭제하면 저장 데이터가 사라질 수 있다</li>
+        <li>시크릿 모드에서는 데이터가 유지되지 않을 수 있다</li>
+        <li>데이터가 지나치게 많으면 저장 용량을 초과할 수 있다</li>
+        <li>저장 실패 경고 시 원본 파일을 다시 업로드해야 할 수 있다</li>
+        <li>중요 자료는 반드시 원본 엑셀로 별도 보관한다</li>
+      </ul>
+      <p>저장된 구매 데이터가 없으면 코드에 포함된 샘플 데이터가 표시될 수 있으므로 실제 구매실적으로 오인하지 않도록 주의합니다.</p>
+
+      <h3 class="sub" id="sec3-17">3-17. 삭제 버튼</h3>
+      <p>상단 삭제 버튼은 <code>dashboard_db</code>(구매 데이터)만 삭제합니다. 전사 예산·부서별 예산·KPI 스냅샷·업로드 정보는 각 기능의 초기화/삭제 버튼으로 별도 삭제해야 합니다.</p>
+
+      <h3 class="sub" id="sec3-18">3-18. 운영 순서</h3>
+      <ol class="stepnum">
+        <li>최신 구매실적 엑셀 파일을 준비한다</li>
+        <li>원본 파일을 별도 폴더에 백업한다</li>
+        <li>대시보드에서 업로드 버튼을 누른다</li>
+        <li>기존 데이터에 추가할지 전체 교체할지 선택한다</li>
+        <li>업로드 완료 후 전체/신규 처리 건수를 확인한다</li>
+        <li>날짜 오류·금액 0원·품목코드 없음 등 품질 검사 결과를 확인한다</li>
+        <li>연도·부서·분류·계약구분 필터가 정상 생성되었는지 확인한다</li>
+        <li>대시보드 총 발주금액과 원본 엑셀 합계를 비교한다</li>
+        <li>자동 분류된 계약구분·품목 분류를 표본 확인한다</li>
+        <li>필요 시 전사/부서별 예산을 입력한다</li>
+        <li>분석 결과 확인 후 필요한 필터 결과를 엑셀로 저장한다</li>
+        <li>중요한 시점에는 KPI 스냅샷을 저장한다</li>
+      </ol>
+    </section>
+
+    <!-- ============ 4. 사택 임차계약 관리 대시보드 ============ -->
+    <section class="doc-section" id="sec4">
+      <h2><span class="tag">04</span> 사택 임차계약 관리 대시보드</h2>
+
+      <h3 class="sub" id="sec4-1">4-1. 사용 목적</h3>
+      <p>회사에서 운영하는 사택의 임차계약 정보를 관리하고 계약 종료 예정 사택을 미리 확인하기 위한 대시보드입니다. 지역별 사택 현황과 계약 기간, 보증금, 월세, 임차인, 담당자 등을 관리합니다.</p>
+
+      <h3 class="sub" id="sec4-2">4-2. 주요 기능</h3>
+      <ul>
+        <li>사택 임차계약 엑셀 업로드, 전체 목록 조회</li>
+        <li>신규 등록 / 수정 / 삭제</li>
+        <li>지역별 필터, 임차인·주소·담당자 검색</li>
+        <li>지역별 사택 수 통계</li>
+        <li>최초계약일 기준 정렬</li>
+        <li>계약 종료 3개월 이내 항목 표시</li>
+        <li>엑셀 다운로드, 서버 현황 저장, 변경 이력 기록</li>
+        <li>필터 영역 접기·펼치기, 저장 버전 확인</li>
+      </ul>
+
+      <h3 class="sub" id="sec4-3">4-3. 주요 관리 항목</h3>
+      <table>
+        <tr><th>항목</th><th>의미</th></tr>
+        <tr><td>계약 시작일</td><td>현재 계약이 시작된 날짜</td></tr>
+        <tr><td>계약 종료일</td><td>현재 계약서상의 종료 날짜</td></tr>
+        <tr><td>최초계약일</td><td>해당 사택의 최초 계약이 시작된 날짜</td></tr>
+      </table>
+      <p>지역, 주소, 임차인, 보증금, 월세, 담당자, 비고 항목도 함께 관리합니다.</p>
+      <div class="callout warn"><span class="lbl">주의</span>계약 시작일 · 계약 종료일 · 최초계약일은 서로 의미가 다르므로 혼동하지 않아야 합니다.</div>
+
+      <h3 class="sub" id="sec4-4">4-4. 정렬 및 검색</h3>
+      <p>기본 정렬은 최신 등록순이며, 최초계약일 기준 정렬도 가능합니다. 지역·주소·임차인·담당자 조건으로 검색·필터링할 수 있고, 필터 영역은 접기·펼치기가 가능합니다(초기 화면은 닫힌 상태일 수 있음).</p>
+
+      <h3 class="sub" id="sec4-5">4-5. 계약 만료 3개월 표시</h3>
+      <p>오늘 날짜를 기준으로 앞으로 3개월 이내 계약이 종료되는 사택을 만료 예정으로 표시합니다. 판정 기준: 다음 계약 종료 예정일이 오늘과 같거나 이후이고, 오늘부터 3개월 이내일 것.</p>
+      <p>계약 종료일에 저장된 연도가 현재 연도와 맞지 않으면 월/일을 기준으로 올해 또는 다음 해의 종료 예정일을 계산합니다. 예: 기준일이 7월 16일이면 10월 16일까지 종료 예정인 계약이 포함되고, 연말에는 다음 해 1~2월 종료 계약도 정상적으로 포함되어야 합니다.</p>
+      <div class="callout warn"><span class="lbl">만료 예정이 이상하게 표시될 때 확인할 것</span>계약 종료일의 실제 연도 · 월과 일 · 현재 날짜 · 날짜 형식 · 엑셀에서 날짜가 문자열로 저장되어 있는지</div>
+
+      <h3 class="sub" id="sec4-6">4-6. 지역별 통계</h3>
+      <p>지역별 사택 수를 통계로 확인할 수 있으며, 통계에서는 <code>기타</code> 지역을 제외하도록 설정되어 있습니다. 따라서 전체 목록 건수와 지역 통계 합계가 다를 수 있으나, <code>기타</code> 데이터가 삭제된 것이 아니라 통계 계산에서만 제외된 것입니다.</p>
+
+      <h3 class="sub" id="sec4-7">4-7. 서버 저장 구조</h3>
+      <p>Vercel 서버 + Private Vercel Blob Storage 사용.</p>
+      <div class="codebox">Blob 경로: cphg-dashboard/data.json
+
+저장 데이터:
+- 사택 계약 데이터
+- 변경 이력
+- 업로드 원본 파일명 / 소스 파일 정보
+- 서버 마지막 저장 시각 / 마지막 저장 사용자
+- 저장 버전</div>
+      <p>서버 API에서는 데이터 배열이 정상적으로 전달되지 않으면 저장하지 않고 오류를 반환하도록 방어 처리가 되어 있습니다.</p>
+
+      <h3 class="sub" id="sec4-8">4-8. 저장 방식</h3>
+      <p>현황 저장 버튼 → 서버에 현재 데이터 저장 → 엑셀 파일 저장 여부 선택. 엑셀 다운로드를 취소해도 서버 저장이 먼저 정상 완료되었다면 서버 데이터는 유지됩니다. 저장 후 확인할 것: 저장 완료 메시지, 마지막 저장 시각/사용자/버전, 새로고침 후 데이터 유지 여부.</p>
+
+      <h3 class="sub" id="sec4-9">4-9. 운영 순서</h3>
+      <ol class="stepnum">
+        <li>대시보드에 접속한다</li>
+        <li>서버의 최신 데이터를 불러온다</li>
+        <li>기존 사택 목록과 마지막 저장 시각을 확인한다</li>
+        <li>신규 등록 또는 기존 계약 정보를 수정한다</li>
+        <li>계약 종료일과 최초계약일을 다시 확인한다</li>
+        <li>만료 예정 3개월 목록에 정상 반영되는지 확인한다</li>
+        <li>현황 저장을 눌러 서버에 저장한다</li>
+        <li>필요한 경우 엑셀 파일을 다운로드한다</li>
+        <li>새로고침 후 데이터가 유지되는지 확인한다</li>
+        <li>변경 이력과 저장 시각을 확인한다</li>
+      </ol>
+
+      <h3 class="sub" id="sec4-10">4-10. 주의사항</h3>
+      <ul class="checklist">
+        <li>엑셀 업로드 전 기존 서버 데이터를 백업한다</li>
+        <li>빈 엑셀 파일이나 잘못 읽힌 파일을 서버에 저장하지 않는다</li>
+        <li>계약 종료일과 최초계약일을 구분한다</li>
+        <li>만료 예정 계산은 단순히 원본 연도만 비교하지 않는다</li>
+        <li><code>기타</code> 지역은 목록에는 있지만 통계에서 제외된다</li>
+        <li>저장 후 반드시 새로고침하여 유지 여부를 확인한다</li>
+        <li>현재 운영은 기본적으로 단일 사용자 사용을 전제로 한다</li>
+        <li>Blob Storage는 Private 설정을 유지한다</li>
+        <li>서버 코드에서 캐시를 사용하면 새 데이터가 바로 표시되지 않을 수 있으므로 <code>no-store</code> 설정을 유지한다</li>
+      </ul>
+    </section>
+
+    <!-- ============ 5. ERP 소모품·시약 품목명 정의 업무 ============ -->
+    <section class="doc-section" id="sec5">
+      <h2><span class="tag">05</span> ERP 소모품·시약 품목명 정의 업무</h2>
+
+      <h3 class="sub" id="sec5-1">5-1. 사용 목적</h3>
+      <p>기존 ERP에 등록된 불규칙한 품목명을 동일한 기준으로 정리하고, 신규 품목을 등록할 때 제조사와 제품 정보를 정확하게 식별할 수 있도록 표준 명칭을 작성하는 업무입니다. 품목명은 제조사 카탈로그, 제품 라벨, 성적서, 제품 페이지 등을 확인한 후 작성합니다.</p>
+      <div class="callout danger"><span class="lbl">원칙</span>확인되지 않은 정보를 임의로 추정해서 입력하지 않습니다.</div>
+
+      <h3 class="sub" id="sec5-2">5-2. 공통 작성 원칙</h3>
+      <ul class="checklist">
+        <li>항목 구분자는 <code>/</code> 사용, 슬래시 앞뒤 공백 없음</li>
+        <li>제조사명은 가능한 한 공식 영문 풀네임 사용</li>
+        <li>제조사 품번은 원문 그대로 입력 (점·하이픈·영문자·숫자 임의 변경 금지)</li>
+        <li>용매 표기는 제조사 표현 유지</li>
+        <li>농도·순도·등급은 확인된 경우만 입력</li>
+        <li>용량과 포장수량 구분</li>
+        <li>CAS 번호는 <code>CAS# 번호</code> 형식</li>
+        <li>혼합 표준물질·Custom 제품은 일반적으로 CAS 번호 생략</li>
+        <li>기존 등록된 동일 제품군과 순서·표현 통일</li>
+        <li>제조사 공식 제품명을 불필요하게 번역·재구성하지 않음</li>
+      </ul>
+
+      <h3 class="sub" id="sec5-3">5-3. 일반 시약</h3>
+      <div class="codebox">형식: 제품명/농도 또는 순도/등급/용량/제조사/제조사품번/CAS# 번호</div>
+      <div class="example">Acetone/99.8%/GR/18L/DAEJUNG/1009-4110/CAS# 67-64-1</div>
+      <div class="example">Hydrochloric acid/35~37%/GR/4L/DAEJUNG/4090-4104/CAS# 7647-01-0</div>
+      <div class="example">Potassium Dichromate/≥99.98%/STD/50g/KANTO/D-32334-96-50G/CAS# 7778-50-9</div>
+      <div class="example">Dichloromethane/99.9%/HPLC/4L/DUKSAN/577/CAS# 75-09-2</div>
+      <p><strong>주의사항</strong></p>
+      <ul class="checklist">
+        <li>농도와 순도를 혼동하지 않는다</li>
+        <li>GR, EP, HPLC, STD 등 등급은 확인된 경우에만 작성</li>
+        <li>hydrate, anhydrous, bead 등 제품 형태를 생략하지 않는다</li>
+        <li>수화물 여부에 따라 CAS 번호가 달라질 수 있다</li>
+        <li>제조사 품번과 용량이 정확히 대응하는지 확인</li>
+      </ul>
+
+      <h3 class="sub" id="sec5-4">5-4. AccuStandard 단일성분 표준물질</h3>
+      <div class="codebox">형식: 제품명/농도 in 용매/용량/AccuStandard/품번/CAS# 번호</div>
+      <div class="example">Cypermethrin/1000µg/mL in MeOH/1mL/AccuStandard/P-225S-10X/CAS# 52315-07-8</div>
+      <div class="example">Acetophenone/5.0mg/mL in Methanol/1mL/AccuStandard/AS-E0411/CAS# 98-86-2</div>
+      <div class="example">Benomyl/100µg/mL in Acetonitrile/1mL/AccuStandard/P-104S-CN/CAS# 17804-35-2</div>
+      <div class="example">PCB-52/35µg/mL in Isooctane/1mL/AccuStandard/C-052S/CAS# 35693-99-3</div>
+      <ul class="checklist">
+        <li>제조사 표기는 "(ACCU)"가 아니라 <strong>AccuStandard</strong>로 작성</li>
+        <li>MeOH, CH2Cl2, Isooctane 등 제조사 용매 표기 유지</li>
+        <li>단일성분 제품은 확인 가능한 경우 CAS 번호 작성</li>
+        <li>IS, ISTD, Surrogate 등 구분은 제품명에 유지</li>
+        <li>농도 단위와 용량 혼동 주의</li>
+      </ul>
+
+      <h3 class="sub" id="sec5-5">5-5. AccuStandard ICP 표준물질</h3>
+      <p>제조사의 제품명을 가능한 한 유지합니다.</p>
+      <div class="example">Selenium ICP-MS Standard/1000µg/mL in 2-5% HNO3/100mL/AccuStandard/ICP-MS-51N-0.1X-1/CAS# 7782-49-2</div>
+      <ul class="checklist">
+        <li>ICP, ICP-MS, AA 등 분석 용도 확인</li>
+        <li>산 농도 범위를 제조사 표기 그대로 유지</li>
+        <li>원소 단일 표준물질이면 CAS 번호 확인</li>
+      </ul>
+
+      <h3 class="sub" id="sec5-6">5-6. AccuStandard 혼합 표준물질</h3>
+      <div class="codebox">형식: 제품명/성분수/농도 in 용매/용량/AccuStandard/품번</div>
+      <div class="example">Carcinogenic Aryl Amine Mix/성분수/100µg/mL in Ethyl acetate/1mL/AccuStandard/AE-00049-R1-10X</div>
+      <div class="example">VOC Mix/12comps/1000ppm in PT MeOH/5×1mL/AccuStandard/S-102546-02</div>
+      <ul class="checklist">
+        <li>개별 CAS 번호를 품목명 뒤에 붙이지 않는다</li>
+        <li><code>6comps</code>, <code>12comps</code>, <code>19comps</code>처럼 성분 수 표시</li>
+        <li>각 성분 농도가 다르면 하나의 농도로 임의 통일하지 않는다</li>
+        <li>성분표와 제품 품번을 함께 확인</li>
+        <li>Mix, Standard, Solution 등 공식 표현 유지</li>
+      </ul>
+
+      <h3 class="sub" id="sec5-7">5-7. AccuStandard Custom 제품</h3>
+      <p>제조사에서 특정 고객 또는 시험법에 맞게 제작한 표준물질일 수 있습니다.</p>
+      <div class="codebox">형식: 제품명 또는 용도/성분수/농도 in 용매/용량/AccuStandard/품번</div>
+      <div class="example">VOC Custom Mix/19comps/100µg/mL in MeOH/2×1mL/AccuStandard/S-7686-R24-0.1X-2</div>
+      <div class="example">Aniline Custom Standard/5000ppm in MeOH/5×1mL/AccuStandard/APP-9-012-50X</div>
+      <ul class="checklist">
+        <li>Custom 제품은 일반 카탈로그 검색으로 정보가 나오지 않을 수 있다</li>
+        <li>라벨, 견적서, 성분표, 과거 구매기록을 함께 확인한다</li>
+        <li>Custom 또는 Mix 제품은 CAS 번호를 생략한다</li>
+        <li>제품명·성분 수가 불명확하면 임의로 확정하지 않는다</li>
+        <li>같은 품번이라도 Revision에 따라 성분·농도가 달라질 수 있다</li>
+      </ul>
+
+      <h3 class="sub" id="sec5-8">5-8. 일반 소모품</h3>
+      <div class="codebox">형식: 제조사 공식 제품명/규격/포장수량/제조사/제조사품번</div>
+      <p>제품 특성에 따라 용량·크기·재질·수량 순서는 조정할 수 있지만, 같은 제품군에서는 동일한 순서를 유지합니다.</p>
+
+      <h3 class="sub" id="sec5-9">5-9. Eppendorf 피펫팁</h3>
+      <div class="example">epTIPS Standard/0.5-10mL,165mm/200tips(2×100tips)/Eppendorf/0030000765</div>
+      <div class="example">epTIPS Box/100-5000µL,120mm(Long)/24tips/Eppendorf/0030076214</div>
+      <ul class="checklist">
+        <li>적용 용량 범위, 팁 길이 확인</li>
+        <li>Box, Reload, Bulk 포장 여부 구분</li>
+        <li>총 수량과 내부 포장 구성 함께 확인</li>
+        <li>제조사 품번의 앞자리 0을 생략하지 않는다</li>
+      </ul>
+
+      <h3 class="sub" id="sec5-10">5-10. PerkinElmer 바이알 및 소모품</h3>
+      <div class="example">Clear Glass Crimp Top Vial, Write-On Patch/20mL/PerkinElmer/N9303348</div>
+      <ul class="checklist">
+        <li>바이알 용량, 유리 색상, Crimp/Screw 방식, Write-On Patch 여부</li>
+        <li>바이알과 캡의 호환 여부, 포장수량, 제조사 품번</li>
+        <li>비슷한 제품을 임의로 같은 품목으로 처리하지 않는다</li>
+      </ul>
+
+      <h3 class="sub" id="sec5-11">5-11. ANSELL 니트릴 장갑</h3>
+      <div class="example">Ansell MICROFLEX® Supreno® 93-743 Nitrile glove/사이즈/100/PK/ANSELL/제조사품번</div>
+      <div class="example">Ansell 마이크로플렉스 니트릴 글러브(사이즈)/100매/pk/제조사품번</div>
+      <ul class="checklist">
+        <li>장갑 사이즈별 제조사 품번 확인</li>
+        <li>제품 시리즈와 모델 번호 함께 확인</li>
+        <li>100매가 한 쌍 기준인지 낱장 기준인지 제조사 포장 확인</li>
+      </ul>
+
+      <h3 class="sub" id="sec5-12">5-12. GASTEC 검지관</h3>
+      <div class="example">CO Detector Tube/2.5-2000ppm/10Tubes/GASTEC/No.1L</div>
+      <ul class="checklist">
+        <li>측정 대상 물질, 측정 범위, 검지관 번호</li>
+        <li>포장수량, 호환 펌프</li>
+        <li>L, LL 등 품번 뒤 문자를 정확히 확인</li>
+      </ul>
+
+      <h3 class="sub" id="sec5-13">5-13. 기타 비시약 소모품</h3>
+      <div class="codebox">형식: 제품명/규격 또는 크기/포장수량/제조사/제조사품번</div>
+      <p>필터, 컬럼, 바이알, 캡, 튜브, 플라스크, 실린더 등은 제품군별로 중요한 규격이 다르므로 재질·용량·직경·길이·공극 크기·연결 규격·제품 등급·포장수량·제조사 품번을 확인합니다.</p>
+
+      <h3 class="sub" id="sec5-14">5-14. 품목명 정의 작업 절차</h3>
+      <ol class="stepnum">
+        <li>기존 ERP 품목코드를 확인한다</li>
+        <li>현재 등록된 품목명을 확인한다</li>
+        <li>제품 라벨이나 사진에서 제조사와 품번을 찾는다</li>
+        <li>제조사 공식 카탈로그 또는 제품 페이지에서 품번을 검색한다</li>
+        <li>제품명, 농도, 순도, 등급, 용량, 포장수량을 확인한다</li>
+        <li>시약 / 표준물질 / 혼합물 / Custom / 소모품 중 유형을 구분한다</li>
+        <li>해당 유형의 명명 규칙에 맞게 품목명을 작성한다</li>
+        <li>CAS 번호가 필요한 제품인지 확인한다</li>
+        <li>동일하거나 유사한 기존 ERP 품목을 검색한다</li>
+        <li>기존 제품군의 표현과 순서를 맞춘다</li>
+        <li>제조사 품번과 최종 품목명을 다시 대조한다</li>
+        <li>확인되지 않은 정보는 임의로 넣지 않고 별도 확인 대상으로 남긴다</li>
+      </ol>
+
+      <h3 class="sub" id="sec5-15">5-15. 최종 검토 체크리스트</h3>
+      <ul class="checklist">
+        <li><code>/</code> 앞뒤에 공백이 없는가</li>
+        <li>제조사명이 공식 명칭으로 작성되었는가</li>
+        <li>제조사 품번이 원문과 정확히 일치하는가</li>
+        <li>품번의 점과 하이픈이 정확한가</li>
+        <li>용량과 포장수량을 혼동하지 않았는가</li>
+        <li>농도와 순도가 정확한가</li>
+        <li>제품 등급이 실제로 확인되었는가</li>
+        <li>용매 표기가 제조사 자료와 일치하는가</li>
+        <li>단일 표준물질에 CAS 번호가 포함되었는가</li>
+        <li>Mix 또는 Custom 제품에 불필요한 CAS 번호가 들어가지 않았는가</li>
+        <li>성분 수가 정확한가</li>
+        <li>hydrate, anhydrous, IS, Surrogate 등의 구분이 유지되었는가</li>
+        <li>기존 ERP의 동일 제품군 형식과 일치하는가</li>
+        <li>확인되지 않은 정보를 추정하여 추가하지 않았는가</li>
+      </ul>
+    </section>
+
+    <!-- ============ 6. 공통 운영 및 인수인계 주의사항 ============ -->
+    <section class="doc-section" id="sec6">
+      <h2><span class="tag">06</span> 공통 운영 및 인수인계 주의사항</h2>
+
+      <h3 class="sub" id="sec6-1">6-1. 세 대시보드의 저장 방식 차이</h3>
+      <table>
+        <tr><th>대시보드</th><th>저장 방식</th><th>특이사항</th></tr>
+        <tr>
+          <td>화환 배송</td>
+          <td>Vercel 서버 + Vercel Blob Storage</td>
+          <td>다른 기기에서도 같은 서버 데이터 조회 가능, 저장 버전·충돌 감지 사용</td>
+        </tr>
+        <tr>
+          <td>구매현황 분석</td>
+          <td>브라우저 localStorage (서버 저장 없음)</td>
+          <td>다른 PC/브라우저와 자동 공유 안 됨, 원본 엑셀이 가장 중요한 백업</td>
+        </tr>
+        <tr>
+          <td>사택 임차계약</td>
+          <td>Vercel 서버 + Private Vercel Blob Storage</td>
+          <td>저장 후 새로고침으로 유지 확인, 현재는 단일 사용자 중심 운영</td>
+        </tr>
+      </table>
+
+      <h3 class="sub" id="sec6-2">6-2. 코드 수정 후 공통 테스트</h3>
+      <ol class="stepnum">
+        <li>테스트용 데이터를 준비한다</li>
+        <li>파일 업로드를 확인한다</li>
+        <li>신규 등록 또는 데이터 조회를 확인한다</li>
+        <li>수정 및 삭제 기능을 확인한다</li>
+        <li>필터와 정렬을 확인한다</li>
+        <li>통계 숫자와 원본 데이터를 비교한다</li>
+        <li>저장 기능을 확인한다</li>
+        <li>새로고침 후 데이터 유지 여부를 확인한다</li>
+        <li>엑셀 다운로드를 확인한다</li>
+        <li>다운로드 파일을 다시 열어 한글, 날짜, 금액을 확인한다</li>
+        <li>PC 화면을 확인한다</li>
+        <li>모바일 화면을 확인한다</li>
+        <li>테스트 데이터와 테스트 이력을 삭제한다</li>
+      </ol>
+
+      <h3 class="sub" id="sec6-3">6-3. 오류 발생 시 기록할 내용</h3>
+      <ul class="checklist">
+        <li>오류 발생 날짜와 시간, 사용한 대시보드, PC와 브라우저</li>
+        <li>실행한 작업 순서, 업로드한 파일명</li>
+        <li>화면에 표시된 오류 문구, 개발자도구 콘솔 오류</li>
+        <li>오류 발생 전 마지막 정상 작업</li>
+        <li>서버 저장 여부, 새로고침 여부</li>
+        <li>다른 브라우저에서도 동일하게 발생하는지</li>
+      </ul>
+      <div class="callout info"><span class="lbl">팁</span>오류 화면만 캡처하는 것보다, 오류가 발생한 순서를 함께 남기는 것이 훨씬 중요합니다.</div>
+    </section>
+
+    <!-- ============ 7. 다음 인턴이 먼저 확인할 사항 ============ -->
+    <section class="doc-section" id="sec7">
+      <h2><span class="tag">07</span> 다음 인턴이 먼저 확인할 사항</h2>
+      <ol class="stepnum">
+        <li>각 대시보드의 실제 배포 주소</li>
+        <li>GitHub 저장소 위치</li>
+        <li>Vercel 프로젝트 소유 계정</li>
+        <li>Vercel Blob Storage 연결 상태</li>
+        <li>최신 운영용 HTML 및 API 코드</li>
+        <li>최신 원본 엑셀 파일 위치</li>
+        <li>실제 운영 담당자</li>
+        <li>테스트 데이터가 남아 있는지</li>
+        <li>마지막 서버 저장 날짜</li>
+        <li>소모품 품목명 정의 진행 현황</li>
+        <li>아직 확인되지 않은 제조사 또는 품번 목록</li>
+        <li>ERP 및 박스히어로 업로드 절차</li>
+      </ol>
+    </section>
+
+    <!-- ============ 8. 핵심 요약 ============ -->
+    <section class="doc-section" id="sec8">
+      <h2><span class="tag">08</span> 핵심 요약</h2>
+      <div class="card">
+        <p><strong>화환 배송 대시보드</strong>는 화환 배송 요청을 등록하고 서버에 저장하는 운영용 시스템입니다.</p>
+        <p><strong>구매현황 분석 대시보드</strong>는 구매실적 엑셀을 브라우저에 불러와 KPI, 예산, 품목, 부서, 계약구분별 통계를 확인하는 분석용 시스템이며 품목을 직접 수정하는 프로그램은 아닙니다.</p>
+        <p><strong>사택 임차계약 대시보드</strong>는 사택 계약정보를 서버에 저장하고 계약 종료 3개월 이내 항목을 관리하는 시스템입니다.</p>
+        <p><strong>소모품 품목명 정의 업무</strong>는 제조사 공식 자료를 확인하여 ERP 품목명을 동일한 형식으로 표준화하는 별도의 데이터 정비 업무입니다.</p>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<button class="back-top" id="backTop" title="맨 위로">↑</button>
+
+<script>
+  const navData = [
+    {id:'sec1', num:'01', title:'업무 구성', children:[]},
+    {id:'sec2', num:'02', title:'화환 배송 관리 대시보드', children:[
+      ['sec2-1','2-1 사용 목적'],['sec2-2','2-2 주요 기능'],['sec2-3','2-3 주요 등록 항목'],
+      ['sec2-4','2-4 BS 양식'],['sec2-5','2-5 배송 상태'],['sec2-6','2-6 카카오톡 공유'],
+      ['sec2-7','2-7 서버 저장 구조'],['sec2-8','2-8 저장 버전과 충돌 감지'],['sec2-9','2-9 변경 이력'],
+      ['sec2-10','2-10 운영 순서'],['sec2-11','2-11 주의사항'],
+    ]},
+    {id:'sec3', num:'03', title:'구매현황 분석 대시보드', children:[
+      ['sec3-1','3-1 정확한 사용 목적'],['sec3-2','3-2 업로드 가능한 파일'],['sec3-3','3-3 필요한 엑셀 컬럼'],
+      ['sec3-4','3-4 파일 추가와 교체'],['sec3-5','3-5 품목 자동 분류'],['sec3-6','3-6 계약구분 자동 판정'],
+      ['sec3-7','3-7 데이터 품질 검사'],['sec3-8','3-8 검색 및 필터'],['sec3-9','3-9 주요 KPI'],
+      ['sec3-10','3-10 전사/부서별 예산'],['sec3-11','3-11 통계 및 분석 기능'],['sec3-12','3-12 상세 데이터 조회'],
+      ['sec3-13','3-13 KPI 스냅샷'],['sec3-14','3-14 필터 결과 엑셀 저장'],['sec3-15','3-15 화면 편의 기능'],
+      ['sec3-16','3-16 데이터 저장 방식'],['sec3-17','3-17 삭제 버튼'],['sec3-18','3-18 운영 순서'],
+    ]},
+    {id:'sec4', num:'04', title:'사택 임차계약 관리 대시보드', children:[
+      ['sec4-1','4-1 사용 목적'],['sec4-2','4-2 주요 기능'],['sec4-3','4-3 주요 관리 항목'],
+      ['sec4-4','4-4 정렬 및 검색'],['sec4-5','4-5 계약 만료 3개월 표시'],['sec4-6','4-6 지역별 통계'],
+      ['sec4-7','4-7 서버 저장 구조'],['sec4-8','4-8 저장 방식'],['sec4-9','4-9 운영 순서'],['sec4-10','4-10 주의사항'],
+    ]},
+    {id:'sec5', num:'05', title:'ERP 소모품·시약 품목명 정의', children:[
+      ['sec5-1','5-1 사용 목적'],['sec5-2','5-2 공통 작성 원칙'],['sec5-3','5-3 일반 시약'],
+      ['sec5-4','5-4 AccuStandard 단일성분'],['sec5-5','5-5 AccuStandard ICP'],['sec5-6','5-6 AccuStandard 혼합'],
+      ['sec5-7','5-7 AccuStandard Custom'],['sec5-8','5-8 일반 소모품'],['sec5-9','5-9 Eppendorf 피펫팁'],
+      ['sec5-10','5-10 PerkinElmer 바이알'],['sec5-11','5-11 ANSELL 니트릴 장갑'],['sec5-12','5-12 GASTEC 검지관'],
+      ['sec5-13','5-13 기타 비시약 소모품'],['sec5-14','5-14 작업 절차'],['sec5-15','5-15 최종 검토 체크리스트'],
+    ]},
+    {id:'sec6', num:'06', title:'공통 운영 및 인수인계 주의사항', children:[
+      ['sec6-1','6-1 저장 방식 차이'],['sec6-2','6-2 코드 수정 후 테스트'],['sec6-3','6-3 오류 발생 시 기록'],
+    ]},
+    {id:'sec7', num:'07', title:'다음 인턴 확인 사항', children:[]},
+    {id:'sec8', num:'08', title:'핵심 요약', children:[]},
+  ];
+
+  const STORAGE_FAVORITES = 'fiti_manual_favorites_v1';
+  const navRoot = document.getElementById('navRoot');
+  const sidebar = document.getElementById('sidebar');
+  const mobileBackdrop = document.getElementById('mobileBackdrop');
+  const favoritesPanel = document.getElementById('favoritesPanel');
+  const favoritesList = document.getElementById('favoritesList');
+  const contentSearch = document.getElementById('contentSearch');
+  const contentSearchStatus = document.getElementById('contentSearchStatus');
+  let favorites = new Set();
+  try { favorites = new Set(JSON.parse(localStorage.getItem(STORAGE_FAVORITES) || '[]')); } catch (error) { favorites = new Set(); }
+  let searchCards = [];
+  let matchedCards = [];
+  let currentMatchIndex = -1;
+
+  // 사이드바 이동 및 현재 위치 표시 제어
+  let manualNavId = null;
+  let manualNavForceOpen = false;
+  let manualNavReleaseTimer = null;
+  let navScrollFrame = null;
+  let navScrollIdleTimer = null;
+
+  // 사용자가 직접 선택한 상위 메뉴의 펼침/접힘 상태를 기억
+  // 값: 'open' 또는 'closed'
+  const navGroupPreferences = new Map();
+  const NAV_ACTIVE_Y = 118;
+
+  function escapeHtml(value) {
+    return String(value).replace(/[&<>'"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#039;','"':'&quot;'}[ch]));
+  }
+
+  function closeMobileMenu() {
+    sidebar.classList.remove('open');
+    mobileBackdrop.classList.remove('show');
+  }
+
+  function keepSidebarItemVisible(element) {
+    if (!element || !sidebar) return;
+
+    const sidebarRect = sidebar.getBoundingClientRect();
+    const itemRect = element.getBoundingClientRect();
+    const topLimit = sidebarRect.top + 82;
+    const bottomLimit = sidebarRect.bottom - 28;
+
+    if (itemRect.top < topLimit) {
+      sidebar.scrollTop -= (topLimit - itemRect.top);
+    } else if (itemRect.bottom > bottomLimit) {
+      sidebar.scrollTop += (itemRect.bottom - bottomLimit);
+    }
+  }
+
+  function setGroupExpanded(group, expanded) {
+    if (!group) return;
+
+    group.classList.toggle('open', expanded);
+
+    const head = group.querySelector(':scope > .nav-head');
+    if (head) {
+      head.setAttribute('aria-expanded', String(expanded));
+    }
+  }
+
+  function setNavigationState(
+    sectionId,
+    topicId = null,
+    { forceOpen = false, autoOpen = true } = {}
+  ) {
+    document.querySelectorAll('.nav-children a.active')
+      .forEach(link => link.classList.remove('active'));
+
+    document.querySelectorAll('.nav-head.current')
+      .forEach(head => head.classList.remove('current'));
+
+    const group = [...document.querySelectorAll('.nav-group')]
+      .find(item => item.dataset.sectionId === sectionId);
+
+    if (!group) return;
+
+    const head = group.querySelector(':scope > .nav-head');
+    head?.classList.add('current');
+
+    const preference = navGroupPreferences.get(sectionId);
+
+    if (forceOpen) {
+      // 세부 항목, 즐겨찾기, 검색 결과 등을 직접 선택한 경우에는
+      // 해당 상위 메뉴를 명시적으로 다시 연다.
+      navGroupPreferences.set(sectionId, 'open');
+      setGroupExpanded(group, true);
+    } else if (preference === 'closed') {
+      // 사용자가 직접 닫은 메뉴는 스크롤 위치 계산으로 다시 열지 않는다.
+      setGroupExpanded(group, false);
+    } else if (preference === 'open') {
+      setGroupExpanded(group, true);
+    } else if (autoOpen) {
+      // 사용자가 아직 조작하지 않은 그룹만 현재 위치에 맞춰 자동으로 연다.
+      setGroupExpanded(group, true);
+    }
+
+    if (topicId) {
+      const link = document.querySelector(`.nav-children a[href="#${topicId}"]`);
+      if (link) {
+        link.classList.add('active');
+
+        // 닫힌 그룹은 그대로 유지하고, 열린 경우에만 세부 항목이 보이도록 한다.
+        if (group.classList.contains('open')) {
+          keepSidebarItemVisible(link);
+        } else {
+          keepSidebarItemVisible(head);
+        }
+      }
+    } else {
+      keepSidebarItemVisible(head);
+    }
+  }
+
+  function beginManualNavigation(id, forceOpen = false) {
+    manualNavId = id;
+    manualNavForceOpen = forceOpen;
+    clearTimeout(manualNavReleaseTimer);
+
+    // 스크롤 이벤트가 발생하지 않는 경우에도 잠금이 남지 않도록 하는 안전장치
+    manualNavReleaseTimer = setTimeout(() => {
+      manualNavId = null;
+      manualNavForceOpen = false;
+      updateNavigationFromScroll();
+    }, 1400);
+  }
+
+  function openTarget(id, smooth = true, options = {}) {
+    const target = document.getElementById(id);
+    if (!target) return;
+
+    const card = target.closest('details.topic-card');
+    if (card) card.open = true;
+
+    const section = target.matches('section.doc-section')
+      ? target
+      : target.closest('section.doc-section');
+
+    // 세부 항목을 선택하면 해당 상위 메뉴를 열어야 한다.
+    // 대분류 이동은 호출한 위치에서 forceOpenNav를 선택할 수 있다.
+    const forceOpenNav = options.forceOpenNav ?? Boolean(card);
+
+    beginManualNavigation(id, forceOpenNav);
+    setNavigationState(
+      section?.id || id,
+      card ? id : null,
+      { forceOpen: forceOpenNav, autoOpen: true }
+    );
+
+    // location.hash 직접 대입으로 발생하던 1차 순간이동 방지
+    history.replaceState(null, '', `#${id}`);
+
+    // 카드가 펼쳐진 다음 계산된 위치로 한 번만 이동
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        target.scrollIntoView({
+          behavior: smooth ? 'smooth' : 'auto',
+          block: 'start'
+        });
+
+        if (!smooth) {
+          manualNavId = null;
+          manualNavForceOpen = false;
+          updateNavigationFromScroll();
+        }
+      });
+    });
+
+    closeMobileMenu();
+  }
+
+  function createNavigation() {
+    let childTotal = 0;
+    navData.forEach(group => {
+      childTotal += group.children.length;
+      const g = document.createElement('div');
+      g.className = 'nav-group';
+      g.dataset.searchText = `${group.num} ${group.title}`;
+      g.dataset.sectionId = group.id;
+
+      const head = document.createElement('button');
+      head.className = 'nav-head';
+      head.type = 'button';
+      head.innerHTML = `<span class="num">${group.num}</span><span>${escapeHtml(group.title)}</span>` + (group.children.length ? '<span class="chev">▶</span>' : '');
+
+      if (group.children.length) {
+        head.setAttribute('aria-expanded', 'false');
+        head.addEventListener('click', () => {
+          const willOpen = !g.classList.contains('open');
+
+          // 상위 메뉴는 본문 이동과 분리한다.
+          // 클릭할 때는 접기/펼치기만 수행한다.
+          navGroupPreferences.set(group.id, willOpen ? 'open' : 'closed');
+          setGroupExpanded(g, willOpen);
+
+          if (willOpen) {
+            keepSidebarItemVisible(head);
+          }
+        });
+      } else {
+        head.addEventListener('click', () => {
+          openTarget(group.id, true, { forceOpenNav: false });
+        });
+      }
+
+      g.appendChild(head);
+
+      if (group.children.length) {
+        const ul = document.createElement('ul');
+        ul.className = 'nav-children';
+        group.children.forEach(([cid, label]) => {
+          const li = document.createElement('li');
+          const a = document.createElement('a');
+          a.href = '#' + cid;
+          a.textContent = label;
+          a.dataset.searchText = label;
+          a.addEventListener('click', event => {
+            event.preventDefault();
+            navGroupPreferences.set(group.id, 'open');
+            setGroupExpanded(g, true);
+            openTarget(cid, true, { forceOpenNav: true });
+          });
+          li.appendChild(a);
+          ul.appendChild(li);
+        });
+        g.appendChild(ul);
+      }
+      navRoot.appendChild(g);
+    });
+    document.getElementById('navCount').textContent = `${childTotal}개 항목`;
+  }
+
+  function transformTopics() {
+    document.querySelectorAll('section.doc-section').forEach(section => {
+      const heading = section.querySelector(':scope > h2');
+      const sectionTitle = heading ? heading.textContent.trim() : '';
+      const headings = [...section.querySelectorAll(':scope > h3.sub')];
+
+      if (!headings.length) {
+        const nodes = [...section.childNodes].filter(node => node !== heading && !(node.nodeType === 3 && !node.textContent.trim()));
+        if (nodes.length) {
+          const staticCard = document.createElement('article');
+          staticCard.className = 'section-static';
+          staticCard.dataset.searchTitle = sectionTitle;
+          nodes.forEach(node => staticCard.appendChild(node));
+          section.appendChild(staticCard);
+        }
+        return;
+      }
+
+      headings.forEach((h3, index) => {
+        const nextHeading = headings[index + 1] || null;
+        const id = h3.id;
+        const fullTitle = h3.textContent.trim();
+        const match = fullTitle.match(/^(\d+-\d+)\.\s*(.*)$/);
+        const indexText = match ? match[1] : String(index + 1).padStart(2, '0');
+        const cleanTitle = match ? match[2] : fullTitle;
+        const details = document.createElement('details');
+        details.className = 'topic-card';
+        details.dataset.topicId = id;
+        details.dataset.searchTitle = `${sectionTitle} ${fullTitle}`;
+        details.open = index === 0;
+
+        const summary = document.createElement('summary');
+        summary.className = 'topic-summary';
+        summary.id = id;
+        summary.innerHTML = `
+          <span class="topic-index">${escapeHtml(indexText)}</span>
+          <span class="topic-title">${escapeHtml(cleanTitle)}</span>
+          <span class="topic-tools">
+            <button type="button" class="bookmark-btn" title="즐겨찾기" aria-label="즐겨찾기">☆</button>
+            <button type="button" class="anchor-btn" title="이 항목 링크 복사" aria-label="항목 링크 복사">#</button>
+            <span class="topic-chevron">▶</span>
+          </span>`;
+
+        const body = document.createElement('div');
+        body.className = 'topic-body';
+        let node = h3.nextSibling;
+        while (node && node !== nextHeading) {
+          const next = node.nextSibling;
+          body.appendChild(node);
+          node = next;
+        }
+        details.appendChild(summary);
+        details.appendChild(body);
+        h3.replaceWith(details);
+
+        const bookmark = summary.querySelector('.bookmark-btn');
+        const anchor = summary.querySelector('.anchor-btn');
+        bookmark.addEventListener('click', event => {
+          event.preventDefault();
+          event.stopPropagation();
+          toggleFavorite(id);
+        });
+        anchor.addEventListener('click', async event => {
+          event.preventDefault();
+          event.stopPropagation();
+          const url = location.href.split('#')[0] + '#' + id;
+          try {
+            await navigator.clipboard.writeText(url);
+            anchor.textContent = '✓';
+            setTimeout(() => anchor.textContent = '#', 900);
+          } catch {
+            openTarget(id);
+          }
+        });
+      });
+    });
+
+    searchCards = [...document.querySelectorAll('.topic-card, .section-static')];
+    updateBookmarkButtons();
+  }
+
+  function toggleFavorite(id) {
+    if (favorites.has(id)) favorites.delete(id); else favorites.add(id);
+    try { localStorage.setItem(STORAGE_FAVORITES, JSON.stringify([...favorites])); } catch (error) { /* file:// 또는 제한 환경에서는 현재 실행 중에만 유지 */ }
+    updateBookmarkButtons();
+    renderFavorites();
+  }
+
+  function getTopicLabel(id) {
+    const target = document.getElementById(id);
+    if (!target) return id;
+    const card = target.closest('.topic-card');
+    const section = target.closest('.doc-section');
+    const sectionName = section?.querySelector(':scope > h2')?.textContent.trim() || '';
+    const title = card?.querySelector('.topic-title')?.textContent.trim() || target.textContent.trim();
+    return `${sectionName} · ${title}`;
+  }
+
+  function updateBookmarkButtons() {
+    document.querySelectorAll('.topic-card').forEach(card => {
+      const id = card.dataset.topicId;
+      const button = card.querySelector('.bookmark-btn');
+      if (!button) return;
+      const saved = favorites.has(id);
+      button.classList.toggle('saved', saved);
+      button.textContent = saved ? '★' : '☆';
+      button.title = saved ? '즐겨찾기 해제' : '즐겨찾기';
+    });
+  }
+
+  function renderFavorites() {
+    const valid = [...favorites].filter(id => document.getElementById(id));
+    favoritesPanel.classList.toggle('has-items', valid.length > 0);
+    if (!valid.length) {
+      favoritesList.innerHTML = '<div class="favorite-empty">별표를 누르면 자주 보는 항목이 여기에 표시됩니다.</div>';
+      return;
+    }
+    favoritesList.innerHTML = '';
+    valid.forEach(id => {
+      const button = document.createElement('button');
+      button.className = 'favorite-link';
+      button.innerHTML = `<span class="star">★</span><span>${escapeHtml(getTopicLabel(id))}</span>`;
+      button.addEventListener('click', () => openTarget(id));
+      favoritesList.appendChild(button);
+    });
+  }
+
+  function clearSearchMarks() {
+    document.querySelectorAll('mark.search-hit').forEach(mark => {
+      const parent = mark.parentNode;
+      mark.replaceWith(document.createTextNode(mark.textContent));
+      parent.normalize();
+    });
+  }
+
+  function highlightIn(element, query) {
+    const lower = query.toLowerCase();
+    const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        const parent = node.parentElement;
+        if (!parent || ['SCRIPT','STYLE','BUTTON','MARK'].includes(parent.tagName)) return NodeFilter.FILTER_REJECT;
+        return node.nodeValue.toLowerCase().includes(lower) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+      }
+    });
+    const nodes = [];
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+    nodes.forEach(node => {
+      const text = node.nodeValue;
+      const frag = document.createDocumentFragment();
+      let cursor = 0;
+      let pos;
+      const lowerText = text.toLowerCase();
+      while ((pos = lowerText.indexOf(lower, cursor)) !== -1) {
+        frag.appendChild(document.createTextNode(text.slice(cursor, pos)));
+        const mark = document.createElement('mark');
+        mark.className = 'search-hit';
+        mark.textContent = text.slice(pos, pos + query.length);
+        frag.appendChild(mark);
+        cursor = pos + query.length;
+      }
+      frag.appendChild(document.createTextNode(text.slice(cursor)));
+      node.replaceWith(frag);
+    });
+  }
+
+  function applyContentSearch() {
+    const query = contentSearch.value.trim();
+    clearSearchMarks();
+    matchedCards = [];
+    currentMatchIndex = -1;
+
+    if (!query) {
+      searchCards.forEach(card => card.classList.remove('search-hidden'));
+      document.querySelectorAll('.doc-section').forEach(section => section.classList.remove('search-hidden'));
+      contentSearchStatus.textContent = '전체 내용을 검색할 수 있습니다.';
+      return;
+    }
+
+    const lower = query.toLowerCase();
+    searchCards.forEach(card => {
+      const sectionTitle = card.closest('.doc-section')?.querySelector(':scope > h2')?.textContent || '';
+      const haystack = `${card.dataset.searchTitle || ''} ${sectionTitle} ${card.textContent}`.toLowerCase();
+      const match = haystack.includes(lower);
+      card.classList.toggle('search-hidden', !match);
+      if (match) {
+        matchedCards.push(card);
+        if (card.matches('details')) card.open = true;
+        highlightIn(card, query);
+      }
+    });
+
+    document.querySelectorAll('.doc-section').forEach(section => {
+      const visible = section.querySelector('.topic-card:not(.search-hidden), .section-static:not(.search-hidden)');
+      section.classList.toggle('search-hidden', !visible);
+    });
+
+    const hitCount = document.querySelectorAll('mark.search-hit').length;
+    contentSearchStatus.textContent = matchedCards.length
+      ? `관련 항목 ${matchedCards.length}개 · 일치 ${hitCount}곳`
+      : `“${query}” 검색 결과 없음`;
+
+    if (matchedCards.length) goToResult(0);
+  }
+
+  function goToResult(index) {
+    if (!matchedCards.length) return;
+    currentMatchIndex = (index + matchedCards.length) % matchedCards.length;
+    document.querySelectorAll('mark.current-hit').forEach(mark => mark.classList.remove('current-hit'));
+    const card = matchedCards[currentMatchIndex];
+    if (card.matches('details')) card.open = true;
+    const firstMark = card.querySelector('mark.search-hit');
+    if (firstMark) firstMark.classList.add('current-hit');
+    card.classList.remove('result-focus');
+    void card.offsetWidth;
+    card.classList.add('result-focus');
+
+    const topicId = card.dataset.topicId;
+    const sectionId = card.closest('section.doc-section')?.id;
+    if (topicId && sectionId) {
+      beginManualNavigation(topicId, true);
+      setNavigationState(sectionId, topicId, {
+        forceOpen: true,
+        autoOpen: true
+      });
+      history.replaceState(null, '', `#${topicId}`);
+    }
+
+    card.scrollIntoView({behavior:'smooth', block:'center'});
+    contentSearchStatus.textContent = `관련 항목 ${matchedCards.length}개 · 현재 ${currentMatchIndex + 1}/${matchedCards.length}`;
+  }
+
+  function updateNavigationFromScroll() {
+    const visibleSections = [...document.querySelectorAll('section.doc-section')]
+      .filter(section => section.offsetParent !== null);
+
+    if (!visibleSections.length) return;
+
+    // 메뉴를 직접 클릭해 이동 중일 때는 클릭한 항목의 표시를 고정
+    if (manualNavId) {
+      const target = document.getElementById(manualNavId);
+      if (target) {
+        const section = target.matches('section.doc-section')
+          ? target
+          : target.closest('section.doc-section');
+
+        const topicId = target.classList.contains('topic-summary')
+          ? target.id
+          : target.closest('details.topic-card')?.dataset.topicId || null;
+
+        setNavigationState(section?.id || manualNavId, topicId, {
+          forceOpen: manualNavForceOpen,
+          autoOpen: true
+        });
+        return;
+      }
+    }
+
+    // 현재 화면 상단 기준선을 마지막으로 통과한 대분류를 선택
+    let activeSection = visibleSections[0];
+    for (const section of visibleSections) {
+      if (section.getBoundingClientRect().top <= NAV_ACTIVE_Y) {
+        activeSection = section;
+      } else {
+        break;
+      }
+    }
+
+    // 현재 대분류 안에서 기준선을 마지막으로 통과한 세부 항목을 선택
+    const visibleTopics = [...activeSection.querySelectorAll('.topic-summary[id]')]
+      .filter(topic => topic.offsetParent !== null);
+
+    let activeTopic = null;
+    for (const topic of visibleTopics) {
+      if (topic.getBoundingClientRect().top <= NAV_ACTIVE_Y + 4) {
+        activeTopic = topic;
+      } else {
+        break;
+      }
+    }
+
+    setNavigationState(activeSection.id, activeTopic?.id || null, {
+      forceOpen: false,
+      autoOpen: true
+    });
+  }
+
+  function setupObservers() {
+    const requestNavUpdate = () => {
+      if (navScrollFrame) return;
+
+      navScrollFrame = requestAnimationFrame(() => {
+        navScrollFrame = null;
+        updateNavigationFromScroll();
+      });
+    };
+
+    window.addEventListener('scroll', () => {
+      requestNavUpdate();
+
+      // 부드러운 이동이 끝난 시점에 수동 잠금을 해제하고 실제 위치를 다시 계산
+      if (manualNavId) {
+        clearTimeout(navScrollIdleTimer);
+        navScrollIdleTimer = setTimeout(() => {
+          manualNavId = null;
+          manualNavForceOpen = false;
+          clearTimeout(manualNavReleaseTimer);
+          updateNavigationFromScroll();
+        }, 180);
+      }
+    }, {passive: true});
+
+    window.addEventListener('resize', requestNavUpdate);
+    requestAnimationFrame(updateNavigationFromScroll);
+  }
+
+  createNavigation();
+  transformTopics();
+  renderFavorites();
+  setupObservers();
+  const firstNavGroup = document.querySelector('.nav-group');
+  if (firstNavGroup) {
+    setGroupExpanded(firstNavGroup, true);
+  }
+
+  document.getElementById('navSearch').addEventListener('input', event => {
+    const q = event.target.value.trim().toLowerCase();
+
+    document.querySelectorAll('.nav-group').forEach(group => {
+      const groupMatch = group.dataset.searchText.toLowerCase().includes(q);
+      let childMatch = false;
+
+      group.querySelectorAll('.nav-children a').forEach(a => {
+        const match = a.dataset.searchText.toLowerCase().includes(q);
+        a.parentElement.style.display = (!q || match) ? '' : 'none';
+        if (match) childMatch = true;
+      });
+
+      group.style.display = (!q || groupMatch || childMatch) ? '' : 'none';
+
+      if (q && childMatch) {
+        // 검색 중에는 일치하는 세부 항목을 보여주기 위해 임시로 연다.
+        setGroupExpanded(group, true);
+      }
+
+      if (!q) {
+        // 검색을 지우면 사용자가 지정한 상태로 복원한다.
+        const sectionId = group.dataset.sectionId;
+        const preference = navGroupPreferences.get(sectionId);
+
+        if (preference === 'open') {
+          setGroupExpanded(group, true);
+        } else if (preference === 'closed') {
+          setGroupExpanded(group, false);
+        } else {
+          setGroupExpanded(group, false);
+        }
+      }
+    });
+
+    if (!q) {
+      updateNavigationFromScroll();
+    }
+  });
+
+  let searchTimer;
+  contentSearch.addEventListener('input', () => {
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(applyContentSearch, 120);
+  });
+  contentSearch.addEventListener('keydown', event => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      goToResult(currentMatchIndex + (event.shiftKey ? -1 : 1));
+    } else if (event.key === 'Escape') {
+      contentSearch.value = '';
+      applyContentSearch();
+      contentSearch.blur();
+    }
+  });
+  document.getElementById('prevResult').addEventListener('click', () => goToResult(currentMatchIndex - 1));
+  document.getElementById('nextResult').addEventListener('click', () => goToResult(currentMatchIndex + 1));
+  document.getElementById('expandAll').addEventListener('click', () => document.querySelectorAll('.topic-card:not(.search-hidden)').forEach(card => card.open = true));
+  document.getElementById('collapseAll').addEventListener('click', () => document.querySelectorAll('.topic-card:not(.search-hidden)').forEach(card => card.open = false));
+  document.querySelectorAll('.keyword-chip').forEach(chip => chip.addEventListener('click', () => {
+    contentSearch.value = chip.dataset.query;
+    applyContentSearch();
+    contentSearch.focus();
+  }));
+
+  document.addEventListener('keydown', event => {
+    if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') {
+      event.preventDefault();
+      contentSearch.focus();
+      contentSearch.select();
+    }
+  });
+
+  document.getElementById('menuToggle').addEventListener('click', () => {
+    sidebar.classList.toggle('open');
+    mobileBackdrop.classList.toggle('show', sidebar.classList.contains('open'));
+  });
+  document.getElementById('sidebarClose').addEventListener('click', closeMobileMenu);
+  mobileBackdrop.addEventListener('click', closeMobileMenu);
+
+  const backTop = document.getElementById('backTop');
+  const progress = document.getElementById('readingProgress');
+  window.addEventListener('scroll', () => {
+    backTop.style.display = window.scrollY > 420 ? 'block' : 'none';
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    progress.style.width = (max > 0 ? (window.scrollY / max) * 100 : 0) + '%';
+  }, {passive:true});
+  backTop.addEventListener('click', () => window.scrollTo({top:0,behavior:'smooth'}));
+
+  document.querySelectorAll('.hero-card').forEach(card => card.addEventListener('click', event => {
+    event.preventDefault();
+    openTarget(card.getAttribute('href').slice(1), true, { forceOpenNav: true });
+  }));
+
+  if (location.hash) {
+    setTimeout(() => {
+      openTarget(location.hash.slice(1), false, { forceOpenNav: true });
+    }, 80);
+  }
+</script>
+</body>
+</html>
