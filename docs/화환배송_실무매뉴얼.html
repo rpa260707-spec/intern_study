@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>화환 배송 관리 시스템 실무 매뉴얼</title>
+<style>
+  :root{
+    --ink:#0f172a; --body:#334155; --muted:#64748b; --line:#e2e8f0;
+    --blue:#1d4ed8; --blue-bg:#eff6ff; --red:#b91c1c; --red-bg:#fef2f2;
+    --amber:#b45309; --amber-bg:#fffbeb; --green:#047857; --green-bg:#ecfdf5;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:#f1f5f9; color:var(--body);
+    font-family:"Malgun Gothic","맑은 고딕",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    font-size:14px; line-height:1.75;
+  }
+  .page{max-width:920px; margin:0 auto; background:#fff; padding:52px 56px 72px;
+        box-shadow:0 2px 28px rgba(15,23,42,.08)}
+
+  header.cover{border-bottom:3px solid var(--ink); padding-bottom:22px; margin-bottom:34px}
+  .eyebrow{font-size:12px; font-weight:900; letter-spacing:.16em; color:var(--muted)}
+  h1{font-size:31px; font-weight:900; color:var(--ink); margin:10px 0 8px; letter-spacing:-.02em; line-height:1.25}
+  .cover .meta{font-size:13px; color:var(--muted)}
+
+  h2{font-size:20px; font-weight:900; color:var(--ink); margin:44px 0 14px;
+     padding-left:12px; border-left:5px solid var(--blue); letter-spacing:-.01em}
+  h3{font-size:15.5px; font-weight:900; color:var(--ink); margin:26px 0 8px}
+  p{margin:0 0 12px}
+  ul,ol{margin:0 0 12px; padding-left:22px}
+  li{margin:4px 0}
+  b,strong{color:var(--ink)}
+  code{background:#f1f5f9; border:1px solid var(--line); border-radius:5px;
+       padding:1px 6px; font-family:Consolas,"D2Coding",monospace; font-size:12.5px; color:var(--ink)}
+
+  table{width:100%; border-collapse:collapse; margin:12px 0 18px; font-size:13px}
+  th,td{border:1px solid var(--line); padding:9px 11px; text-align:left; vertical-align:top}
+  th{background:#f8fafc; color:var(--ink); font-weight:900; white-space:nowrap}
+  td.c{text-align:center} td.n{text-align:right; white-space:nowrap}
+
+  .note{border-radius:12px; padding:14px 16px; margin:16px 0; font-size:13.5px}
+  .note .t{font-weight:900; display:block; margin-bottom:4px}
+  .note.info{background:var(--blue-bg); border:1px solid #bfdbfe; color:#1e40af}
+  .note.warn{background:var(--amber-bg); border:1px solid #fde68a; color:var(--amber)}
+  .note.danger{background:var(--red-bg); border:1px solid #fecaca; color:var(--red)}
+  .note.ok{background:var(--green-bg); border:1px solid #a7f3d0; color:var(--green)}
+
+  .toc{background:#f8fafc; border:1px solid var(--line); border-radius:14px; padding:18px 22px; margin-bottom:8px}
+  .toc ol{margin:0; padding-left:20px; columns:2; column-gap:34px}
+  .toc a{color:var(--body); text-decoration:none}
+  .toc a:hover{color:var(--blue); text-decoration:underline}
+
+  .steps{counter-reset:s; list-style:none; padding:0; margin:14px 0}
+  .steps li{counter-increment:s; position:relative; padding:0 0 12px 38px; margin:0}
+  .steps li::before{content:counter(s); position:absolute; left:0; top:1px;
+    width:25px; height:25px; border-radius:50%; background:var(--blue); color:#fff;
+    font-size:12.5px; font-weight:900; display:flex; align-items:center; justify-content:center}
+
+  .pill{display:inline-block; border-radius:999px; padding:2px 10px; font-size:12px; font-weight:900}
+  .p-pending{background:#fef3c7; color:#b45309}
+  .p-processing{background:#dbeafe; color:#1d4ed8}
+  .p-completed{background:#d1fae5; color:#047857}
+  .p-issue{background:#fee2e2; color:#b91c1c}
+  .p-cancelled{background:#e5e7eb; color:#374151}
+
+  footer{margin-top:52px; padding-top:18px; border-top:1px solid var(--line);
+         font-size:12px; color:var(--muted); display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap}
+
+  @media print{
+    body{background:#fff; font-size:11.5pt}
+    .page{box-shadow:none; max-width:none; padding:0 6mm}
+    h2{page-break-after:avoid} h3{page-break-after:avoid}
+    table,.note,.steps li{page-break-inside:avoid}
+    .toc{break-after:page}
+    a{color:inherit; text-decoration:none}
+  }
+  @page{margin:16mm 12mm}
+</style>
+</head>
+<body>
+<div class="page">
+
+<header class="cover">
+  <div class="eyebrow">FITI시험연구원 · 전략구매팀</div>
+  <h1>화환 배송 관리 시스템<br>실무 매뉴얼</h1>
+  <div class="meta">2026년 9월 개정 · 비밀번호 로그인 및 월말 정산 리포트 반영</div>
+</header>
+
+<div class="toc">
+  <ol>
+    <li><a href="#s1">시스템 개요와 접속</a></li>
+    <li><a href="#s2">로그인</a></li>
+    <li><a href="#s3">화면 구성</a></li>
+    <li><a href="#s4">신규 화환 등록</a></li>
+    <li><a href="#s5">상세 정보 수정</a></li>
+    <li><a href="#s6">상태 변경과 카카오톡 안내</a></li>
+    <li><a href="#s7">월말 정산 리포트</a></li>
+    <li><a href="#s8">저장하기</a></li>
+    <li><a href="#s9">엑셀 불러오기 · 내보내기</a></li>
+    <li><a href="#s10">자주 생기는 문제</a></li>
+    <li><a href="#s11">관리자용 기술 정보</a></li>
+  </ol>
+</div>
+
+<h2 id="s1">1. 시스템 개요와 접속</h2>
+<p>경조사 화환 신청부터 업체 발주 안내, 월말 정산까지 한 화면에서 처리하는 시스템입니다. 입력한 내용은 서버에 저장되어 담당자가 바뀌어도 이어서 볼 수 있습니다.</p>
+
+<table>
+  <tr><th style="width:130px">접속 주소</th><td><code>https://flower-delivery-dashboard-nu.vercel.app</code></td></tr>
+  <tr><th>권장 브라우저</th><td>크롬(Chrome), 엣지(Edge)</td></tr>
+  <tr><th>데이터 저장</th><td>서버 저장. <b>[현황 저장]</b>을 눌러야 반영됩니다</td></tr>
+</table>
+
+<div class="note info">
+  <span class="t">화면이 예전 그대로 보일 때</span>
+  브라우저가 이전 화면을 기억하고 있는 것입니다. <code>Ctrl</code> + <code>Shift</code> + <code>R</code> 을 눌러 강제로 새로 불러오세요.
+</div>
+
+<h2 id="s2">2. 로그인</h2>
+<p>아이디와 비밀번호를 입력해야 들어갈 수 있습니다. 등록되지 않은 아이디는 입장할 수 없습니다.</p>
+
+<table>
+  <tr><th style="width:130px">아이디</th><th style="width:120px">비밀번호</th><th>권한</th></tr>
+  <tr><td><code>관리자</code></td><td><code>8124</code></td><td>전체 기능 (등록·수정·저장·엑셀)</td></tr>
+  <tr><td><code>전략구매팀</code></td><td><code>8124</code></td><td>전체 기능 (위와 동일)</td></tr>
+</table>
+
+<p>한 번 로그인하면 같은 브라우저에서는 다음에 자동으로 들어갑니다. 공용 PC에서는 사용 후 <b>[로그아웃]</b>을 눌러주세요.</p>
+
+<div class="note warn">
+  <span class="t">비밀번호를 바꾸려면</span>
+  <code>index.html</code> 파일 안의 <code>ACCOUNTS</code> 목록에서 <code>pw</code> 값을 고친 뒤 다시 배포해야 합니다. 화면에서는 바꿀 수 없습니다.
+</div>
+
+<h2 id="s3">3. 화면 구성</h2>
+<table>
+  <tr><th style="width:150px">영역</th><th>내용</th></tr>
+  <tr><td>상단 요약 카드</td><td>전체 건수, 총 금액, 상태별 건수</td></tr>
+  <tr><td>그래프</td><td>상태별 현황 · 품목명 현황 · 월별 금액</td></tr>
+  <tr><td>배송현황 목록</td><td>등록된 화환 전체 목록. 행을 클릭하면 오른쪽에 상세가 열립니다</td></tr>
+  <tr><td>상세 정보</td><td>선택한 건의 수정 화면</td></tr>
+  <tr><td>월말 정산 리포트</td><td>업체별 월 집계 (7장 참고)</td></tr>
+  <tr><td>변경 이력</td><td>누가 무엇을 바꿨는지 기록</td></tr>
+</table>
+
+<h3>목록에 표시되는 항목</h3>
+<p>No · 신청일 · <b>문서번호</b> · 품목명 · 단가 · 거래처/사유 · 배송장소/수신자 · <b>부고안내/청첩장</b> · 상태 · 관리메모</p>
+<p>부고안내/청첩장 칸에 인터넷 주소를 넣으면 파란 링크로 표시되고, 누르면 새 창에서 열립니다.</p>
+
+<h2 id="s4">4. 신규 화환 등록</h2>
+<p>상단 <b>[신규 등록]</b> 버튼을 누르면 등록창이 열립니다. 창 위쪽에서 <b>일반 양식</b>과 <b>BS 양식</b>을 고를 수 있습니다.</p>
+
+<table>
+  <tr><th style="width:110px">양식</th><th>사용하는 경우</th><th>입력 항목</th></tr>
+  <tr><td><b>일반 양식</b></td><td>축하화환, 근조화환, 화분 등 일반 건</td><td>배송장소/수신자, 문구, 관계(실적 등)</td></tr>
+  <tr><td><b>BS 양식</b></td><td>임직원 경조사(비에스) 건</td><td>빈소, 받는분(연락처), 고인, 수량</td></tr>
+</table>
+
+<div class="note info">
+  <span class="t">품목과 양식은 연동됩니다</span>
+  품목 선택에서 <code>BS_근조화환</code>을 고르면 <b>BS 양식</b>으로 자동 전환되고, 다른 품목을 고르면 <b>일반 양식</b>으로 돌아옵니다. 반대로 [BS 양식] 버튼을 누르면 품목도 <code>BS_근조화환</code>으로 맞춰집니다.
+</div>
+
+<h3>자동으로 채워지는 값</h3>
+<table>
+  <tr><th style="width:150px">항목</th><th>기본값</th></tr>
+  <tr><td>문구</td><td><code>(재)FITI시험연구원 원장 윤주경</code></td></tr>
+  <tr><td>BS 수량</td><td><code>화환,근조기2개,용품</code></td></tr>
+  <tr><td>단가</td><td>품목을 고르면 자동 입력 (수정 가능)</td></tr>
+</table>
+<p>기본값은 그 자리에서 지우고 다시 쓰실 수 있습니다.</p>
+
+<h3>등록 절차</h3>
+<ol class="steps">
+  <li>[신규 등록] 클릭</li>
+  <li>양식 선택 (또는 품목 선택으로 자동 전환)</li>
+  <li>거래처명, 발송사유, <b>발신 문서번호</b> 입력</li>
+  <li>배송장소/수신자 입력 — 배송일·시간·장소·수신자·연락처를 줄바꿈해서 적습니다</li>
+  <li>부고안내/청첩장 주소가 있으면 붙여넣기</li>
+  <li>[신규 건 추가] 클릭</li>
+  <li><b>[현황 저장]</b>을 눌러 서버에 반영</li>
+</ol>
+
+<div class="note danger">
+  <span class="t">[신규 건 추가]만으로는 저장되지 않습니다</span>
+  화면에만 추가된 상태입니다. 반드시 상단 <b>[현황 저장]</b>까지 눌러야 서버에 남습니다.
+</div>
+
+<h2 id="s5">5. 상세 정보 수정</h2>
+<p>목록에서 행을 클릭하면 오른쪽에 상세 화면이 열립니다. 수정 후 <b>[저장]</b> → 상단 <b>[현황 저장]</b> 순서로 누르세요.</p>
+
+<h3>양식 구분 바꾸기</h3>
+<p>상세 화면 맨 위 <b>양식 구분</b>에서 일반 ↔ BS를 바꿀 수 있습니다. 잘못 등록한 건을 지우고 다시 만들 필요가 없습니다.</p>
+<ul>
+  <li>BS → 일반으로 바꿔도 빈소·받는분·고인 값은 남아 있어, 다시 BS로 되돌리면 그대로 복원됩니다</li>
+  <li>양식을 바꿀 때만 필수 항목을 확인합니다</li>
+  <li>변경 내용은 <b>양식 구분 변경</b>으로 이력에 남습니다</li>
+</ul>
+
+<h3>수정할 수 있는 항목</h3>
+<p>신청일 · 품목 · 단가 · 거래처 · 발송사유 · <b>발신 문서번호</b> · <b>관계(실적 등)</b> · 배송장소/수신자 · 문구 · 부고안내/청첩장 · 상태 · 관리메모 · 담당자</p>
+<p><b>변경 사유</b> 칸에 적은 내용은 변경 이력에 함께 기록됩니다.</p>
+
+<h2 id="s6">6. 상태 변경과 카카오톡 안내</h2>
+
+<h3>상태값</h3>
+<table>
+  <tr><th style="width:150px">표시</th><th>의미</th></tr>
+  <tr><td><span class="pill p-pending">배송준비</span></td><td>접수 후 준비 중</td></tr>
+  <tr><td><span class="pill p-processing">배송중</span></td><td>진행 중</td></tr>
+  <tr><td><span class="pill p-completed">배송요청</span></td><td>업체에 발주 요청한 상태</td></tr>
+  <tr><td><span class="pill p-issue">확인필요</span></td><td>확인이 필요한 건</td></tr>
+  <tr><td><span class="pill p-cancelled">배송완료</span></td><td>배송이 끝난 건</td></tr>
+</table>
+
+<h3>카카오톡 안내문 보내기</h3>
+<p>상태를 <b>배송요청</b>으로 바꾸면 카카오톡 안내 창이 자동으로 열립니다. 이미 배송요청 상태인 건은 상세 화면 아래 <b>[📨 카카오 배송 안내 다시 보내기]</b>로 다시 열 수 있습니다.</p>
+<ul>
+  <li><b>[카카오톡 전달]</b> — 카카오톡 공유창이 열리고, 보낼 채팅방을 직접 고릅니다. 자동 발송이 아닙니다</li>
+  <li><b>[안내문 복사]</b> — 내용을 복사해 카카오톡에 직접 붙여넣습니다</li>
+</ul>
+<p>안내문은 창 안에서 바로 고쳐서 보낼 수 있습니다.</p>
+
+<h3>안내문에 들어가는 내용</h3>
+<table>
+  <tr><th style="width:110px">양식</th><th>포함 항목</th></tr>
+  <tr><td>일반</td><td>발신 문서번호 · 신청일 · 품목명 · 거래처/발송사유 · 관계(실적 등) · 배송장소/수신자 · 문구 · 부고안내/청첩장 · 현재상태</td></tr>
+  <tr><td>BS</td><td>발신 문서번호 · 빈소 · 받는분(연락처) · 고인 · 수량 · 문구 · 부고안내/청첩장</td></tr>
+</table>
+<p>부고안내/청첩장은 입력한 건에만 표시되고, 비어 있으면 그 문단이 통째로 빠집니다.</p>
+
+<h2 id="s7">7. 월말 정산 리포트</h2>
+<p>목록 아래 <b>월말 정산 리포트</b>에서 업체별 월 집계를 확인합니다. 비에스 계산서 대조와 꽃과향기 실적 확인을 한 화면에서 처리할 수 있습니다.</p>
+
+<table>
+  <tr><th style="width:130px">구분</th><th style="width:170px">판정 기준</th><th>용도</th></tr>
+  <tr><td><b>비에스</b></td><td>품목명에 <code>BS</code> 포함</td><td>계산서 대조</td></tr>
+  <tr><td><b>꽃과향기</b></td><td>그 외 전부</td><td>실적 확인</td></tr>
+</table>
+
+<h3>사용법</h3>
+<ol class="steps">
+  <li>월 선택 상자에서 확인할 달을 고릅니다 (<b>◀ 이전달</b> / <b>다음달 ▶</b>로도 이동)</li>
+  <li>업체별 <b>건수와 합계 금액</b>을 먼저 확인합니다</li>
+  <li>그 아래 <b>품목별 소계</b>로 계산서 항목과 맞춰봅니다</li>
+  <li>상세 표에서 건별 내역을 확인합니다</li>
+  <li><b>[엑셀 내보내기]</b> 또는 <b>[인쇄]</b>로 보고자료를 만듭니다</li>
+</ol>
+
+<p>비에스 표에는 <b>수량</b> 열이 따로 있어 <code>화환,근조기2개,용품</code> 같은 값을 계산서와 대조할 수 있습니다. 엑셀 파일은 <code>화환_월말리포트_2026-09.xlsx</code> 형태로 저장됩니다.</p>
+
+<div class="note info">
+  <span class="t">인쇄하면 리포트만 나옵니다</span>
+  상단 메뉴, 그래프, 변경 이력은 인쇄에서 자동으로 빠집니다.
+</div>
+
+<h2 id="s8">8. 저장하기</h2>
+<p>상단 <b>[현황 저장]</b>이 서버 저장입니다. 저장 중에는 안내 화면이 뜨며, 이때 <b>창을 닫거나 새로고침하지 마세요.</b></p>
+
+<div class="note warn">
+  <span class="t">다른 사람이 먼저 저장한 경우</span>
+  "다른 사용자가 먼저 저장했습니다" 안내가 뜹니다. 내 화면 내용으로 덮어쓰면 상대방 작업이 사라지므로, <b>[서버 새로고침]</b>으로 최신 내용을 받은 뒤 다시 입력하는 것이 안전합니다.
+</div>
+
+<p>저장이 끝나면 화면 위에 <b>최근 저장 시각과 저장한 사람</b>이 표시됩니다. 저장 전에 이 값을 확인하면 다른 사람의 작업 여부를 알 수 있습니다.</p>
+
+<h2 id="s9">9. 엑셀 불러오기 · 내보내기</h2>
+<table>
+  <tr><th style="width:160px">기능</th><th>설명</th></tr>
+  <tr><td>[엑셀 불러오기]</td><td><code>화환배송관리.xlsx</code>를 읽어 화면에 채웁니다</td></tr>
+  <tr><td>[현황 저장]</td><td>서버 저장 + 수정본 엑셀 생성</td></tr>
+  <tr><td>[변경이력 다운로드]</td><td>변경 이력을 엑셀로 저장</td></tr>
+  <tr><td>리포트 [엑셀 내보내기]</td><td>선택한 달의 월말 정산 리포트</td></tr>
+</table>
+
+<div class="note warn">
+  <span class="t">엑셀 열 구성이 바뀌었습니다</span>
+  <b>발신 문서번호</b> 열이 추가되어 기존 양식과 열 위치가 다릅니다. 다른 문서에서 이 파일을 참조하고 있다면 열 위치를 확인해주세요.
+</div>
+
+<h2 id="s10">10. 자주 생기는 문제</h2>
+
+<table>
+  <tr><th style="width:230px">증상</th><th>원인과 조치</th></tr>
+  <tr>
+    <td>바꾼 내용이 안 보인다</td>
+    <td>브라우저 캐시입니다. <code>Ctrl</code>+<code>Shift</code>+<code>R</code></td>
+  </tr>
+  <tr>
+    <td>"조회 전용 계정입니다"</td>
+    <td>저장 권한이 없는 상태입니다. <code>관리자</code> 또는 <code>전략구매팀</code>으로 로그인했는지 확인하세요</td>
+  </tr>
+  <tr>
+    <td>카카오톡 전달 시 <b>요청 실패</b></td>
+    <td>카카오 개발자 콘솔에 접속 주소가 등록되지 않은 경우입니다. <b>두 곳 모두</b> 등록해야 합니다 (11장 참고)</td>
+  </tr>
+  <tr>
+    <td>카카오 공유창이 안 뜬다</td>
+    <td>브라우저 팝업 차단입니다. 주소창 오른쪽 차단 아이콘에서 허용하세요. 급하면 [안내문 복사]를 쓰시면 됩니다</td>
+  </tr>
+  <tr>
+    <td>서버 데이터 불러오기 실패</td>
+    <td>서버 저장소 연결 문제입니다. 관리자에게 문의하세요</td>
+  </tr>
+  <tr>
+    <td>문구가 비어서 나간다</td>
+    <td>현재는 비어 있으면 기본 문구가 자동으로 들어갑니다. 그래도 비어 있다면 예전 화면을 보고 있는 것이니 새로고침하세요</td>
+  </tr>
+</table>
+
+<h2 id="s11">11. 관리자용 기술 정보</h2>
+
+<h3>구성</h3>
+<table>
+  <tr><th style="width:150px">항목</th><th>내용</th></tr>
+  <tr><td>소스 저장소</td><td>GitHub <code>rpa260707-spec</code> 계정</td></tr>
+  <tr><td>배포</td><td>Vercel <code>fiti4</code> 팀 · 커밋하면 자동 배포</td></tr>
+  <tr><td>데이터 저장소</td><td>Vercel Blob (<code>deliveries.json</code>, <code>logs.json</code>)</td></tr>
+  <tr><td>화면 파일</td><td><code>index.html</code> 한 개에 화면·기능이 모두 들어 있습니다</td></tr>
+  <tr><td>서버 기능</td><td><code>api/deliveries.js</code> (배송현황), <code>api/logs.js</code> (변경이력)</td></tr>
+</table>
+
+<h3>카카오톡 공유 설정</h3>
+<p>접속 주소가 바뀌면 카카오 개발자 콘솔에서 <b>두 곳 모두</b> 새 주소를 등록해야 합니다. 한 곳만 하면 초기화는 되지만 공유에서 <code>4019</code> 오류가 납니다.</p>
+<table>
+  <tr><th style="width:230px">등록 위치</th><th>역할</th></tr>
+  <tr><td>앱 설정 → 플랫폼 키 → JavaScript 키 → <b>JS SDK 도메인</b></td><td>SDK 실행 허용</td></tr>
+  <tr><td>앱 설정 → <b>제품 링크 관리</b></td><td>공유 링크 허용</td></tr>
+</table>
+<p>안내문의 공유 링크는 접속 주소를 그대로 쓰도록 되어 있어, 주소가 바뀌어도 코드는 고칠 필요가 없습니다.</p>
+
+<h3>저장 권한</h3>
+<p>서버는 저장 요청자 이름이 <code>전략구매팀</code>일 때만 저장을 허용합니다. 화면에 <code>관리자</code>로 로그인해도 서버에는 <code>전략구매팀</code>으로 전달되므로 정상 저장됩니다.</p>
+
+<div class="note danger">
+  <span class="t">보안상 알아두실 점</span>
+  로그인 비밀번호는 화면 파일 안에 들어 있어, 마음먹고 보면 확인할 수 있습니다. 외부인의 단순 접근을 막는 수준이며, 서버 자체에 접근 제한은 걸려 있지 않습니다. 개인정보(성명·연락처)가 담긴 시스템이므로 <b>접속 주소를 외부에 공유하지 마세요.</b>
+</div>
+
+<footer>
+  <span>FITI시험연구원 전략구매팀 · 화환 배송 관리 시스템 실무 매뉴얼</span>
+  <span>2026-09 개정</span>
+</footer>
+
+</div>
+</body>
+</html>
