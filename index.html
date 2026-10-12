@@ -1822,10 +1822,14 @@ API:
       <p>수요부서가 납품·설치 완료 후 <b>수량 · 성능 · 시운전 결과</b>를 포함해 검수하고
          검수조서를 작성한다. 전략구매팀은 검수 내용을 확인한다.</p>
 
-      <div class="callout info"><span class="lbl">시스템과 연결</span>
-        시험장비 구매 실적은 <b>FITI시험연구원 구매현황</b>의
-        「시험장비·공기구비품」 카드에서 봅니다. 엑셀 구매구분에 ‘시험장비’라는 값은 없고
-        <b>공기구비품</b>으로 들어옵니다 — 03장 참고.</div>
+      <div class="callout warn"><span class="lbl">구매구분 주의</span>
+        시험기기 구매 실적은 <b>FITI시험연구원 구매현황</b>의 <b>「시험기기」</b> 카드에서 봅니다.
+        다만 <b>ERP 구매구분에 ‘시험기기’라는 값이 없습니다.</b> 원자힘현미경 · DMA · TMA ·
+        HIC충격시험기 · IR챔버 같은 시험기기가 전부 <b>‘공기구비품’</b>으로 들어옵니다.<br>
+        같은 값에 <b>모니터 · 노트북 · 책상 같은 진짜 공기구비품</b>과 <b>정기교정 용역</b>도 섞입니다
+        (2026-09 기준 91종 중 시험기기 계열 34 · IT사무기기 9 · 교정용역 11).
+        그래서 카드 숫자는 <b>시험기기만의 금액이 아닙니다.</b>
+        정확히 갈라 보려면 ERP 구매구분을 나누어야 합니다 — 03장 참고.</div>
     </section>
 
     <section class="doc-section" id="secg3">
@@ -2703,6 +2707,43 @@ API:
       openTarget(location.hash.slice(1), false, { forceOpenNav: true });
     }, 80);
   }
+</script>
+
+<!-- ─────────────────────────────────────────────────────────────
+     업무포털 주소 — 포털 주소가 바뀌면 **아래 한 줄만** 고치세요.
+     이 스크립트가 페이지 안의 「← 업무포털」 링크를 전부 바꿔 줍니다.
+     ───────────────────────────────────────────────────────────── -->
+<script>
+  window.FITI_PORTAL = 'https://fiti-procurement-portal.vercel.app/';
+  (function () {
+    /* 수요부서 포털에서 넘어오면 주소에 ?from=dept&back=<돌아갈 주소> 가 붙습니다.
+       그때는 「← 업무포털」이 전략구매팀 포털이 아니라 수요부서 포털로 돌아갑니다.
+       한 번 들어오면 그 탭이 기억하므로(sessionStorage) 앱 안에서 옮겨 다녀도 유지됩니다.
+       back 은 주소로 들어오는 값이라 https 의 vercel.app 만 받습니다. */
+    var KEY = 'fiti.portalBack';
+    function clean(u) {
+      try { var x = new URL(u); return (x.protocol === 'https:' && /\.vercel\.app$/.test(x.hostname)) ? x.origin + x.pathname : ''; }
+      catch (e) { return ''; }
+    }
+    var back = '';
+    try {
+      var p = new URLSearchParams(location.search);
+      back = (p.get('from') === 'dept') ? clean(p.get('back') || '') : '';
+      if (back) sessionStorage.setItem(KEY, back);
+      else back = clean(sessionStorage.getItem(KEY) || '');
+    } catch (e) { back = ''; }
+
+    var target = back || window.FITI_PORTAL;
+    var sel = 'a[href*="procurement-portal"], a[data-portal]';
+    document.querySelectorAll(sel).forEach(function (a) {
+      a.href = target;
+      if (!back) return;
+      a.title = '수요부서 업무포털로 이동';
+      if (!a.children.length && /업무포털/.test(a.textContent)) {
+        a.textContent = a.textContent.replace('전략구매팀 업무포털', '수요부서 업무포털').replace(/^←\s*업무포털$/, '← 수요부서 포털');
+      }
+    });
+  })();
 </script>
 </body>
 </html>
