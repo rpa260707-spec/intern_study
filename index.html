@@ -793,6 +793,14 @@
 
         <h3 id="sec9-1">2-1 구매 가이드 · 업무요령</h3>
         <div class="doc-list">
+          <a class="doc-item" href="docs/지침_찾아보기.html" target="_blank" rel="noopener">
+            <span class="ic htm">찾기</span>
+            <span class="tx"><b class="nm">지침 찾아보기</b><span class="mt">문서 전체를 열지 않고 필요한 조문만 — 38건 · 검색 · 분류</span></span>
+          </a>
+          <a class="doc-item" href="docs/구매유형_한눈에.html" target="_blank" rel="noopener">
+            <span class="ic htm">그림</span>
+            <span class="tx"><b class="nm">구매 유형 한눈에</b><span class="mt">입찰 ↔ 수의계약 · 수의 사유 · 낙찰 방식 · 검수에서 입고까지</span></span>
+          </a>
           <a class="doc-item" href="docs/구매업무가이드_2025.06.09.pdf" target="_blank" rel="noopener">
             <span class="ic pdf">PDF</span>
             <span class="tx"><b class="nm">구매업무 가이드</b><span class="mt">2025.06.09</span></span>
@@ -1686,14 +1694,19 @@ API:
 
       <h3 class="sub" id="secg11-3">3. 구매 유형</h3>
 
+      <div class="callout info"><span class="lbl">그림으로 보기</span>
+        입찰과 수의계약을 좌우로 견주고, 수의계약 사유 · 낙찰 방식 · 검수에서 입고까지를 한 장에 모았습니다 —
+        <a href="docs/구매유형_한눈에.html" target="_blank" rel="noopener"><b>구매 유형 한눈에</b></a> ·
+        조문이 어느 문서 몇 조에 있는지 찾으려면 <a href="docs/지침_찾아보기.html" target="_blank" rel="noopener"><b>지침 찾아보기</b></a> (새 창)</div>
+
       <h4 class="sub3">3.1 입찰</h4>
       <p>연구원 전자구매시스템(<b>씨마켓</b>)을 통해 입찰 공고를 게시하고,
          투찰 결과(낙찰/유찰)에 따라 계약을 진행함.</p>
       <p class="sub4">3.1.1 유형</p>
       <table>
         <tr><th>유형</th><th>내용</th></tr>
-        <tr><td>입찰-소모품</td><td>등록된 시험 소모품 구매</td></tr>
-        <tr><td>입찰-일반</td><td>소모품 및 사업비구매에 해당하지 않는 일반적인 구매건</td></tr>
+        <tr><td>입찰-소모품</td><td>원내 시험소모품 예산으로 등록된 시험소모품을 <b>반복적으로</b> 구매할 때</td></tr>
+        <tr><td>입찰-일반</td><td><b>1회성 구매 또는 단건</b> — 소모품 및 사업비구매에 해당하지 않는 구매</td></tr>
         <tr><td>입찰-사업비</td><td>연구사업 / 과제 / 용역 예산으로 집행되는 구매</td></tr>
       </table>
 
@@ -1703,9 +1716,10 @@ API:
       <p class="sub4">3.2.1 유형</p>
       <table>
         <tr><th>유형</th><th>내용</th></tr>
-        <tr><td>소모품구매</td><td>등록된 시험 소모품 구매</td></tr>
-        <tr><td>일반 / 비품</td><td>소모품 및 사업비구매에 해당하지 않는 일반적인 구매</td></tr>
+        <tr><td>소모품 구매요청</td><td>등록된 시험소모품을 수의 사유에 해당해 경쟁 없이 살 때</td></tr>
+        <tr><td>(일반/협조)구매요청</td><td><b>1회성 · 단건</b> — 책상 · 의자 · PC류 등</td></tr>
         <tr><td>사업비구매</td><td>연구사업 / 과제 / 용역 예산으로 집행되는 구매</td></tr>
+        <tr><td>시험기기수리 / 개조 요청</td><td>쓰던 시험기기의 수리 · 개조. 정품 부품 · 지정 업체 유지보수가 많아 수의계약으로 진행됨</td></tr>
       </table>
 
       <div class="callout info"><span class="lbl">시스템과 연결</span>
@@ -1737,6 +1751,42 @@ API:
       <p><b>FITI시험연구원 구매현황</b>의 <b>「단가계약 실적」</b> 카드를 누르면
          단가계약 품목만 걸러 볼 수 있습니다(다시 누르면 해제).
          품목별 단가 이력은 <b>소모품 가격검색</b>에서 봅니다.</p>
+
+      <h3 class="sub" id="secg11-5">5. 공급업체 평가</h3>
+      <p>검수조서의 <b>[납품업체평가] 별표(★1~5개)</b> 가 그대로 업체 점수가 됩니다.
+         1개년치를 전산으로 집계해 <b>연간종합평점(5.0 만점)</b> 을 내고, 아래 단계대로 조치합니다.</p>
+      <table>
+        <tr><th>조치단계</th><th>연간종합평점</th><th>조치 내용 및 사후관리</th><th>근거</th></tr>
+        <tr><td>현상유지</td><td>3.5점 이상</td><td>외부공급자 자격 정상 유지</td><td>FITI-P-006 제6.2조</td></tr>
+        <tr><td>주의</td><td>3.0 ~ 3.4점</td><td>납기 지연 및 서비스 미흡에 대한 유의 권고 통보</td><td>FITI-P-006 제6.3조</td></tr>
+        <tr><td>개선요구</td><td>2.5 ~ 2.9점</td><td>시정조치요구 및 결과보고서(FITI-P021-01) 공식 발행 · 대책 징구</td><td>FITI-P-021</td></tr>
+        <tr><td>등록해지</td><td>2.5점 미만(부적합)<br>또는 검수거부 3회</td><td>외부공급자 등록 즉시 해지 및 계약 해제 · 해지.
+          필요 시 입찰참가자격 제한 조치와 연계</td><td>구매업무지침 제21조제4항<br>계약요령 제19조 · 제20조</td></tr>
+      </table>
+      <div class="callout danger"><span class="lbl">검수거부 3회</span>
+        평점과 상관없이 <b>자동으로 등록해지</b>됩니다. 별표는 느낌이 아니라
+        <b>납기 · 수량 · 사양 · 응대</b>를 보고 매겨야 합니다 — 수요부서가 매긴 별 하나가 업체의 자격을 좌우합니다.</div>
+      <div class="callout info"><span class="lbl">근거 문서</span>
+        <b>FITI-P-006 제6장 「외부에서 제공되는 제품 및 서비스」</b></div>
+
+      <h3 class="sub" id="secg11-6">6. 금지사항 — 교육자료</h3>
+      <p>2026 구매시스템 교육자료(내부직원 · 2026.06.22.)의 「금지사항」입니다. 실제로 있었던 일들입니다.</p>
+      <table>
+        <tr><th>하지 말 것</th><th>있었던 일</th></tr>
+        <tr><td>구매요청 전 공급업체에 <b>사전 발주</b> · 선구매 후 구매요청</td>
+            <td>법인카드로 결제를 끝낸 뒤 요청 → 미승인되어 <b>카드 취소 처리</b></td></tr>
+        <tr><td>사업비 <b>목적 외</b> 물품 구매 · 사업 종료 후 추가 구매</td>
+            <td>연구실안전비 · 안전용품비로 센터 근무복(아웃도어 자켓) 구매 요청</td></tr>
+        <tr><td>렌탈기기 <b>이전 설치 후 사후 구매요청</b></td>
+            <td>정수기 등 사무 렌탈기기를 옮겨 설치해 놓고 나중에 요청</td></tr>
+        <tr><td>검수 사진 <b>메타데이터 삭제 · 이미지 수정</b></td>
+            <td><b>카카오톡 메신저로 촬영해 전송하는 것도 금지</b></td></tr>
+        <tr><td>재고 <b>일괄 출고</b> · 박스히어로 미시행</td>
+            <td>전량 소진될 때까지 모았다가 한 번에 출고 처리 — <b>최소 주 1회</b> 출고해야 함</td></tr>
+      </table>
+      <div class="callout info"><span class="lbl">필수 첨부</span>
+        견적서 · 제품사양서 및 카달로그 · <b>국문규격서 또는 과업지시서</b>.
+        자세한 사례와 검수 기준은 <a href="docs/구매유형_한눈에.html" target="_blank" rel="noopener"><b>구매 유형 한눈에</b></a> 를 보세요.</div>
     </section>
 
     <section class="doc-section" id="secg2">
@@ -2038,7 +2088,7 @@ API:
       ['sec10-9','10-9 재산의 임대차(사택)'],['sec10-10','10-10 서식 목록'],
     ]},
     {id:'secg11', num:'1-1장', title:'물품구매 계약업무', children:[
-      ['secg11-1','1. 목적'],['secg11-2','2. 관련 법령 및 규정'],['secg11-3','3. 구매 유형'],['secg11-4','4. 단가계약'],
+      ['secg11-1','1. 목적'],['secg11-2','2. 관련 법령 및 규정'],['secg11-3','3. 구매 유형'],['secg11-4','4. 단가계약'],['secg11-5','5. 공급업체 평가'],['secg11-6','6. 금지사항'],
     ]},
     {id:'secg2', num:'2장', title:'시험기기 구매', children:[['secg2-1','1. 목적'],['secg2-2','2. 수의계약에 의한 시험장비 구매'],['secg2-3','3. 나라장터 입찰에 의한 시험장비 구매']]},
     {id:'secg3', num:'3장', title:'재고관리 (제정·개정 중)', children:[]},

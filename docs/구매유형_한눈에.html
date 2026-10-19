@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>구매 유형 한눈에 · FITI 전략구매팀</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+<style>
+:root{
+  --bg:#f5f7fb; --panel:#fff; --line:#e3e8f0; --text:#101729; --text-2:#5b6478;
+  --bid:#2563eb; --bid-soft:#eaf0ff;
+  --neg:#d97706; --neg-soft:#fff5e6;
+  --stock:#0f9d58; --stock-soft:#e9f7ef;
+  --radius:16px; --shadow:0 1px 2px rgba(16,24,40,.05),0 6px 20px rgba(16,24,40,.06);
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#0e1118; --panel:#161a23; --line:#262c3a; --text:#e9ecf4; --text-2:#99a1b3;
+        --bid:#7f9cff; --bid-soft:rgba(127,156,255,.13);
+        --neg:#f0b357; --neg-soft:rgba(240,179,87,.12);
+        --stock:#4ade80; --stock-soft:rgba(74,222,128,.12);
+        --shadow:0 1px 2px rgba(0,0,0,.4),0 6px 20px rgba(0,0,0,.35);}
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);
+  font-family:Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  font-size:14px;line-height:1.62;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1060px;margin:0 auto;padding:34px 20px 56px}
+h1{margin:0;font-size:27px;font-weight:800;letter-spacing:-.9px}
+.sub{margin:8px 0 0;font-size:13px;color:var(--text-2)}
+h2{margin:34px 0 4px;font-size:18px;font-weight:800;letter-spacing:-.5px;
+  padding-left:11px;border-left:4px solid var(--bid)}
+h2 .n{color:var(--text-2);font-weight:700;margin-right:6px}
+.h2d{margin:0 0 15px 15px;font-size:12.5px;color:var(--text-2)}
+
+/* 갈림길 그림 */
+.fork{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:6px}
+.lane{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+  overflow:hidden;box-shadow:var(--shadow)}
+.lane__h{padding:14px 18px;color:#fff;font-weight:800;font-size:16px;letter-spacing:-.4px;
+  display:flex;align-items:center;gap:9px}
+.lane--bid .lane__h{background:var(--bid)} .lane--neg .lane__h{background:var(--neg)}
+.lane__h small{font-weight:700;font-size:11.5px;opacity:.9;margin-left:auto}
+.lane__b{padding:16px 18px}
+.flow{display:flex;flex-direction:column;gap:0}
+.step{display:flex;gap:11px;align-items:flex-start;padding:9px 0}
+.step__i{flex:none;width:22px;height:22px;border-radius:50%;font-size:11.5px;font-weight:800;
+  display:grid;place-items:center;color:#fff}
+.lane--bid .step__i{background:var(--bid)} .lane--neg .step__i{background:var(--neg)}
+.step__t{font-size:13px}
+.step__t b{font-weight:700}
+.rail{margin-left:10px;width:2px;height:10px;background:var(--line)}
+
+.kinds{display:grid;gap:7px;margin-top:13px;padding-top:13px;border-top:1px dashed var(--line)}
+.kind{display:grid;grid-template-columns:118px 1fr;gap:10px;font-size:12.5px;align-items:start}
+.kind b{font-weight:700}
+.lane--bid .kind b{color:var(--bid)} .lane--neg .kind b{color:var(--neg)}
+.kind span{color:var(--text-2)}
+
+/* 공통 표 */
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+  padding:18px 20px;box-shadow:var(--shadow);margin-top:6px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{padding:9px 11px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{font-size:11.5px;font-weight:700;color:var(--text-2);white-space:nowrap}
+tr:last-child th,tr:last-child td{border-bottom:0}
+td.b{color:var(--bid);font-weight:700;white-space:nowrap}
+td.g{color:var(--neg);font-weight:700;white-space:nowrap}
+
+.why{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:6px}
+.why__c{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--neg);
+  border-radius:12px;padding:14px 16px;box-shadow:var(--shadow)}
+.why__t{font-weight:800;font-size:13.5px;margin-bottom:5px}
+.why__d{font-size:12.5px;color:var(--text-2)}
+.why__e{margin-top:8px;font-size:12px;color:var(--text-2)}
+.why__e b{color:var(--text);font-weight:700}
+
+.note{margin-top:14px;background:var(--neg-soft);border:1px solid var(--line);
+  border-radius:12px;padding:13px 16px;font-size:12.5px;color:var(--text-2)}
+.note b{color:var(--text)}
+
+footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);
+  font-size:11.5px;color:var(--text-2);display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+footer b{color:var(--text)}
+.dot{opacity:.45}
+@media (max-width:820px){ .fork{grid-template-columns:1fr} .why{grid-template-columns:1fr} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>구매 유형 한눈에</h1>
+  <p class="sub">
+    <b>2026 구매시스템 교육자료</b>(내부직원 · 2026.06.22.) 와 「구매 및 계약 업무요령」(4-1-4, 최종개정 2025.04.30.) ·
+    구매 가이드북 제1장 「물품구매 계약업무」(FITI_AG_0100, 2026.08.01. 개정) 을 그림으로 옮긴 것입니다.
+    <b>금액 기준은 원문을 보세요</b> — 자주 바뀝니다.
+  </p>
+
+  <h2><span class="n">1</span>구매는 두 갈래로 갑니다</h2>
+  <p class="h2d">같은 물건이라도 어느 갈래로 가느냐에 따라 절차와 서류가 달라집니다.</p>
+
+  <div class="fork">
+
+    <section class="lane lane--bid">
+      <div class="lane__h">입찰<small>경쟁으로 고릅니다</small></div>
+      <div class="lane__b">
+        <div class="flow">
+          <div class="step"><span class="step__i">1</span><span class="step__t">수요부서가 <b>구매관리시스템</b>으로 구매요청 상신</span></div>
+          <div class="rail"></div>
+          <div class="step"><span class="step__i">2</span><span class="step__t">전략구매팀이 <b>씨마켓</b>에 입찰 공고 게시</span></div>
+          <div class="rail"></div>
+          <div class="step"><span class="step__i">3</span><span class="step__t">업체들이 투찰</span></div>
+          <div class="rail"></div>
+          <div class="step"><span class="step__i">4</span><span class="step__t"><b>낙찰</b>이면 계약 · <b>유찰</b>이면 재공고 또는 수의계약 검토</span></div>
+        </div>
+        <div class="kinds">
+          <div class="kind"><b>입찰-소모품</b><span>원내 <b>시험소모품 예산</b>으로 등록된 시험소모품을 <b>반복적으로</b> 구매할 때</span></div>
+          <div class="kind"><b>입찰-일반</b><span><b>1회성 구매 또는 단건</b> — 소모품 · 사업비구매에 해당하지 않는 구매</span></div>
+          <div class="kind"><b>입찰-사업비</b><span>연구사업 · 과제 · 용역 예산으로 집행되는 구매</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="lane lane--neg">
+      <div class="lane__h">수의계약<small>사유가 있어야 합니다</small></div>
+      <div class="lane__b">
+        <div class="flow">
+          <div class="step"><span class="step__i">1</span><span class="step__t">수요부서가 구매요청 상신 — <b>공문에 수의계약 사유를 반드시 기재</b></span></div>
+          <div class="rail"></div>
+          <div class="step"><span class="step__i">2</span><span class="step__t">전략구매팀이 사유의 <b>적정성 · 규정 준수</b> 검토</span></div>
+          <div class="rail"></div>
+          <div class="step"><span class="step__i">3</span><span class="step__t">견적 비교 및 <b>적정성 검토</b></span></div>
+          <div class="rail"></div>
+          <div class="step"><span class="step__i">4</span><span class="step__t">경쟁 입찰 없이 <b>특정 업체와 직접 계약</b></span></div>
+        </div>
+        <div class="kinds">
+          <div class="kind"><b>소모품 구매요청</b><span>등록된 시험소모품을 <b>수의 사유</b>에 해당해 경쟁 없이 살 때</span></div>
+          <div class="kind"><b>(일반/협조)구매요청</b><span><b>1회성 · 단건</b> — 책상 · 의자 · PC류 등</span></div>
+          <div class="kind"><b>사업비구매</b><span>연구사업 · 과제 · 용역 예산으로 집행되는 구매</span></div>
+          <div class="kind"><b>시험기기수리 / 개조</b><span>쓰던 시험기기의 수리 · 개조 — 정품 부품 · 지정 업체 유지보수</span></div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <h2><span class="n">2</span>무엇이 다릅니까</h2>
+  <p class="h2d">같은 줄을 좌우로 견주어 보세요.</p>
+
+  <div class="panel">
+    <table>
+      <tr><th style="width:120px">보는 자리</th><th style="width:40%">입찰</th><th>수의계약</th></tr>
+      <tr><td class="b">고르는 방법</td><td>공고를 올려 <b>여러 업체가 겨룹니다</b></td><td>사유가 인정되면 <b>한 업체와 바로</b></td></tr>
+      <tr><td class="b">요청서에 더 쓸 것</td><td>없음 (일반 구매요청)</td><td><b>수의계약 사유</b> — 공문에 반드시</td></tr>
+      <tr><td class="b">업체를 정하는 때</td><td>투찰 결과가 나온 뒤</td><td>요청 단계에서 이미 정해져 있음</td></tr>
+      <tr><td class="b">걸리는 시간</td><td>공고 기간이 있어 더 걸립니다</td><td>상대적으로 빠릅니다</td></tr>
+      <tr><td class="b">전략구매팀이 보는 것</td><td>공고문 · 투찰 결과 · 낙찰 적정성</td><td><b>사유가 규정에 맞는지</b> · 견적 적정성</td></tr>
+      <tr><td class="b">실패할 때</td><td><b>유찰</b> → 재공고 또는 수의계약 검토</td><td>사유 미충족 → <b>반려</b>, 입찰로 전환</td></tr>
+      <tr><td class="b">그룹웨어 메뉴</td><td><b>구매관리 ▸ 입찰구매요청</b> 하나로 올립니다</td><td><b>소모품 구매요청</b> · <b>(일반/협조)구매요청</b> · <b>시험기기수리/개조 요청</b></td></tr>
+      <tr><td class="b">우리 데이터에서</td><td>입찰-소모품 · 입찰-일반 · 입찰-사업비</td><td>수의계약 · 시험기기수리 (구매현황의 「계약구분」)</td></tr>
+    </table>
+  </div>
+
+  <h2><span class="n">3</span>수의계약이 되는 사유</h2>
+  <p class="h2d">요령이 드는 사유를 세 갈래로 묶었습니다. <b>공문에 어느 사유인지 적어야 합니다.</b></p>
+
+  <div class="why">
+
+    <div class="why__c">
+      <div class="why__t">독점 — 그 업체뿐</div>
+      <div class="why__d">독점적 기술 · 위치 · 구조로 경쟁이 제한되거나, 생산자 또는 소지자가 <b>1인뿐</b>인 경우.</div>
+      <div class="why__e"><b>예</b> 시험가스 · 기존 장비의 정품 부품 및 유지보수 · 드라이클리닝 용매 · 물벼룩 먹이 · 주문제작품</div>
+    </div>
+
+    <div class="why__c">
+      <div class="why__t">긴급 · 품질</div>
+      <div class="why__d">품질 유지기한이 짧거나 <b>긴급하게</b> 필요한 경우.</div>
+      <div class="why__e"><b>예</b> 실험용 쥐(ICR) — 2026년 단가계약 시범 1호 (요령 제15조의2)</div>
+    </div>
+
+    <div class="why__c">
+      <div class="why__t">소액 · 유찰</div>
+      <div class="why__d"><b>10만원 이하(부가세 포함)</b> 구매. 또는 <b>입찰 결과 1회 이상 유찰</b>된 건.</div>
+      <div class="why__e"><b>유찰이란</b> 응찰자 없음 · 예정가보다 높은 투찰 금액 · 납기 등 다른 조건 미충족</div>
+    </div>
+
+  </div>
+
+  <div class="note">
+    <b>금액 기준은 여기 싣지 않았습니다.</b> 계약서 작성 기준(천만원 초과) · 견적서 수 · 보증금 비율 같은 숫자는
+    개정될 때마다 바뀝니다. <b>요청하실 때는 원문을 보시고</b>, 애매하면 전략구매팀(내선 8124)에 물어보세요.
+  </div>
+
+  <h2><span class="n">4</span>낙찰은 둘 중 하나로 정해집니다</h2>
+  <p class="h2d">입찰로 갔을 때만 해당합니다.</p>
+
+  <div class="panel">
+    <table>
+      <tr><th style="width:120px">방식</th><th>어떻게 뽑나</th><th style="width:34%">쓰는 자리</th></tr>
+      <tr><td class="b">최저가</td><td>가장 <b>낮은 입찰금액</b>을 제시한 업체가 낙찰</td><td>규격이 정해진 일반 구매</td></tr>
+      <tr><td class="b">최다수량</td><td>정해진 예산 안에서 지정한 물품의 <b>수량을 가장 많이</b> 제시한 업체가 낙찰.
+        금액을 고정 입력하고 수량으로 겨룹니다</td><td>예산이 정해져 있고 많이 받을수록 좋은 소모품</td></tr>
+    </table>
+  </div>
+
+  <h2 style="border-left-color:var(--stock)"><span class="n">5</span>산 다음 — 검수와 재고</h2>
+  <p class="h2d">발주로 끝이 아닙니다. <b>검수조서가 작성돼야 입고</b>로 잡힙니다.</p>
+
+  <div class="panel">
+    <div class="flow" style="gap:0">
+      <div class="step"><span class="step__i" style="background:var(--stock)">1</span>
+        <span class="step__t"><b>발주</b> — 계약 체결 후 업체에 발주</span></div>
+      <div class="rail"></div>
+      <div class="step"><span class="step__i" style="background:var(--stock)">2</span>
+        <span class="step__t"><b>납품</b> — 수요부서가 물품을 받습니다</span></div>
+      <div class="rail"></div>
+      <div class="step"><span class="step__i" style="background:var(--stock)">3</span>
+        <span class="step__t"><b>검수</b> — 검수사진 앱(GRFITI)으로 촬영.
+          앱 목록에는 <b>발주 O · 입고 X</b> 인 건만 뜹니다</span></div>
+      <div class="rail"></div>
+      <div class="step"><span class="step__i" style="background:var(--stock)">4</span>
+        <span class="step__t"><b>입고</b> — 검수조서가 작성되면 재고관리에 잡힙니다.
+          그 줄의 <b>일시 = 검수일</b>, <b>담당자 = 검수자</b></span></div>
+    </div>
+  </div>
+
+  <div class="panel" style="margin-top:12px">
+    <table>
+      <tr><th style="width:150px">검수사진 앱 화면</th><th>이렇게 보입니다</th></tr>
+      <tr><td class="b" style="color:var(--stock)">머리말</td><td><b>{부서명} 로그인중</b> — GRFITI 계정으로 들어갑니다</td></tr>
+      <tr><td class="b" style="color:var(--stock)">목록 한 줄</td>
+          <td><b>문서번호</b>(예 H231-26-23165) · <b>신청자</b> · <b>금액</b> — 이 셋만 보입니다</td></tr>
+      <tr><td class="b" style="color:var(--stock)">목록 조건</td>
+          <td><b>발주 O · 입고 X</b> 인 건만, 최근 순으로 200건까지</td></tr>
+      <tr><td class="b" style="color:var(--stock)">부서 가르기</td>
+          <td>앱이 아니라 <b>서버(RLS)가 막습니다.</b> 다른 부서 건은 애초에 내려오지 않습니다</td></tr>
+      <tr><td class="b" style="color:var(--stock)">사진 파일명</td>
+          <td><b>(촬영자)구매번호_날짜시각.jpg</b> — 사진 안에 촬영시각 · 위치 · 기기정보와 진위확인코드가 함께 기록됩니다</td></tr>
+    </table>
+  </div>
+
+  <div class="note" style="background:var(--stock-soft)">
+    <b>검수를 늦추면 재고도 늦게 잡힙니다.</b> 재고관리 현황의 입고 일시가 검수일이라,
+    물건을 받고도 검수를 안 하면 장부상으로는 아직 안 들어온 물건입니다.
+  </div>
+
+  <h2 style="border-left-color:var(--neg)"><span class="n">6</span>수의계약으로 가는 실제 사례</h2>
+  <p class="h2d">2026 구매시스템 교육자료(내부직원용)에 실린 사례입니다. 내 건이 어느 쪽인지 여기서 찾아보세요.</p>
+
+  <div class="panel">
+    <table>
+      <tr><th style="width:30%">이런 건</th><th style="width:34%">어떻게 요청</th><th>왜</th></tr>
+      <tr><td>토양시료 채취용 <b>핸드 오거</b></td><td class="g">(일반/협조)구매요청</td><td><b>1회성</b> 구매</td></tr>
+      <tr><td>마틴데일 마모강도용 <b>모마모자</b></td><td class="g">소모품 구매요청</td><td><b>지속적으로</b> 구매하는 시험용 소모품 · 독점적 지위 또는 지정업체</td></tr>
+      <tr><td><b>분광광도계 램프</b></td><td class="g">소모품 구매요청</td><td>사용자가 교체 가능한 램프</td></tr>
+      <tr><td>분석기기 <b>정품 부품 및 소모품류</b></td><td class="g">소모품 구매요청</td><td>제품 공급처만 유지보수가 가능</td></tr>
+      <tr><td><b>퍼클로로에틸렌</b> (상업용 드라이클리닝 용제)</td><td class="g">수의계약</td><td>관련 <b>취급자격</b>이 필요</td></tr>
+      <tr><td>스티커형 <b>채수병 세트</b></td><td class="g">수의계약</td><td>지역센터 · 팀 구분을 위해 마개에 스티커 부착 — <b>주문제작</b></td></tr>
+      <tr><td><b>위·변조방지 성적서 용지</b> (조폐공사)</td><td class="g">수의계약</td><td>생산자 또는 소지자가 <b>1인</b></td></tr>
+      <tr><td>시험용 <b>생쥐 · 물벼룩 먹이 · 미생물 배지</b></td><td class="g">수의계약</td><td><b>품질 유지기한</b>이 짧음</td></tr>
+      <tr><td>기기 회사 엔지니어의 <b>부품 교체 · 캘리브레이션</b>(정도검사 포함)</td><td class="g">시험기기수리 / 개조 요청</td><td>해당 업체만 가능</td></tr>
+      <tr><td><b>시약</b></td><td class="b">입찰구매요청</td><td>금액이 작아도 시약은 <b>전량 소모품 입찰</b></td></tr>
+      <tr><td>연구원 <b>명함 · 시험분석표</b> 등 인쇄물</td><td class="g">수의계약</td><td>양식 · 시험기록지 등</td></tr>
+    </table>
+    <p class="facts__more" style="margin-top:12px;font-size:12px;color:var(--text-2)">
+      씨마켓에서 수의계약은 <b>계약업체를 먼저 고르고 그다음 물품을 고릅니다.</b> 순서가 반대입니다.
+    </p>
+  </div>
+
+  <h2 style="border-left-color:#dc2626"><span class="n">7</span>이건 하지 마세요</h2>
+  <p class="h2d">교육자료의 「금지사항」입니다. 실제로 있었던 일들입니다.</p>
+
+  <div class="why">
+    <div class="why__c" style="border-left-color:#dc2626">
+      <div class="why__t">선구매 · 사전 발주</div>
+      <div class="why__d">구매요청 <b>전에</b> 공급업체에 발주하거나 물건을 먼저 사고 나중에 요청서를 올리는 것.</div>
+      <div class="why__e"><b>있었던 일</b> 법인카드로 결제를 끝낸 뒤 요청 → 미승인되어 <b>카드 취소 처리</b></div>
+    </div>
+    <div class="why__c" style="border-left-color:#dc2626">
+      <div class="why__t">예산 목적 외 사용</div>
+      <div class="why__d">사업비를 그 사업 목적이 아닌 물품에 쓰거나, 사업이 <b>끝난 뒤</b> 부족한 물품 · 공사를 추가 요청하는 것.</div>
+      <div class="why__e"><b>있었던 일</b> 연구실안전비 · 안전용품비로 센터 근무복(아웃도어 자켓) 구매 요청</div>
+    </div>
+    <div class="why__c" style="border-left-color:#dc2626">
+      <div class="why__t">사후 요청</div>
+      <div class="why__d">정수기 같은 사무 렌탈기기를 <b>이전 설치부터 해 놓고</b> 나중에 구매요청을 올리는 것.</div>
+      <div class="why__e"><b>검수 사진</b> 메타데이터 삭제 · 이미지 수정 · <b>카카오톡으로 촬영해 전송</b> 모두 금지</div>
+    </div>
+  </div>
+
+
+  <h2 style="border-left-color:var(--stock)"><span class="n">8</span>검수 — 언제까지, 무엇을 보나</h2>
+  <p class="h2d">검수조서가 작성돼야 입고로 잡힙니다. 사진은 검수사진 앱으로 찍습니다.</p>
+
+  <div class="panel">
+    <table>
+      <tr><th style="width:130px">검수 기한</th>
+          <td>납품 후 정해진 날짜 안에 완료합니다. 다만 <b>납품처 과실 · 제품 하자 · 납기(수입일정) 지연 ·
+          납품오류(구성품 누락 · 품목 상이)</b> 가 있으면 <b>그 문제가 모두 해결된 시점</b>을 기준으로 합니다</td></tr>
+      <tr><th>검수가 안 되는 때</th>
+          <td>품목명 · 모델명 · 수량이 구매내역과 <b>다른</b> 경우 ·
+              파손 · 손상 등 <b>물리적 이상</b>(운송 · 제조 과정의 외관 손상, 내부 파손) ·
+              계약 사양 미충족 · 작동 불능 · 상품 누락 · 기술적 시험 미이행</td></tr>
+      <tr><th>시험장비는 다릅니다</th>
+          <td><b>단순 외관 확인만으로는 검수할 수 없습니다.</b> 교정 또는 시운전으로 성능 · 사양이
+              계약내용과 맞는지 확인한 뒤 검수조서를 씁니다. <b>작동 상태를 알 수 있는 사진 · 파일을 첨부</b>하세요.
+              기술적 판단이 필요하면 전문가 · 기술자와 함께 검수할 수 있습니다</td></tr>
+      <tr><th>사진</th>
+          <td><b>반드시 검수 제품 사진을 첨부</b>합니다.
+              사진 메타데이터 삭제 금지 · 이미지 수정 금지 · <b>카카오톡으로 찍어 보내는 것 금지</b></td></tr>
+    </table>
+    <p class="facts__more" style="margin-top:12px;font-size:12px;color:var(--text-2)">
+      <b>있었던 일</b> — 고가 시험장비를 검수 완료했는데 전원선이 짧게 시공돼 정상 작동이 안 됐습니다.
+      케이블 확장비용과 공임이 추가로 들었습니다.
+    </p>
+  </div>
+
+  <h2 style="border-left-color:var(--stock)"><span class="n">9</span>재고관리 — 박스히어로</h2>
+  <p class="h2d">입고만 하고 출고를 안 하면 장부가 맞지 않습니다.</p>
+
+  <div class="panel">
+    <table>
+      <tr><th style="width:130px">입고</th><td>납품이 완료된 물품을 <b>검수와 동시에</b> 입고 처리합니다. <b>입고일이 일치</b>해야 합니다</td></tr>
+      <tr><th>출고</th><td><b>최소 주 1회</b> 출고 처리. 입고 · 출고 모두 가능한 한 <b>실시간</b>으로</td></tr>
+      <tr><th>대상 확대</th><td>입고 후 바로 파트별로 나눠 쓰는 소모품도 <b>재고관리 대상</b>입니다</td></tr>
+      <tr><th>유효기한 있는 것</th><td>품질 유지기한이 짧으면 <b>제품에 직접 스티커를 붙여</b>
+          입고일자 · 개봉일 · 만료일을 적습니다 (화학물질관리지침)</td></tr>
+    </table>
+  </div>
+
+  <div class="note" style="background:#fee2e2;border-color:#fca5a5">
+    <b>이러면 안 됩니다</b> — 출고를 그때그때 하지 않고 <b>전량 소진될 때까지 모았다가 한 번에</b> 처리하는 것 ·
+    재고관리 시행 부서인데 박스히어로에 <b>입고 · 출고를 아예 안 하는</b> 것 ·
+    퇴사자 PC를 반납하지 않고 <b>본인 구형 PC와 바꿔치기</b>해 쓰는 것(부서장 허가 · 부서 협의 없이).
+  </div>
+
+  <h2><span class="n">10</span>알아 두면 좋은 말</h2>
+  <p class="h2d">교육자료 「용어」 칸에 있는 것입니다.</p>
+
+  <div class="panel">
+    <table>
+      <tr><th style="width:120px">구매요청서</th><td><b>구매의 출발점.</b> 반드시 문서로 작성합니다.
+          사용자 부서가 필요로 하는 물품의 내용을 구매자(전략구매팀)에게 알려 주는 것 — 구매관리 업무는 이 접수로부터 시작합니다</td></tr>
+      <tr><th>전략적 구매</th><td>단순한 구매업무가 아니라 연구원의 <b>중장기 목표와 사업 계획에 맞춰</b>
+          구매 활동을 기획하고 주도적으로 실행하는 것. 프로세스 고도화 · 관리 최적화 · <b>총 소유비용</b> 관점의 접근</td></tr>
+      <tr><th>위임전결</th><td>의사결정의 효율을 높이기 위해 기관장의 결재 권한을 <b>하위 직급자에게 넘기는 것</b>.
+          구매요청 상신은 <b>금액 구간(부가세 포함)</b>에 따라 팀장 · 센터장 → 본부장 → 부원장 → 원장 순으로 올라갑니다</td></tr>
+    </table>
+    <p class="facts__more" style="margin-top:12px;font-size:12px;color:var(--text-2)">
+      <b>금액 구간의 숫자는 여기 싣지 않았습니다.</b> 자주 바뀌고 원문 PDF 에서 정확히 읽어내지 못했습니다 —
+      요청 전에 <b>구매시스템 교육자료</b> 또는 위임전결 규정을 확인하세요.
+    </p>
+  </div>
+
+  <div class="note">
+    <b>필수 첨부</b> — 견적서 · 제품사양서 및 카달로그 · <b>국문규격서 또는 과업지시서</b>.
+    입찰 건은 씨마켓에서 보이는 공고문을 확인한 뒤 작성합니다.
+  </div>
+
+
+  <h2 style="border-left-color:var(--neg)"><span class="n">11</span>공급업체 평가 — 별표 ★가 점수입니다</h2>
+  <p class="h2d">검수조서의 <b>[납품업체평가] 별표(★1~5개)</b> 를 1개년 전산 집계해 <b>연간종합평점(5.0 만점)</b> 을 냅니다.</p>
+
+  <div class="panel">
+    <table>
+      <tr><th style="width:104px">조치단계</th><th style="width:132px">연간종합평점</th><th>조치 내용 및 사후관리</th></tr>
+      <tr><td class="g">현상유지</td><td><b>3.5점 이상</b></td><td>외부공급자 자격 정상 유지 <span style="color:var(--text-2)">(FITI-P-006 제6.2조)</span></td></tr>
+      <tr><td class="g">주의</td><td><b>3.0 ~ 3.4점</b></td><td>납기 지연 및 서비스 미흡에 대한 <b>유의 권고 통보</b> <span style="color:var(--text-2)">(FITI-P-006 제6.3조)</span></td></tr>
+      <tr><td class="g">개선요구</td><td><b>2.5 ~ 2.9점</b></td><td><b>시정조치요구 및 결과보고서</b>(FITI-P021-01) 공식 발행 · 대책 징구 <span style="color:var(--text-2)">(FITI-P-021)</span></td></tr>
+      <tr><td class="g" style="color:#dc2626">등록해지</td><td><b>2.5점 미만</b>(부적합)<br><b>또는 검수거부 3회</b></td>
+          <td>외부공급자 <b>등록 즉시 해지</b> 및 계약 해제 · 해지 조치. 필요 시 <b>입찰참가자격 제한</b> 조치와 연계
+            <span style="color:var(--text-2)">(구매업무지침 제21조제4항 · 계약요령 제19조 · 제20조)</span></td></tr>
+    </table>
+    <p class="facts__more" style="margin-top:12px;font-size:12px;color:var(--text-2)">
+      <b>검수거부 3회는 평점과 상관없이 자동으로 등록해지</b>됩니다. 별표는 느낌이 아니라
+      <b>납기 · 수량 · 사양 · 응대</b>를 보고 매겨 주세요 — 수요부서가 매긴 별 하나가 업체의 자격을 좌우합니다.<br>
+      근거 — <b>FITI-P-006 제6장 「외부에서 제공되는 제품 및 서비스」</b>
+    </p>
+  </div>
+
+  <footer>
+    <span><b>(재)FITI시험연구원</b> 사업지원본부 · 전략구매팀</span>
+    <span class="dot">·</span><span>구매 유형 한눈에 v1.1</span>
+    <span class="dot">·</span><span>문의 : 전략구매팀 (내선 8124)</span>
+  </footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="robots" content="noindex,nofollow" />
+<title>지침 찾아보기 · FITI 전략구매팀</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+<style>
+:root{
+  --bg:#f5f7fb; --panel:#fff; --line:#e3e8f0; --text:#101729; --text-2:#5b6478;
+  --accent:#2563eb; --accent-soft:#eaf0ff; --neg:#d97706; --ok:#0f9d58;
+  --radius:16px; --shadow:0 1px 2px rgba(16,24,40,.05),0 6px 20px rgba(16,24,40,.06);
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#0e1118; --panel:#161a23; --line:#262c3a; --text:#e9ecf4; --text-2:#99a1b3;
+        --accent:#7f9cff; --accent-soft:rgba(127,156,255,.13); --neg:#f0b357; --ok:#4ade80;
+        --shadow:0 1px 2px rgba(0,0,0,.4),0 6px 20px rgba(0,0,0,.35);}
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);
+  font-family:Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  font-size:14px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1060px;margin:0 auto;padding:32px 20px 52px}
+
+h1{margin:0;font-size:26px;font-weight:800;letter-spacing:-.8px}
+.sub{margin:9px 0 0;font-size:13px;color:var(--text-2);max-width:740px}
+.sub b{color:var(--text)}
+
+.bar{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin-top:20px}
+.bar input{flex:1;min-width:250px;padding:11px 15px;border:1px solid var(--line);border-radius:12px;
+  background:var(--panel);color:var(--text);font:inherit;font-size:14px;box-shadow:var(--shadow)}
+.bar input:focus{outline:none;border-color:var(--accent)}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:11px}
+.chip{padding:6px 13px;border:1px solid var(--line);border-radius:99px;background:var(--panel);
+  font-size:12.5px;font-weight:700;color:var(--text-2);cursor:pointer}
+.chip.on{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
+
+.count{margin:16px 2px 9px;font-size:12px;color:var(--text-2)}
+.count b{color:var(--text)}
+
+.list{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+  overflow:hidden;box-shadow:var(--shadow)}
+.row{display:grid;grid-template-columns:86px 1fr 210px 118px;gap:12px;align-items:start;
+  padding:13px 16px;border-bottom:1px solid var(--line);cursor:pointer}
+.row:last-of-type{border-bottom:0}
+.row:hover{background:var(--accent-soft)}
+.row.open{background:var(--accent-soft)}
+.cat{font-size:11px;font-weight:800;color:var(--accent);padding-top:2px}
+.q{font-size:13.5px;font-weight:700}
+.doc{font-size:12px;color:var(--text-2)}
+.art{font-size:12px;font-weight:700;text-align:right;white-space:nowrap}
+.ans{grid-column:1/-1;margin-top:8px;padding-top:10px;border-top:1px dashed var(--line);
+  font-size:13px;color:var(--text-2);display:none}
+.row.open .ans{display:block}
+.ans b{color:var(--text)}
+.ans .lk{display:inline-block;margin-top:8px;color:var(--accent);font-weight:700;font-size:12.5px}
+.empty{padding:44px;text-align:center;color:var(--text-2)}
+
+.note{margin-top:18px;background:var(--accent-soft);border:1px solid var(--line);
+  border-radius:12px;padding:14px 17px;font-size:12.5px;color:var(--text-2)}
+.note b{color:var(--text)}
+
+footer{margin-top:34px;padding-top:16px;border-top:1px solid var(--line);
+  font-size:11.5px;color:var(--text-2);display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+footer b{color:var(--text)}
+.dot{opacity:.45}
+@media (max-width:760px){
+  .row{grid-template-columns:1fr;gap:4px}
+  .art{text-align:left}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>지침 찾아보기</h1>
+  <p class="sub">
+    문서를 통째로 열지 않고 <b>필요한 조문만</b> 찾습니다.
+    「수의계약은 어디에?」처럼 찾으시는 말을 넣으면 <b>어느 문서 몇 조</b>인지와 한 줄 답이 나옵니다.
+    줄을 누르면 펼쳐지고, <b>원문 PDF</b> 로 바로 갈 수 있습니다.
+  </p>
+
+  <div class="bar">
+    <input type="search" id="q" placeholder="찾으시는 말 — 수의계약 · 계약서 · 검수 · 보증금 · 지체상금 · 평가 · 개정" autocomplete="off" />
+  </div>
+  <div class="chips" id="chips"></div>
+
+  <div class="count" id="count"></div>
+  <div class="list" id="list"></div>
+
+  <div class="note">
+    <b>조문 번호는 2025.04.30. 개정판 기준입니다.</b> 개정되면 번호가 밀릴 수 있으니,
+    실제 결재 문서에 인용하실 때는 <b>원문 PDF 로 한 번 더 확인</b>해 주세요.
+    여기 없는 조문은 전략구매팀(내선 8124)에 물어보시면 채워 넣겠습니다.
+  </div>
+
+  <footer>
+    <span><b>(재)FITI시험연구원</b> 사업지원본부 · 전략구매팀</span>
+    <span class="dot">·</span><span>지침 찾아보기 v1.0</span>
+    <span class="dot">·</span><span>문의 : 전략구매팀 (내선 8124)</span>
+  </footer>
+
+</div>
+
+<!-- 자료는 이 배열 하나입니다. 조문이 늘거나 개정되면 여기만 고치면 됩니다.
+     c=분류 q=찾는 말 d=문서 a=조문 t=한 줄 답 u=원문 링크 -->
+<script>
+(function () {
+  var P_RULE  = '4-1-4_구매및계약_업무요령_20250430.pdf';
+  var P_PROP  = '4-1-3_재산관리_업무요령_20250430.pdf';
+  var P_HOUSE = '비거주지_지원금_운영요령.pdf';
+  var P_GUIDE = 'FITI_AG_0100_제1장_구매및계약_20260801.pdf';
+  var P_PIC   = '구매유형_한눈에.html';
+
+  var DATA = [
+    {c:'구매 유형', q:'일반 구매는 어디에 있나', d:'구매 및 계약 업무요령 (4-1-4)', a:'제15조', u:P_RULE,
+     t:'「일반 구매」 조문입니다. 1회성 · 단건 구매가 여기에 해당합니다. 그룹웨어에서는 <b>(일반/협조)구매요청</b> 으로 올립니다.'},
+    {c:'구매 유형', q:'수의계약은 어디에 있나', d:'구매 및 계약 업무요령 (4-1-4)', a:'제15조의2', u:P_RULE,
+     t:'<b>「수의계약에 의한 구매」</b> 조문입니다. 소액 · 긴급 · 독점 등 사유가 있을 때 경쟁 없이 특정 업체와 계약합니다. <b>단가계약의 근거</b>도 이 조문입니다.'},
+    {c:'구매 유형', q:'경쟁입찰의 근거', d:'구매 및 계약 업무요령 (4-1-4)', a:'제4조', u:P_RULE,
+     t:'경쟁입찰을 원칙으로 한다는 조문입니다. 입찰 방법은 제13조, 낙찰자 결정은 제14조에 있습니다.'},
+    {c:'구매 유형', q:'나라장터(국가종합전자조달)로 입찰할 때', d:'구매 및 계약 업무요령 (4-1-4)', a:'제5조', u:P_RULE,
+     t:'국가종합전자조달시스템을 통해 경쟁입찰을 진행하는 경우의 조문입니다.'},
+
+    {c:'입찰', q:'입찰공고에 무엇을 적나', d:'구매 및 계약 업무요령 (4-1-4)', a:'제9조', u:P_RULE,
+     t:'입찰공고에 반드시 포함해야 할 사항이 각 호로 열거돼 있습니다.'},
+    {c:'입찰', q:'입찰 방법 · 단계 경쟁', d:'구매 및 계약 업무요령 (4-1-4)', a:'제13조', u:P_RULE,
+     t:'입찰 방법 조문입니다. 규격 또는 기술입찰을 먼저 하고 가격입찰을 나중에 하는 <b>단계 경쟁</b>도 이 부근에 있습니다.'},
+    {c:'입찰', q:'낙찰자는 어떻게 정하나', d:'구매 및 계약 업무요령 (4-1-4)', a:'제14조', u:P_RULE,
+     t:'<b>개찰 및 낙찰자 결정.</b> 예정가격 이하 최저금액 입찰자를 낙찰자로 합니다(최저가). 낙찰가격이 같으면 <b>추첨</b>으로 정합니다.'},
+    {c:'입찰', q:'예정가격은 어떻게 잡나', d:'구매 및 계약 업무요령 (4-1-4)', a:'제6조', u:P_RULE,
+     t:'예산에 계상된 금액 등을 기준으로 정합니다. 가격 조사는 제29조(거래실례가격조사)를 함께 보세요.'},
+    {c:'입찰', q:'입찰이 무효가 되는 때', d:'구매 및 계약 업무요령 (4-1-4)', a:'제8조', u:P_RULE,
+     t:'입찰참가자격이 없는 자의 입찰, 동일인이 2통 이상 제출한 입찰, 요구 서류 미제출 등이 열거돼 있습니다.'},
+    {c:'입찰', q:'입찰참가자격을 제한하려면', d:'구매 및 계약 업무요령 (4-1-4)', a:'제7조', u:P_RULE,
+     t:'제한 사항과 제한 기준을 <b>입찰공고에 미리 밝혀야</b> 합니다.'},
+    {c:'입찰', q:'유찰이란', d:'구매 가이드북 제1장 (2026.08.01.)', a:'구매 유형', u:P_GUIDE,
+     t:'<b>응찰자가 없거나</b>, 예정가보다 높은 투찰 금액이거나, <b>납기 등 다른 조건이 맞지 않는</b> 경우입니다. 1회 이상 유찰되면 수의계약 사유가 됩니다.'},
+
+    {c:'계약 · 보증', q:'계약서는 언제 써야 하나', d:'구매 및 계약 업무요령 (4-1-4)', a:'제19조', u:P_RULE,
+     t:'<b>계약서 작성</b> 조문입니다. 일정 금액을 넘는 계약은 반드시 계약서를 쓰고, 그 이하는 생략할 수 있습니다. <b>금액 기준은 원문에서 확인</b>하세요.'},
+    {c:'계약 · 보증', q:'계약의 원칙 · 성립', d:'구매 및 계약 업무요령 (4-1-4)', a:'제17조 · 제18조', u:P_RULE,
+     t:'제17조 계약의 원칙, 제18조 계약의 성립입니다.'},
+    {c:'계약 · 보증', q:'계약보증금은 얼마를 받나', d:'구매 및 계약 업무요령 (4-1-4)', a:'제20조', u:P_RULE,
+     t:'계약금액의 일정 비율 이상을 현금 또는 <b>지급보증서 · 계약보증보험증권</b>으로 징구합니다. 보증기간은 계약기간 개시일부터 종료일 이후까지입니다.'},
+    {c:'계약 · 보증', q:'보증금을 현금으로 낼 때', d:'구매 및 계약 업무요령 (4-1-4)', a:'제21조', u:P_RULE,
+     t:'현금에 의한 보증금 납부 조문입니다.'},
+    {c:'계약 · 보증', q:'납기가 늦으면 (지체상금)', d:'구매 및 계약 업무요령 (4-1-4)', a:'제23조', u:P_RULE,
+     t:'정당한 이유 없이 계약을 지체하면 <b>계약총액 × 지체상금률 × 지체일수</b>를 현금으로 징수합니다.'},
+    {c:'계약 · 보증', q:'하자보수보증 · 담보책임기간', d:'구매 및 계약 업무요령 (4-1-4)', a:'제24조 · 제25조', u:P_RULE,
+     t:'하자보수보증서의 유효기간은 <b>하자담보책임기간 종료 후</b>까지여야 합니다. 비율은 계약금액의 일정 범위 안에서 정합니다.'},
+    {c:'계약 · 보증', q:'계약할 때 지켜야 할 것', d:'구매 및 계약 업무요령 (4-1-4)', a:'제31조 · 제32조', u:P_RULE,
+     t:'제31조 계약 시 준수사항, 제32조 계약체결 후 보고사항입니다.'},
+
+    {c:'검수', q:'검수는 언제까지 하나', d:'구매 및 계약 업무요령 (4-1-4)', a:'제27조', u:P_RULE,
+     t:'<b>검수</b> 조문입니다. 원칙적으로 납품자의 검수요청일로부터 정해진 날짜 안에 완료합니다. 납품처 과실 · 하자 · 납기 지연 · 구성품 누락이 있으면 <b>그 문제가 해결된 시점</b>이 기준입니다.'},
+    {c:'검수', q:'검수를 거부할 수 있는 때', d:'구매 및 계약 업무요령 (4-1-4)', a:'제28조', u:P_RULE,
+     t:'<b>검수거부</b> 조문입니다. 품목 · 모델 · 수량 상이, 파손 등 물리적 이상, 계약 사양 미충족 · 작동 불능 · 상품 누락 등. <b>검수거부 3회면 업체가 등록해지</b>됩니다.'},
+    {c:'검수', q:'시험장비 검수는 다른가', d:'구매시스템 교육자료 (2026.06.22.)', a:'검수 절차', u:P_PIC,
+     t:'<b>단순 외관 확인만으로는 검수할 수 없습니다.</b> 교정 또는 시운전으로 성능 · 사양이 계약내용과 맞는지 확인한 뒤 검수조서를 씁니다. 작동 상태를 알 수 있는 사진 · 파일을 첨부하세요.'},
+    {c:'검수', q:'검수 사진 규칙', d:'구매시스템 교육자료 (2026.06.22.)', a:'금지사항', u:P_PIC,
+     t:'반드시 검수 제품 사진을 첨부합니다. <b>메타데이터 삭제 금지 · 이미지 수정 금지 · 카카오톡으로 촬영해 전송 금지.</b>'},
+
+    {c:'공급업체 평가', q:'업체 점수는 어떻게 매겨지나', d:'FITI-P-006 제6장', a:'제6.2조 · 제6.3조', u:P_PIC,
+     t:'검수조서의 <b>[납품업체평가] 별표(★1~5개)</b> 를 1개년 집계해 <b>연간종합평점(5.0 만점)</b> 을 냅니다. 3.5점 이상 현상유지 · 3.0~3.4 주의 · 2.5~2.9 개선요구 · <b>2.5 미만 또는 검수거부 3회는 등록해지</b>.'},
+    {c:'공급업체 평가', q:'시정조치요구는 어떤 문서인가', d:'FITI-P-021 (개선 및 시정조치)', a:'FITI-P021-01', u:P_PIC,
+     t:'연간종합평점 2.5~2.9점이면 <b>시정조치요구 및 결과보고서(FITI-P021-01)</b> 를 공식 발행하고 대책을 징구합니다.'},
+    {c:'공급업체 평가', q:'등록해지와 입찰참가자격 제한', d:'구매업무지침 · 계약요령', a:'지침 제21조제4항 · 요령 제19조 · 제20조', u:P_PIC,
+     t:'2.5점 미만(부적합) 또는 검수거부 3회면 <b>외부공급자 등록을 즉시 해지</b>하고 계약을 해제 · 해지합니다. 필요하면 입찰참가자격 제한 조치와 연계합니다.'},
+
+    {c:'재고', q:'출고는 얼마나 자주 하나', d:'구매시스템 교육자료 (2026.06.22.)', a:'재고관리', u:P_PIC,
+     t:'<b>최소 주 1회</b> 출고 처리. 입고 · 출고 모두 가능한 한 실시간으로. 전량 소진될 때까지 모았다가 한 번에 처리하는 것은 <b>금지</b>입니다.'},
+    {c:'재고', q:'유효기한 있는 물품 표시', d:'화학물질관리지침', a:'스티커 부착', u:P_PIC,
+     t:'품질 유지기한이 짧으면 <b>제품에 직접 스티커를 붙여</b> 입고일자 · 개봉일 · 만료일을 적습니다.'},
+    {c:'재고', q:'재산관리는 어느 요령인가', d:'재산관리 업무요령 (4-1-3)', a:'전체', u:P_PROP,
+     t:'비품 · 자산의 관리는 이 요령입니다. 구매는 4-1-4, 재산관리는 4-1-3 으로 나뉩니다.'},
+
+    {c:'사택 · 경조사', q:'사택 지원 기준은 어디에', d:'인사관리 3-2-2 비거주지 근무직원 지원금 운영요령', a:'최종개정 2025.07.01.', u:P_HOUSE,
+     t:'비거주지 근무직원 지원 기준입니다. <b>거주지원금 환수 사유가 제8조</b>에 조문으로 명시돼 있습니다. 보증금 · 월세 한도는 <b>매년 예산집행지침</b>이 지역별로 정합니다.'},
+    {c:'사택 · 경조사', q:'경조사 화환 지원 기준', d:'휴가 · 휴직 업무처리지침 (2026.03.01.)', a:'별표 2', u:'https://intern-study.vercel.app/#secg5-5',
+     t:'누가 대상이고 무엇이(화환 · 근조기 · 상조용품) 지원되는지, 언제까지 신청해야 하는지가 별표 2에 있습니다.'},
+
+    {c:'개정', q:'지금 적용되는 판이 무엇인가', d:'문서별 최종개정일', a:'아래 참조', u:'',
+     t:'<b>구매 및 계약 업무요령(4-1-4)</b> 2025.04.30. · <b>재산관리 업무요령(4-1-3)</b> 2025.04.30. · <b>구매 가이드북 제1장</b> 2026.08.01. · <b>비거주지 지원금 운영요령(3-2-2)</b> 2025.07.01. · <b>휴가 · 휴직 업무처리지침</b> 2026.03.01. · <b>구매시스템 교육자료</b> 2026.06.22.'},
+    {c:'개정', q:'개정 전에 한 일은 어느 규정을 따르나', d:'구매 및 계약 업무요령 (4-1-4)', a:'부칙 · 경과조치', u:P_RULE,
+     t:'부칙의 경과조치에 <b>개정 전 규정에 의하여 시행한 것은 이전 규정에 따른다</b> 고 돼 있습니다. 즉 <b>요청한 시점의 판</b>을 봅니다.'},
+    {c:'개정', q:'요령이 바뀌면 무엇을 고쳐야 하나', d:'전략구매팀 내부', a:'운영', u:'',
+     t:'① 이 찾아보기 표 ② <b>구매 유형 한눈에</b> 그림 ③ 업무매뉴얼 1-1장 ④ 수요부서 포털의 지침 탭. 네 군데가 같은 내용을 쓰고 있어 <b>한 곳만 고치면 어긋납니다.</b>'},
+
+    {c:'기본', q:'이 요령의 목적 · 적용범위', d:'구매 및 계약 업무요령 (4-1-4)', a:'제1조 · 제2조', u:P_RULE,
+     t:'제1조 목적, 제2조 적용범위입니다.'},
+    {c:'기본', q:'용어의 뜻', d:'구매 및 계약 업무요령 (4-1-4)', a:'제3조', u:P_RULE,
+     t:'요령에서 쓰는 용어의 정의입니다. 계약책임자 · 계약담당자 등이 여기서 정해집니다.'},
+    {c:'기본', q:'구매요청서란', d:'구매시스템 교육자료 (2026.06.22.)', a:'용어', u:P_PIC,
+     t:'<b>구매의 출발점.</b> 반드시 문서로 작성합니다. 사용자 부서가 필요한 물품의 내용을 구매자(전략구매팀)에게 알려 주는 것으로, 구매관리 업무는 이 접수로부터 시작합니다.'},
+    {c:'기본', q:'위임전결이란', d:'구매시스템 교육자료 (2026.06.22.)', a:'용어 · 위임전결', u:P_PIC,
+     t:'결재 권한을 하위 직급자에게 넘기는 것입니다. 구매요청 상신은 <b>금액 구간(부가세 포함)</b>에 따라 팀장 · 센터장 → 본부장 → 부원장 → 원장 순으로 올라갑니다.'},
+    {c:'기본', q:'부동산 매매 · 매각', d:'구매 및 계약 업무요령 (4-1-4)', a:'제30조', u:P_RULE,
+     t:'부동산의 매매 및 매각 조문입니다.'}
+  ];
+
+  var CATS = ['전체'];
+  DATA.forEach(function (r) { if (CATS.indexOf(r.c) < 0) CATS.push(r.c); });
+  var pick = '전체';
+
+  var $ = function (s) { return document.querySelector(s); };
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) {
+      return ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;' })[c];
+    });
+  }
+
+  $('#chips').innerHTML = CATS.map(function (c, i) {
+    return '<button type="button" class="chip' + (i === 0 ? ' on' : '') + '" data-c="' + esc(c) + '">' + esc(c) + '</button>';
+  }).join('');
+
+  function render() {
+    var q = ($('#q').value || '').trim().toLowerCase();
+    var view = DATA.filter(function (r) {
+      if (pick !== '전체' && r.c !== pick) return false;
+      if (!q) return true;
+      return (r.q + ' ' + r.d + ' ' + r.a + ' ' + r.t + ' ' + r.c).toLowerCase().indexOf(q) >= 0;
+    });
+
+    $('#count').innerHTML = '<b>' + view.length + '</b>건' + (q ? ' · ‘' + esc(q) + '’ 로 찾음' : '');
+
+    $('#list').innerHTML = view.length ? view.map(function (r, i) {
+      var link = r.u
+        ? '<a class="lk" href="' + esc(r.u) + '" target="_blank" rel="noopener">원문 열기 &#8599;</a>'
+        : '';
+      return '<div class="row" data-i="' + i + '">'
+        + '<div class="cat">' + esc(r.c) + '</div>'
+        + '<div class="q">' + esc(r.q) + '</div>'
+        + '<div class="doc">' + esc(r.d) + '</div>'
+        + '<div class="art">' + esc(r.a) + '</div>'
+        + '<div class="ans">' + r.t + '<br>' + link + '</div>'
+        + '</div>';
+    }).join('') : '<div class="empty">찾으시는 말이 없습니다. 전략구매팀(내선 8124)에 물어보시면 채워 넣겠습니다.</div>';
+
+    Array.prototype.forEach.call(document.querySelectorAll('.row'), function (el) {
+      el.addEventListener('click', function (e) {
+        if (e.target.tagName === 'A') return;
+        el.classList.toggle('open');
+      });
+    });
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll('.chip'), function (b) {
+    b.addEventListener('click', function () {
+      pick = b.dataset.c;
+      Array.prototype.forEach.call(document.querySelectorAll('.chip'), function (x) {
+        x.classList.toggle('on', x === b);
+      });
+      render();
+    });
+  });
+
+  var deb;
+  $('#q').addEventListener('input', function () { clearTimeout(deb); deb = setTimeout(render, 160); });
+
+  render();
+})();
+</script>
+</body>
+</html>
