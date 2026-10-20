@@ -66,6 +66,8 @@ th{font-size:11.5px;font-weight:700;color:var(--text-2);white-space:nowrap}
 tr:last-child th,tr:last-child td{border-bottom:0}
 td.b{color:var(--bid);font-weight:700;white-space:nowrap}
 td.g{color:var(--neg);font-weight:700;white-space:nowrap}
+.mk{display:inline-block;margin-left:4px;padding:0 7px;border:1px solid var(--line);border-radius:999px;
+  font-size:11px;font-weight:700;color:var(--text-2);white-space:nowrap}
 
 .why{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:6px}
 .why__c{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--neg);
@@ -92,12 +94,11 @@ footer b{color:var(--text)}
   <h1>구매 유형 한눈에</h1>
   <p class="sub">
     <b>2026 구매시스템 교육자료</b>(내부직원 · 2026.06.22.) 와 「구매 및 계약 업무요령」(4-1-4, 최종개정 2025.04.30.) ·
-    구매 가이드북 제1장 「물품구매 계약업무」(FITI_AG_0100, 2026.08.01. 개정) 을 그림으로 옮긴 것입니다.
-    <b>금액 기준은 원문을 보세요</b> — 자주 바뀝니다.
+    구매 가이드북 제1장 「물품구매 계약업무」(FITI_AG_0100, 2026.08.01. 개정) 을 도식화한 것입니다.
   </p>
 
-  <h2><span class="n">1</span>구매는 두 갈래로 갑니다</h2>
-  <p class="h2d">같은 물건이라도 어느 갈래로 가느냐에 따라 절차와 서류가 달라집니다.</p>
+  <h2><span class="n">1</span>계약방법 — 경쟁입찰과 수의계약</h2>
+  <p class="h2d">동일 품목이라도 계약방법에 따라 절차와 구비서류가 달라집니다.</p>
 
   <div class="fork">
 
@@ -114,7 +115,7 @@ footer b{color:var(--text)}
           <div class="step"><span class="step__i">4</span><span class="step__t"><b>낙찰</b>이면 계약 · <b>유찰</b>이면 재공고 또는 수의계약 검토</span></div>
         </div>
         <div class="kinds">
-          <div class="kind"><b>입찰-소모품</b><span>원내 <b>시험소모품 예산</b>으로 등록된 시험소모품을 <b>반복적으로</b> 구매할 때</span></div>
+          <div class="kind"><b>입찰-소모품</b><span>원내 <b>시험소모품 및 시험보조장치 예산</b>으로 등록된 시험소모품을 <b>반복적으로</b> 구매할 때 (소모품 등록이 선행되어야 함)</span></div>
           <div class="kind"><b>입찰-일반</b><span><b>1회성 구매 또는 단건</b> — 소모품 · 사업비구매에 해당하지 않는 구매</span></div>
           <div class="kind"><b>입찰-사업비</b><span>연구사업 · 과제 · 용역 예산으로 집행되는 구매</span></div>
         </div>
@@ -134,18 +135,18 @@ footer b{color:var(--text)}
           <div class="step"><span class="step__i">4</span><span class="step__t">경쟁 입찰 없이 <b>특정 업체와 직접 계약</b></span></div>
         </div>
         <div class="kinds">
-          <div class="kind"><b>소모품 구매요청</b><span>등록된 시험소모품을 <b>수의 사유</b>에 해당해 경쟁 없이 살 때</span></div>
+          <div class="kind"><b>소모품 구매요청</b><span><b>= 수의계약.</b> 등록된 시험소모품을 <b>수의 사유</b>에 해당해 경쟁 없이 살 때</span></div>
           <div class="kind"><b>(일반/협조)구매요청</b><span><b>1회성 · 단건</b> — 책상 · 의자 · PC류 등</span></div>
           <div class="kind"><b>사업비구매</b><span>연구사업 · 과제 · 용역 예산으로 집행되는 구매</span></div>
-          <div class="kind"><b>시험기기수리 / 개조</b><span>쓰던 시험기기의 수리 · 개조 — 정품 부품 · 지정 업체 유지보수</span></div>
+          <div class="kind"><b>시험기기수리 / 개조</b><span>기기 제조사 엔지니어가 <b>출장하여 출장비를 받는</b> 시험기기 수리 · 개조 · 유지보수</span></div>
         </div>
       </div>
     </section>
 
   </div>
 
-  <h2><span class="n">2</span>무엇이 다릅니까</h2>
-  <p class="h2d">같은 줄을 좌우로 견주어 보세요.</p>
+  <h2><span class="n">2</span>계약방법별 비교</h2>
+  <p class="h2d">항목별로 경쟁입찰과 수의계약을 비교합니다.</p>
 
   <div class="panel">
     <table>
@@ -161,8 +162,8 @@ footer b{color:var(--text)}
     </table>
   </div>
 
-  <h2><span class="n">3</span>수의계약이 되는 사유</h2>
-  <p class="h2d">요령이 드는 사유를 세 갈래로 묶었습니다. <b>공문에 어느 사유인지 적어야 합니다.</b></p>
+  <h2><span class="n">3</span>수의계약 사유</h2>
+  <p class="h2d">업무요령상 수의계약 사유를 세 유형으로 구분합니다. <b>공문에 해당 사유를 명기하여야 합니다.</b></p>
 
   <div class="why">
 
@@ -181,22 +182,22 @@ footer b{color:var(--text)}
     <div class="why__c">
       <div class="why__t">소액 · 유찰</div>
       <div class="why__d"><b>10만원 이하(부가세 포함)</b> 구매. 또는 <b>입찰 결과 1회 이상 유찰</b>된 건.</div>
-      <div class="why__e"><b>유찰이란</b> 응찰자 없음 · 예정가보다 높은 투찰 금액 · 납기 등 다른 조건 미충족</div>
+      <div class="why__e"><b>유찰이란</b> 응찰자 없음 · 예정가격 초과 투찰 · 납기 등 기타 조건 미충족</div>
+      <div class="why__e"><b>단,</b> 소액이라도 <b>시험용 시약 등은 입찰 구매</b>로 진행합니다.</div>
     </div>
 
   </div>
 
   <div class="note">
-    <b>금액 기준은 여기 싣지 않았습니다.</b> 계약서 작성 기준(천만원 초과) · 견적서 수 · 보증금 비율 같은 숫자는
-    개정될 때마다 바뀝니다. <b>요청하실 때는 원문을 보시고</b>, 애매하면 전략구매팀(내선 8124)에 물어보세요.
+    <b>금액 기준</b> — 원내 <b>위임전결요령</b>(문서번호 ○○○ · 개정일자 ○○○○.○○.○○.)에 따라 내부결재 등을 진행합니다.
   </div>
 
-  <h2><span class="n">4</span>낙찰은 둘 중 하나로 정해집니다</h2>
-  <p class="h2d">입찰로 갔을 때만 해당합니다.</p>
+  <h2><span class="n">4</span>낙찰자 결정 방법</h2>
+  <p class="h2d">입찰 구매에 한하여 적용합니다.</p>
 
   <div class="panel">
     <table>
-      <tr><th style="width:120px">방식</th><th>어떻게 뽑나</th><th style="width:34%">쓰는 자리</th></tr>
+      <tr><th style="width:120px">낙찰 방식</th><th>낙찰자 결정 기준</th><th style="width:34%">적용 대상</th></tr>
       <tr><td class="b">최저가</td><td>가장 <b>낮은 입찰금액</b>을 제시한 업체가 낙찰</td><td>규격이 정해진 일반 구매</td></tr>
       <tr><td class="b">최다수량</td><td>정해진 예산 안에서 지정한 물품의 <b>수량을 가장 많이</b> 제시한 업체가 낙찰.
         금액을 고정 입력하고 수량으로 겨룹니다</td><td>예산이 정해져 있고 많이 받을수록 좋은 소모품</td></tr>
@@ -229,7 +230,7 @@ footer b{color:var(--text)}
       <tr><th style="width:150px">검수사진 앱 화면</th><th>이렇게 보입니다</th></tr>
       <tr><td class="b" style="color:var(--stock)">머리말</td><td><b>{부서명} 로그인중</b> — GRFITI 계정으로 들어갑니다</td></tr>
       <tr><td class="b" style="color:var(--stock)">목록 한 줄</td>
-          <td><b>문서번호</b>(예 H231-26-23165) · <b>신청자</b> · <b>금액</b> — 이 셋만 보입니다</td></tr>
+          <td><b>구매번호</b>(예 H231-26-23165) · <b>신청자</b> · <b>금액</b> — 이 셋만 보입니다</td></tr>
       <tr><td class="b" style="color:var(--stock)">목록 조건</td>
           <td><b>발주 O · 입고 X</b> 인 건만, 최근 순으로 200건까지</td></tr>
       <tr><td class="b" style="color:var(--stock)">부서 가르기</td>
@@ -250,17 +251,17 @@ footer b{color:var(--text)}
   <div class="panel">
     <table>
       <tr><th style="width:30%">이런 건</th><th style="width:34%">어떻게 요청</th><th>왜</th></tr>
-      <tr><td>토양시료 채취용 <b>핸드 오거</b></td><td class="g">(일반/협조)구매요청</td><td><b>1회성</b> 구매</td></tr>
-      <tr><td>마틴데일 마모강도용 <b>모마모자</b></td><td class="g">소모품 구매요청</td><td><b>지속적으로</b> 구매하는 시험용 소모품 · 독점적 지위 또는 지정업체</td></tr>
-      <tr><td><b>분광광도계 램프</b></td><td class="g">소모품 구매요청</td><td>사용자가 교체 가능한 램프</td></tr>
-      <tr><td>분석기기 <b>정품 부품 및 소모품류</b></td><td class="g">소모품 구매요청</td><td>제품 공급처만 유지보수가 가능</td></tr>
-      <tr><td><b>퍼클로로에틸렌</b> (상업용 드라이클리닝 용제)</td><td class="g">수의계약</td><td>관련 <b>취급자격</b>이 필요</td></tr>
-      <tr><td>스티커형 <b>채수병 세트</b></td><td class="g">수의계약</td><td>지역센터 · 팀 구분을 위해 마개에 스티커 부착 — <b>주문제작</b></td></tr>
-      <tr><td><b>위·변조방지 성적서 용지</b> (조폐공사)</td><td class="g">수의계약</td><td>생산자 또는 소지자가 <b>1인</b></td></tr>
-      <tr><td>시험용 <b>생쥐 · 물벼룩 먹이 · 미생물 배지</b></td><td class="g">수의계약</td><td><b>품질 유지기한</b>이 짧음</td></tr>
-      <tr><td>기기 회사 엔지니어의 <b>부품 교체 · 캘리브레이션</b>(정도검사 포함)</td><td class="g">시험기기수리 / 개조 요청</td><td>해당 업체만 가능</td></tr>
+      <tr><td>토양시료 채취용 <b>핸드 오거</b></td><td class="g">(일반/협조)구매요청 <span class="mk">일반구매</span></td><td><b>1회성</b> 구매</td></tr>
+      <tr><td>마틴데일 마모강도용 <b>모마모자</b> <span class="mk">James H. Heal</span></td><td class="g">소모품 구매요청 <span class="mk">수의계약</span></td><td><b>지속적으로</b> 구매하는 시험용 소모품 · 독점적 지위 또는 지정업체</td></tr>
+      <tr><td><b>분광광도계 램프</b> <span class="mk">Agilent</span></td><td class="g">소모품 구매요청 <span class="mk">수의계약</span></td><td>사용자가 교체 가능한 램프</td></tr>
+      <tr><td>분석기기 <b>정품 부품 및 소모품류</b></td><td class="g">소모품 구매요청 <span class="mk">수의계약</span></td><td>제품 공급처만 유지보수가 가능</td></tr>
+      <tr><td><b>퍼클로로에틸렌</b> (상업용 드라이클리닝 용제)</td><td class="g">소모품 구매요청 <span class="mk">수의계약</span></td><td>관련 <b>취급자격</b>이 필요</td></tr>
+      <tr><td>스티커형 <b>채수병 세트</b></td><td class="g">소모품 구매요청 <span class="mk">수의계약</span></td><td>지역센터 · 팀 구분을 위해 마개에 스티커 부착 — <b>주문제작</b></td></tr>
+      <tr><td><b>위·변조방지 성적서 용지</b> (조폐공사)</td><td class="g">소모품 구매요청 <span class="mk">수의계약</span></td><td>생산자 또는 소지자가 <b>1인</b></td></tr>
+      <tr><td>시험용 <b>생쥐 · 물벼룩 먹이 · 미생물 배지</b></td><td class="g">소모품 구매요청 <span class="mk">수의계약</span></td><td><b>품질 유지기한</b>이 짧음</td></tr>
+      <tr><td>기기 제조사 엔지니어가 <b>출장하여</b> 수행하는 <b>부품 교체 · 캘리브레이션</b>(정도검사 포함) — <b>출장비가 발생</b>하는 건</td><td class="g">시험기기수리 / 개조 요청</td><td>해당 업체만 가능</td></tr>
       <tr><td><b>시약</b></td><td class="b">입찰구매요청</td><td>금액이 작아도 시약은 <b>전량 소모품 입찰</b></td></tr>
-      <tr><td>연구원 <b>명함 · 시험분석표</b> 등 인쇄물</td><td class="g">수의계약</td><td>양식 · 시험기록지 등</td></tr>
+      <tr><td>연구원 <b>명함 · 시험분석표</b> 등 인쇄물</td><td class="g">소모품 구매요청 <span class="mk">수의계약</span></td><td>양식 · 시험기록지 등</td></tr>
     </table>
     <p class="facts__more" style="margin-top:12px;font-size:12px;color:var(--text-2)">
       씨마켓에서 수의계약은 <b>계약업체를 먼저 고르고 그다음 물품을 고릅니다.</b> 순서가 반대입니다.
@@ -347,8 +348,7 @@ footer b{color:var(--text)}
           구매요청 상신은 <b>금액 구간(부가세 포함)</b>에 따라 팀장 · 센터장 → 본부장 → 부원장 → 원장 순으로 올라갑니다</td></tr>
     </table>
     <p class="facts__more" style="margin-top:12px;font-size:12px;color:var(--text-2)">
-      <b>금액 구간의 숫자는 여기 싣지 않았습니다.</b> 자주 바뀌고 원문 PDF 에서 정확히 읽어내지 못했습니다 —
-      요청 전에 <b>구매시스템 교육자료</b> 또는 위임전결 규정을 확인하세요.
+      <b>금액 구간</b> — 원내 <b>위임전결요령</b>(문서번호 ○○○ · 개정일자 ○○○○.○○.○○.)에 따릅니다.
     </p>
   </div>
 
@@ -358,8 +358,9 @@ footer b{color:var(--text)}
   </div>
 
 
-  <h2 style="border-left-color:var(--neg)"><span class="n">11</span>공급업체 평가 — 별표 ★가 점수입니다</h2>
-  <p class="h2d">검수조서의 <b>[납품업체평가] 별표(★1~5개)</b> 를 1개년 전산 집계해 <b>연간종합평점(5.0 만점)</b> 을 냅니다.</p>
+  <h2 style="border-left-color:var(--neg)"><span class="n">11</span>공급업체 평가 — 외부 제공 제품 및 서비스 관리</h2>
+  <p class="h2d">검수조서 <b>[납품업체평가]</b> 항목에 납품 건별 <b>평점(1.0 ~ 5.0점)</b> 을 부여하고, 1개년 평균으로 <b>연간종합평점(5.0 만점)</b> 을 산출합니다.
+    <b>KOLAS 인정기준</b>(ISO/IEC 17025 6.6) 적용 — 개정 업무요령 반영.</p>
 
   <div class="panel">
     <table>
@@ -372,8 +373,8 @@ footer b{color:var(--text)}
             <span style="color:var(--text-2)">(구매업무지침 제21조제4항 · 계약요령 제19조 · 제20조)</span></td></tr>
     </table>
     <p class="facts__more" style="margin-top:12px;font-size:12px;color:var(--text-2)">
-      <b>검수거부 3회는 평점과 상관없이 자동으로 등록해지</b>됩니다. 별표는 느낌이 아니라
-      <b>납기 · 수량 · 사양 · 응대</b>를 보고 매겨 주세요 — 수요부서가 매긴 별 하나가 업체의 자격을 좌우합니다.<br>
+      <b>검수거부 3회 시 평점과 무관하게 등록해지</b>됩니다. 평점은
+      <b>납기 · 수량 · 사양 · 대응</b>을 기준으로 객관적으로 부여하여 주십시오.<br>
       근거 — <b>FITI-P-006 제6장 「외부에서 제공되는 제품 및 서비스」</b>
     </p>
   </div>
